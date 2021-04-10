@@ -1,7 +1,8 @@
 /*
  ============================================================================
- Name        : TpCalculadora.c
- Author      : Juan Sueldo
+ Name:         Tp1Calculadora.c
+ Alumno:       Juan Sueldo
+ Division:     1 E
 Hacer una calculadora. Para ello el programa iniciará y contará con un menú de opciones:
 1. Ingresar 1er operando (A=x)
 2. Ingresar 2do operando (B=y)
@@ -33,6 +34,7 @@ que contenga las funciones para realizar las cinco operaciones.
 #include "utn_calculos.h"
 
 int main(void) {
+	system("cls") ;
 	setbuf(stdout, NULL);
 	int menu;
 	int opcion;
@@ -51,11 +53,9 @@ int main(void) {
 	double resultadoFactorial1;
 	double resultadoFactorial2;
 
-
-
 	do
 	{
-		menu = utn_mostrarMenu (&opcion, operador1, operador2,"La opcion no es valida.\n",1,5,5);
+		menu = utn_mostrarMenu (&opcion, operador1, operador2,"\nLa opcion no es valida.\n",1,5,5);
 		if(menu == 0)
 		{
 		switch(opcion)
@@ -79,7 +79,7 @@ int main(void) {
 			}
 			else
 			{
-				suma = utn_getSuma(operador1, operador2, &resultadoSuma,"A.Se realizo la suma\n","\nLos operadores tienen que ser distintos a cero");
+				suma = utn_getSuma(operador1, operador2, &resultadoSuma,"\nA.Se realizo la suma\n","\nLos operadores tienen que ser distintos a cero");
 
 				resta = utn_getResta(operador1, operador2, &resultadoResta,"B.Se realizo la resta\n","\nLos operadores tienen que ser distintos a cero");
 
@@ -96,16 +96,16 @@ int main(void) {
 		case 4:
 			if(operador1 == 0 && operador2 == 0)
 			{
-			printf("Debe ingresar al menos un valor para continuar\n");
+			printf("\nDebe ingresar al menos un valor para continuar\n");
 			}
 			if((operador1 != 0 || operador2 != 0) && suma != 0 && resta != 0 && division != 0 && multiplicacion != 0 && factorial1 != 0 && factorial2 != 0)
 			{
-				printf("Antes debe realizar las operaciones.\n");
+				printf("\nAntes debe realizar las operaciones.\n");
 			}
 
 				if(suma == 0)
 				{
-					printf("A.El resultado de A+B es: %d\n",resultadoSuma);
+					printf("\nA.El resultado de A+B es: %d\n",resultadoSuma);
 				}
 
 				if(resta == 0)
