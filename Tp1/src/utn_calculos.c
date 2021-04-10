@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*
- * brief Utiliza los dos operadores ingresados por el usuario, valida, muestra el resultado
+ * brief Utiliza los dos operadores ingresados por el usuario, muestra el resultado, muestra mensaje de exito y mensaje de error
  * param operador1 recibe el primer operador ingresado por el usuario
  * param operador2 recibe el segunto operador ingresado por el usuario
  * param resultado puntero del resultado, allí se dejara el resultado de la operacion
@@ -37,6 +37,14 @@ int utn_getSuma (int operador1, int operador2, int*resultado,char*mensaje, char*
 	return retorno;
 
 }
+/*
+ * brief Utiliza los dos operadores ingresados por el usuario, muestra el resultado, muestra mensaje de exito y mensaje de error
+ * param operador1 recibe el primer operador ingresado por el usuario
+ * param operador2 recibe el segunto operador ingresado por el usuario
+ * param resultado puntero del resultado, allí se dejara el resultado de la operacion
+ * param mensaje mensaje a mostrar en caso de que se pudo realizar la operacion
+ * param mensajeError mensaje en caso de error
+ */
 int utn_getResta (int operador1, int operador2, int*resultado,char*mensaje, char*mensajeError)
 {
 	int retorno = -1;
@@ -58,6 +66,14 @@ int utn_getResta (int operador1, int operador2, int*resultado,char*mensaje, char
 	return retorno;
 
 }
+/*
+ * brief Utiliza los dos operadores ingresados por el usuario, muestra el resultado, muestra mensaje de exito y mensaje de error
+ * param operador1 recibe el primer operador ingresado por el usuario
+ * param operador2 recibe el segunto operador ingresado por el usuario
+ * param resultado puntero del resultado, allí se dejara el resultado de la operacion
+ * param mensaje mensaje a mostrar en caso de que se pudo realizar la operacion
+ * param mensajeError mensaje en caso de error
+ */
 float utn_getDividir (int operador1, int operador2,float* resultado, char*mensaje, char*mensajeError)
 {
 	float resul;
@@ -79,6 +95,14 @@ float utn_getDividir (int operador1, int operador2,float* resultado, char*mensaj
 	}
 	return retorno;
 }
+/*
+ * brief Utiliza los dos operadores ingresados por el usuario, muestra el resultado, muestra mensaje de exito y mensaje de error
+ * param operador1 recibe el primer operador ingresado por el usuario
+ * param operador2 recibe el segunto operador ingresado por el usuario
+ * param resultado puntero del resultado, allí se dejara el resultado de la operacion
+ * param mensaje mensaje a mostrar en caso de que se pudo realizar la operacion
+ * param mensajeError mensaje en caso de error
+ */
 int utn_getMultiplicar (int operador1, int operador2, int*resultado, char*mensaje, char*mensajeError)
 {
 	int retorno = -1;
@@ -99,14 +123,21 @@ int utn_getMultiplicar (int operador1, int operador2, int*resultado, char*mensaj
 		}
 		return retorno;
 }
-int utn_getFactorial (int operador, int * resultado , char*mensaje, char*mensajeError)
+/*
+ * brief Utiliza el operador ingresado por el usuario, muestra el resultado, muestra mensaje de exito y mensaje de error
+ * param operador recibe el primer operador ingresado por el usuario
+ * param resultado puntero del resultado, allí se dejara el resultado de la operacion
+ * param mensaje mensaje a mostrar en caso de que se pudo realizar la operacion
+ * param mensajeError mensaje en caso de error
+ */
+int utn_getFactorial (int operador, double* resultado , char*mensaje, char*mensajeError)
 {
 	int retorno = -1;
-	int bufferResultado = 1;
+	double bufferResultado = 1;
 
 	if(mensaje != NULL && resultado != NULL )
 	{
-		if(operador <= 0 || operador > 10)
+		if(operador <= 0 || operador > 20)
 		{
 			printf("%s",mensajeError);
 			retorno = 1;

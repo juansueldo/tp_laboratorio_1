@@ -48,8 +48,8 @@ int main(void) {
 	int resultadoResta;
 	int resultadoMultiplicacion;
 	float resultadoDivision;
-	int resultadoFactorial1;
-	int resultadoFactorial2;
+	double resultadoFactorial1;
+	double resultadoFactorial2;
 
 
 
@@ -87,9 +87,9 @@ int main(void) {
 
 				multiplicacion = utn_getMultiplicar(operador1, operador2,&resultadoMultiplicacion,"D.Se realizo la multiplicacion\n","\nLos operadores tienen que ser distintos a cero");
 
-				factorial1 = utn_getFactorial(operador1, &resultadoFactorial1,"E.Se realizo el factoreo de A\n","E.El operador A tiene que ser mayor a cero y menor que 10\n");
+				factorial1 = utn_getFactorial(operador1, &resultadoFactorial1,"E.Se realizo el factoreo de A\n","E.El operador A tiene que ser mayor a cero y menor que 20\n");
 
-				factorial2 = utn_getFactorial(operador2, &resultadoFactorial2,"F.Se realizo el factoreo de B\n","F.El operador B tiene que ser mayor a cero y menor que 10\n");
+				factorial2 = utn_getFactorial(operador2, &resultadoFactorial2,"F.Se realizo el factoreo de B\n","F.El operador B tiene que ser mayor a cero y menor que 20\n");
 
 			}
 			break;
@@ -98,7 +98,7 @@ int main(void) {
 			{
 			printf("Debe ingresar al menos un valor para continuar\n");
 			}
-			if(suma != 0 && resta != 0 && division != 0 && multiplicacion != 0 && factorial1 != 0 && factorial2 != 0)
+			if((operador1 != 0 || operador2 != 0) && suma != 0 && resta != 0 && division != 0 && multiplicacion != 0 && factorial1 != 0 && factorial2 != 0)
 			{
 				printf("Antes debe realizar las operaciones.\n");
 			}
@@ -129,7 +129,7 @@ int main(void) {
 
 				if(factorial1 == 0)
 				{
-					printf("E.El resultado del factorial de A es: %d\n",resultadoFactorial1);
+					printf("E.El resultado del factorial de A es: %.0f\n",resultadoFactorial1);
 				}
 				else if(factorial1 == 1)
 				{
@@ -137,7 +137,7 @@ int main(void) {
 				}
 				if(factorial2 == 0)
 				{
-					printf("F.El resultado del factorial de B es: %d\n",resultadoFactorial2);
+					printf("F.El resultado del factorial de B es: %.0f\n",resultadoFactorial2);
 				}
 				else if(factorial2 == 1)
 				{
