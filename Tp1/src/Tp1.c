@@ -89,9 +89,9 @@ int main(void) {
 
 				multiplicacion = utn_getMultiplicar(operador1, operador2,&resultadoMultiplicacion,"D.Se realizo la multiplicacion\n","\nLos operadores tienen que ser distintos a cero");
 
-				factorial1 = utn_getFactorial(operador1, &resultadoFactorial1,"E.Se realizo el factoreo de A\n","E.El operador A tiene que ser mayor a cero y menor que 20\n");
+				factorial1 = utn_getFactorial(operador1, &resultadoFactorial1,"E.Se realizo el factoreo de A\n","E.El operador A tiene que ser mayor a cero, o menor o igual que 170 para realizar el factorial\n");
 
-				factorial2 = utn_getFactorial(operador2, &resultadoFactorial2,"F.Se realizo el factoreo de B\n","F.El operador B tiene que ser mayor a cero y menor que 20\n");
+				factorial2 = utn_getFactorial(operador2, &resultadoFactorial2,"F.Se realizo el factoreo de B\n","F.El operador B tiene que ser mayor a cero, o menor o igual que 170 para realizar el factorial\n");
 
 			}
 			break;
