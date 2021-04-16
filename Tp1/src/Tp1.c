@@ -61,14 +61,16 @@ int main(void) {
 		switch(opcion)
 		{
 		case 1:
-		    printf("\nIngrese el primer operandor:\n");
+		    printf("\nIngrese el primer operador(Debe ser un numero entero):\n");
 		    scanf("%d",&operador1);
+		    utn_validar (operador1, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial");
 		    printf("\nPrimer operandor ingresado es: %d\n",operador1);
 			break;
 
 		case 2:
-			printf("\nIngrese el segundo operandor:\n");
+			printf("\nIngrese el segundo operador(Debe ser un numero entero):\n");
 			scanf("%d",&operador2);
+			utn_validar (operador2, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial");
 			printf("\nSegundo operandor ingresado es: %d\n",operador2);
 			break;
 

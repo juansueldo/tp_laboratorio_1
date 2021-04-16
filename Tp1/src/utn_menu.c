@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*brief Toma la opcion ingresada por el usuario, valida la opcion elegida, pide el ingreso de los operadores por parte del usuario y muestra mensaje en caso de error
- * param opcion toma la opcion ingresada por el usuario
- * param operador1 toma el valor ingresado por el usuario
- * param operador2 toma el valor ingresado por el usuario
- * param mensajeError puntero que muestra el mensaje en caso de error
- * param min el valor minimo que admite el menu
- * param max el valor maximo que admite el menu
- * param salir valor para salir del menu
- */
+
 int utn_mostrarMenu (int* opcion, int operador1, int operador2,char*mensajeError, int min, int max, int salir)
 {
 	int retorno = -1;
@@ -31,5 +23,16 @@ int utn_mostrarMenu (int* opcion, int operador1, int operador2,char*mensajeError
 	}
 
 	return retorno;
+}
+void utn_validar (int operador, int min, int max, char*mensaje, char* mensaje2)
+{
+	if(operador < min)
+	{
+		printf("%s",mensaje);
+	}
+	else if(operador > max)
+	{
+		printf("%s",mensaje2);
+	}
 }
 
