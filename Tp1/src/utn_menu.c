@@ -35,4 +35,26 @@ void utn_validar (int operador, int min, int max, char*mensaje, char* mensaje2)
 		printf("%s",mensaje2);
 	}
 }
+int utn_validarNumero (char auxiliarNum[],int i,int operador,char* mensaje,char*mensajeError)
+ {
 
+    printf("%s",mensaje);
+    scanf("%s",auxiliarNum);
+    operador=atoi(auxiliarNum);
+
+    if(operador!=0)
+        printf("\nPrimer operador ingresado es: %d\n",operador);
+    else
+        printf("No el valor ingresado no es un numero\n");
+    while(operador == 0)
+    {
+      printf("%s",mensajeError);
+      scanf("%s",auxiliarNum);
+      operador=atoi(auxiliarNum);
+     if(operador!=0)
+        printf("\nPrimer operador ingresado es: %d\n",operador);
+    else
+        printf("No el valor ingresado no es un numero\n");
+    }
+    return operador;
+}

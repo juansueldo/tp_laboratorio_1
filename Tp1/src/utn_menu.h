@@ -21,4 +21,13 @@ int utn_mostrarMenu (int* opcion, int operador1, int operador2,char*mensajeError
  *
  */
 void utn_validar (int operador, int min, int max, char*mensaje, char* mensaje2);
+/* @brief Pide el numero al usuario y valida que sea un entero
+ * @param auxiliarNum toma el dato ingresado por el usuario
+ * @param i la cantidad de elementos que caben en auxiliarNum
+ * @param operador variable en la cual se guardara el dato ingresado en caso de ser un numero
+ * @param mensaje que solicita el ingreso de un dato
+ * @param mensajeError en caso de reintento vuelve a pedir el dao
+ * @return retorna el valor del operador entero
+ */
+int utn_validarNumero (char auxiliarNum[],int i,int operador,char* mensaje,char*mensajeError);
 #endif /* UTN_MENU_H_ */

@@ -33,13 +33,16 @@ que contenga las funciones para realizar las cinco operaciones.
 #include "utn_menu.h"
 #include "utn_calculos.h"
 
+#define MAX 10
 int main(void) {
 	system("cls") ;
 	setbuf(stdout, NULL);
 	int menu;
 	int opcion;
+	char auxiliarOperador1[MAX];
+	char auxiliarOperador2[MAX];
 	int operador1 =0;
-	int operador2 =0;
+	int operador2 = 0;
 	int suma;
 	int resta;
 	int multiplicacion;
@@ -61,17 +64,15 @@ int main(void) {
 		switch(opcion)
 		{
 		case 1:
-		    printf("\nIngrese el primer operador(Debe ser un numero entero):\n");
-		    scanf("%d",&operador1);
-		    utn_validar (operador1, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial");
-		    printf("\nPrimer operador ingresado es: %d\n",operador1);
+			operador1 = utn_validarNumero (auxiliarOperador1,MAX,operador1,"\nIngrese el primer operador(Debe ser un numero entero):\n","\nIngrese el primer operador(Debe ser un numero entero):\n");
+		    utn_validar (operador1, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial\n");
+
 			break;
 
 		case 2:
-			printf("\nIngrese el segundo operador(Debe ser un numero entero):\n");
-			scanf("%d",&operador2);
-			utn_validar (operador2, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial");
-			printf("\nSegundo operador ingresado es: %d\n",operador2);
+			operador2 = utn_validarNumero (auxiliarOperador2,MAX,operador2,"\nIngrese el segundo operador(Debe ser un numero entero):\n","\nERROR. Ingrese el segundo operador(Debe ser un numero entero):\n");
+			utn_validar (operador2, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial\n");
+
 			break;
 
 		case 3:
