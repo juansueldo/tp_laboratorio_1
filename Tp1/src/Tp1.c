@@ -55,7 +55,7 @@ int main(void) {
 
 	do
 	{
-		menu = utn_mostrarMenu (&opcion, operador1, operador2,"\nLa opcion no es valida.\n",1,5,5);
+		menu = utn_mostrarMenu (&opcion, operador1, operador2,"\nERROR. La opcion no es valida.\n",1,5,5);
 		if(menu == 0)
 		{
 		switch(opcion)
@@ -64,14 +64,14 @@ int main(void) {
 		    printf("\nIngrese el primer operador(Debe ser un numero entero):\n");
 		    scanf("%d",&operador1);
 		    utn_validar (operador1, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial");
-		    printf("\nPrimer operandor ingresado es: %d\n",operador1);
+		    printf("\nPrimer operador ingresado es: %d\n",operador1);
 			break;
 
 		case 2:
 			printf("\nIngrese el segundo operador(Debe ser un numero entero):\n");
 			scanf("%d",&operador2);
 			utn_validar (operador2, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial");
-			printf("\nSegundo operandor ingresado es: %d\n",operador2);
+			printf("\nSegundo operador ingresado es: %d\n",operador2);
 			break;
 
 		case 3:
@@ -81,13 +81,13 @@ int main(void) {
 			}
 			else
 			{
-				suma = utn_getSuma(operador1, operador2, &resultadoSuma,"\nA.Se realizo la suma\n","\nLos operadores tienen que ser distintos a cero");
+				suma = utn_getSuma(operador1, operador2, &resultadoSuma,"\nA.Se realizo la suma\n","\nA.Los operadores tienen que ser distintos a cero");
 
-				resta = utn_getResta(operador1, operador2, &resultadoResta,"B.Se realizo la resta\n","\nLos operadores tienen que ser distintos a cero");
+				resta = utn_getResta(operador1, operador2, &resultadoResta,"B.Se realizo la resta\n","\nB.Los operadores tienen que ser distintos a cero");
 
 				division = utn_getDividir(operador1, operador2, &resultadoDivision,"C.Se realizo la division\n","C.No es posible dividir por cero\n");
 
-				multiplicacion = utn_getMultiplicar(operador1, operador2,&resultadoMultiplicacion,"D.Se realizo la multiplicacion\n","\nLos operadores tienen que ser distintos a cero");
+				multiplicacion = utn_getMultiplicar(operador1, operador2,&resultadoMultiplicacion,"D.Se realizo la multiplicacion\n","\nD.Los operadores tienen que ser distintos a cero");
 
 				factorial1 = utn_getFactorial(operador1, &resultadoFactorial1,"E.Se realizo el factoreo de A\n","E.El operador A tiene que ser mayor a cero, o menor o igual que 170 para realizar el factorial\n");
 
