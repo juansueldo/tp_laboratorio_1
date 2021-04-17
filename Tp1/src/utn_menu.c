@@ -43,7 +43,7 @@ int utn_validarNumero (char auxiliarNum[],int i,int operador,char* mensaje,char*
     operador=atoi(auxiliarNum);
 
     if(operador!=0)
-        printf("\nPrimer operador ingresado es: %d\n",operador);
+        printf("\nEl operador ingresado es: %d\n",operador);
     else
         printf("No el valor ingresado no es un numero\n");
     while(operador == 0)

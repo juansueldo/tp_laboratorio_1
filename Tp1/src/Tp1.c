@@ -70,7 +70,7 @@ int main(void) {
 			break;
 
 		case 2:
-			operador2 = utn_validarNumero (auxiliarOperador2,MAX,operador2,"\nIngrese el segundo operador(Debe ser un numero entero):\n","\nERROR. Ingrese el segundo operador(Debe ser un numero entero):\n");
+			operador2 = utn_validarNumero (auxiliarOperador2,MAX,operador2,"\nIngrese el segundo operador(Debe ser un numero entero):\n","\nIngrese el segundo operador(Debe ser un numero entero):\n");
 			utn_validar (operador2, 1, 170, "\nEl numero debe ser mayor a 1 para calcular el factorial","\nEl numero debe ser menor o igual a 170 para calcular el factorial\n");
 
 			break;
