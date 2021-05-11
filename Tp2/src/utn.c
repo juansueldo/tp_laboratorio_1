@@ -3,18 +3,27 @@
 #include <stdlib.h>
 #include <string.h>
 
-int utn_getSoloString (char cadena[], int tam)
+int utn_getTexto (char *pData)
 {
-    int i;
-    int rtn = -1;
-    for(i = 0; i < tam; i++)
-    {
-        while(isalpha(cadena[i]) == 1)
-        {
-           rtn = 0;
-        }
-    }
-    return rtn;
+	int rtn = 1;
+	int i;
+	if (strlen(pData) > 0)
+	{
+		for (i = 0; i < strlen(pData); i++)
+		{
+		if (isalpha(pData[i]) == 0)
+		{
+			rtn = 0;
+			break;
+		}
+		}
+	}
+	else
+	{
+		rtn = 1;
+	}
+
+	return rtn;
 }
 int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char max,int intentos)
 {
@@ -78,6 +87,8 @@ int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],ch
 
 		for (i = 0; i < intentos; ++i)
 		{
+			if(utn_getTexto (buffer) != 0)
+			{
 			aux = strlen(buffer);
 
 			if(aux >= min && aux <= tamanio)
@@ -85,6 +96,7 @@ int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],ch
 				strcpy(array,buffer);
 				ret = 0;
 				break;
+			}
 			}
 			else
 			{
@@ -365,21 +377,4 @@ int Validate_OnlyAlphabet(char *pData) {
 	return rtn;
 }
 
-int Validate_OnlyAlphabetWithSpaces(char *pData) {
-	int rtn = 1;
 
-	if (strlen(pData) > 0) {
-		for (int i = 0; i < strlen(pData); i++) {
-			if (isalpha(pData[i]) == 0) {
-				if (isspace(pData[i]) == 0) {
-					rtn = 0;
-					break;
-				}
-			}
-		}
-	} else {
-		rtn = 0;
-	}
-
-	return rtn;
-}

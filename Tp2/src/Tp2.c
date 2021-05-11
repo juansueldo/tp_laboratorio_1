@@ -63,7 +63,7 @@ int main(void) {
 		case 2:
 			if(bufferAlta != 0)
 			{
-				if(modificarEmpleados(empleados, MAX, sector, CANT)==0)
+				if(modificarEmpleados(empleados, MAX, sector, CANT) !=0)
 				{
 					printf("\nSE MODIFICO UN EMPLEADO\n");
 				}

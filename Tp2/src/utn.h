@@ -14,8 +14,9 @@ int utn_menu(int *opcion, char *mensaje, char *mensajeError, int min, int max,in
 int esNumericoFlotante(char str[]);
 int unt_gerRespuesta (char* mensaje,char*mensajeError, int reintentos);
 int esSoloLetras(char str[]);
-int utn_getSoloString (char cadena[], int tam);
+int utn_getTexto (char *pData);
 int utn_getMayusMin (char name[], int tam);
+int utn_getTextoEspacios (char *pData);
 
 
 #endif /* UTN_H_ */
