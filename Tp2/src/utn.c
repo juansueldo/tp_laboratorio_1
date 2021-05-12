@@ -6,24 +6,21 @@
 int utn_getTexto (char *pData)
 {
 	int rtn = 1;
-	int i;
-	if (strlen(pData) > 0)
-	{
-		for (i = 0; i < strlen(pData); i++)
-		{
-		if (isalpha(pData[i]) == 0)
-		{
-			rtn = 0;
-			break;
-		}
-		}
-	}
-	else
-	{
-		rtn = 1;
-	}
 
-	return rtn;
+		if (strlen(pData) > 0) {
+			for (int i = 0; i < strlen(pData); i++) {
+				if (isalpha(pData[i]) == 0) {
+					if (isspace(pData[i]) == 0) {
+						rtn = 0;
+						break;
+					}
+				}
+			}
+		} else {
+			rtn = 0;
+		}
+
+		return rtn;
 }/*
 int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char max,int intentos)
 {
