@@ -254,7 +254,12 @@ int utn_menu(int *opcion, char *mensaje, char *mensajeError, int min, int max,in
 	}
 	return retorno;
 }
-int unt_gerRespuesta (char* mensaje,char*mensajeError, int reintentos)
+int utn_getMinuscula (char* letra)
+{
+	strlwr(letra);
+	return 0;
+}
+int unt_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 {
 	int rtn = -1;
 	char respuesta;
@@ -264,6 +269,7 @@ int unt_gerRespuesta (char* mensaje,char*mensajeError, int reintentos)
 	printf("%s",mensaje);
 	fflush(stdin);
 	scanf("%c",&respuesta);
+	utn_getMinuscula (&respuesta);
 	while(respuesta != 's' && respuesta != 'n')
 	{
 		printf("%s",mensajeError);
@@ -290,6 +296,7 @@ int utn_getMayusMin (char name[], int tam)
 
    return 0;
 }
+
 //*** VALIDACIONES - INICIO
 int Validate_OnlyNumberInt(char *pData) {
 	int rtn = 1;

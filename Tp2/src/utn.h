@@ -12,10 +12,10 @@ int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,in
 int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos);
 int utn_menu(int *opcion, char *mensaje, char *mensajeError, int min, int max,int salir);
 int utn_getIsFloat(char str[]);
-int unt_gerRespuesta (char* mensaje,char*mensajeError, int reintentos);
+int unt_getRespuesta (char* mensaje,char*mensajeError, int reintentos);
 int utn_getTexto (char *pData);
 int utn_getMayusMin (char name[], int tam);
 int utn_getTextoEspacios (char *pData);
-
+int utn_getMinuscula (char letra);
 
 #endif /* UTN_H_ */

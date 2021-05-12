@@ -48,8 +48,8 @@ int main(void) {
 
 	do
 	{
-		printf("\n*************\n");
-		utn_menu(&opcion, "1. Alta \n2. Modificar \n3. Baja \n4. Listar \n5. Salir \n*************\nIngrese:", "\nNO ES VALIDO\n", 1, 5,5);
+		printf("\n*****************************************************************\n");
+		utn_menu(&opcion, "1. Alta \n2. Modificar \n3. Baja \n4. Listar \n5. Salir \n*****************************************************************\nIngrese:", "\nNO ES VALIDO\n", 1, 5,5);
 		switch(opcion)
 		{
 		case 1:
@@ -63,9 +63,13 @@ int main(void) {
 		case 2:
 			if(bufferAlta != 0)
 			{
-				if(modificarEmpleados(empleados, MAX, sector, CANT) !=0)
+				if(modificarEmpleados(empleados, MAX, sector, CANT) ==0)
 				{
 					printf("\nSE MODIFICO UN EMPLEADO\n");
+				}
+				else
+				{
+					printf("\nNO SE REALIZARON CAMBIOS");
 				}
 			}
 
@@ -88,8 +92,8 @@ int main(void) {
 			{
 			do
 			{
-				printf("\n*************\n");
-				utn_menu(&opcion2, "\n1. Listar por orden alfabetico y sector \n2. Promedio de sueldos y listado de quienes superan el promedio \n3. Volver \n*************\n \nIngrese:", "\nNO ES VALIDO\n", 1, 3,3);
+				printf("\n*****************************************************************\n");
+				utn_menu(&opcion2, "\n1. Listar por orden alfabetico y sector \n2. Promedio de sueldos y listado de quienes superan el promedio \n3. Volver \n*****************************************************************\n \nIngrese:", "\nNO ES VALIDO\n", 1, 3,3);
 				switch(opcion2)
 				{
 				case 1:
