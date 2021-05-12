@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX 5
+#define MAX 100
 #define CANT 4
 #define TEXTO 51
 
@@ -26,9 +26,26 @@ typedef struct
 	int isEmpty;
 }eSector;
 
+/*
+ * @brief recibe una estructura y la inicializa
+ * @param arrayEmpleados estructura que incluye los campos empleados
+ * @param tamanio cantidad de elementos
+ * @return retorna cero en caso de exito
+ */
 int initEmployees (eEmployee arrayEmpleados[],int tamanio);
+/*
+ * @brief recibe una estructura y la inicializa
+ * @param arraySector estructura que incluye los sectores
+ * @param tamanio cantidad de elementos
+ * @return retorna cero en caso de exito
+ */
 int initSector (eSector arraySector[],int tamanio);
-
+/*
+ * @brief recorre la estrucutra en busca de un campo libre
+ * @param arrayEmpleados estructura que incluye los campos empleados
+ * @param tamanio cantidad de elementos
+ * @return retorna cero en caso de que el campo esta vacio
+ */
 int buscarLibre(eEmployee arrayEmpleados[],int tamanio);
 int buscarId(eEmployee arrayEmpleados[],int tamanio,int id);
 

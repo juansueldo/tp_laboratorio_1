@@ -13,13 +13,11 @@
 #include "empleados.h"
 #include "utn.h"
 
-#define MAX 5
-#define CANT 4
 
 int main(void) {
 	setbuf(stdout,NULL);
 	int opcion;
-	int bufferAlta = 0;
+	int flagAlta = 0;
 	int opcion2;
 
 
@@ -55,13 +53,13 @@ int main(void) {
 		case 1:
 			if(altaEmpleados (empleados, MAX))
 			{
-				bufferAlta = 1;
+				flagAlta = 1;
 				printf("\nALTA EXITOSA\n");
 			}
 
 			break;
 		case 2:
-			if(bufferAlta != 0)
+			if(flagAlta != 0)
 			{
 				if(modificarEmpleados(empleados, MAX, sector, CANT) ==0)
 				{
@@ -72,10 +70,14 @@ int main(void) {
 					printf("\nNO SE REALIZARON CAMBIOS");
 				}
 			}
+			else
+			{
+				printf("\nNO SE DIO NINGUNA ALTA\n");
+			}
 
 			break;
 		case 3:
-			if(bufferAlta != 0)
+			if(flagAlta != 0)
 			{
 				if(empleadoBaja(empleados, MAX, sector, CANT)==0)
 				{
@@ -86,9 +88,14 @@ int main(void) {
 					printf("\nNO SE DIO DE BAJA\n");
 				}
 			}
+			else
+			{
+				printf("\nNO SE DIO NINGUNA ALTA\n");
+			}
+
 			break;
 		case 4:
-			if(bufferAlta != 0)
+			if(flagAlta != 0)
 			{
 			do
 			{
@@ -111,6 +118,13 @@ int main(void) {
 				}
 			}while(opcion2 != 3);
 			}
+			else
+			{
+				printf("\nNO SE DIO NINGUNA ALTA\n");
+			}
+			break;
+		case 5:
+			printf("\nFin.");
 			break;
 		}
 

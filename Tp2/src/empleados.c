@@ -140,6 +140,7 @@ eEmployee cargarEmpleados (void)
 		{
 			printf("\n Error al ingresar el sector");
 		}
+		auxiliar.id+=1000;
 	return auxiliar;
 }
 int altaEmpleados (eEmployee arrayEmpleados[], int tamanio)
@@ -256,7 +257,8 @@ int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySe
 
 			while (buscarId(arrayEmpleados, tamanio, idGen) == -1)
 			{
-				printf("NO EXISTE ID.");
+				printf("NO EXISTE ID. Reingrese el id a modificar:");
+				scanf("%d",&idGen);
 			}
 
 
@@ -296,11 +298,11 @@ int empleadoBaja (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[]
 
 		while (buscarId(arrayEmpleados, tamanio, idGen) == -1)
 		{
-			printf("NO EXISTE ID.");
-			idGen = 1;
+			printf("NO EXISTE ID. Reingrese el id a dar de baja:");
+			scanf("%d",&idGen);
 		}
 		index = buscarId(arrayEmpleados, tamanio, idGen);
-		if(unt_getRespuesta ("\nDesea dar la baja el empleado? (SI 's' o NO 'n'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
+		if(unt_getRespuesta ("\nDesea dar la baja el empleado? (si 's' o NO 'no'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
 		{
 			arrayEmpleados[index].isEmpty = 1;
 			rtn = 0;
