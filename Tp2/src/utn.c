@@ -24,7 +24,7 @@ int utn_getTexto (char *pData)
 	}
 
 	return rtn;
-}
+}/*
 int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char max,int intentos)
 {
 	int ret = -1;
@@ -61,7 +61,7 @@ int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char ma
 
 	return ret;
 
-}
+}*/
 int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],char min,int intentos)
 {
 	int ret = -1;

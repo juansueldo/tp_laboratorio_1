@@ -56,7 +56,11 @@ int main(void) {
 				flagAlta = 1;
 				printf("\nALTA EXITOSA\n");
 			}
-
+			else
+			{
+				printf("\nNO SE DIO DE ALTA");
+			}
+			system("pause");
 			break;
 		case 2:
 			if(flagAlta != 0)
@@ -74,7 +78,7 @@ int main(void) {
 			{
 				printf("\nNO SE DIO NINGUNA ALTA\n");
 			}
-
+			system("pause");
 			break;
 		case 3:
 			if(flagAlta != 0)
@@ -92,7 +96,7 @@ int main(void) {
 			{
 				printf("\nNO SE DIO NINGUNA ALTA\n");
 			}
-
+			system("pause");
 			break;
 		case 4:
 			if(flagAlta != 0)
@@ -108,12 +112,14 @@ int main(void) {
 					{
 						mostrarEmpleados (empleados, MAX, sector, CANT);
 					}
+					system("pause");
 					break;
 				case 2:
 					if(mostrarEmpleadosProm (empleados, MAX, sector, CANT)==0)
 					{
 
 					}
+					system("pause");
 					break;
 				}
 			}while(opcion2 != 3);
@@ -122,9 +128,11 @@ int main(void) {
 			{
 				printf("\nNO SE DIO NINGUNA ALTA\n");
 			}
+			system("pause");
 			break;
 		case 5:
 			printf("\nFin.");
+			system("pause");
 			break;
 		}
 
