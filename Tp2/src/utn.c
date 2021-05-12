@@ -254,12 +254,12 @@ int utn_menu(int *opcion, char *mensaje, char *mensajeError, int min, int max,in
 	}
 	return retorno;
 }
-int utn_getMinuscula (char* letra)
+int utn_getLower(char* letra)
 {
 	strlwr(letra);
 	return 0;
 }
-int unt_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
+int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 {
 	int rtn = -1;
 	char respuesta;
@@ -269,7 +269,7 @@ int unt_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 	printf("%s",mensaje);
 	fflush(stdin);
 	scanf("%c",&respuesta);
-	utn_getMinuscula (&respuesta);
+	utn_getLower (&respuesta);
 	while(respuesta != 's' && respuesta != 'n')
 	{
 		printf("%s",mensajeError);

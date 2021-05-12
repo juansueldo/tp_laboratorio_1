@@ -268,7 +268,7 @@ int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySe
 			printf("\n*****************************************************************\n");
 			printf("Ingrese:");
 			scanf("%d",&auxMod);
-			if(unt_getRespuesta ("\nDesea modificar el empleado? (SI 's' o NO 'n'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
+			if(utn_getRespuesta ("\nDesea modificar el empleado? (SI 's' o NO 'n'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
 			{
 			auxiliar = modificarUno(arrayEmpleados[index],auxMod);
 			arrayEmpleados[index] = auxiliar;
@@ -302,7 +302,7 @@ int empleadoBaja (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[]
 			scanf("%d",&idGen);
 		}
 		index = buscarId(arrayEmpleados, tamanio, idGen);
-		if(unt_getRespuesta ("\nDesea dar la baja el empleado? (si 's' o NO 'no'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
+		if(utn_getRespuesta ("\nDesea dar la baja el empleado? (si 's' o NO 'no'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
 		{
 			arrayEmpleados[index].isEmpty = 1;
 			rtn = 0;
@@ -316,7 +316,7 @@ int empleadoBaja (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[]
 
 	return rtn;
 }
-int utn_ordenarApellido (eEmployee empleados[], int tamanio)
+int ordenarApellido (eEmployee empleados[], int tamanio)
 {
 	int i;
 	int j;
@@ -349,7 +349,7 @@ int utn_ordenarApellido (eEmployee empleados[], int tamanio)
 	}
 	return rtn;
 }
-void get_promedio (eEmployee empleados[], int tamanio, float* promedio)
+void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
 {
 	int i;
 	float auxPromedio = 0;
@@ -366,8 +366,8 @@ void get_promedio (eEmployee empleados[], int tamanio, float* promedio)
     }
 
     auxPromedio = total/contEmpleados;
-    printf("\nEl total de los sueldos es: %.2f",total);
-    printf("\nEl Promedio es: %.2f\n",auxPromedio);
+    printf("\nEl total de los sueldos ingresados es: %.2f",total);
+    printf("\nEl promedio de los sueldos ingresados es: %.2f\n",auxPromedio);
     *promedio = auxPromedio;
 }
 int mostrarEmpleadosProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
@@ -378,7 +378,7 @@ int mostrarEmpleadosProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySe
 
 	if(arrayEmpleados != NULL && tamanio > 0)
 	{
-		get_promedio (arrayEmpleados, tamanio, &referencia);
+		getPromedio (arrayEmpleados, tamanio, &referencia);
 		printf("\n*****************************************************************************\n");
 		printf("\n ID    NOMBRE      APELLIDO         SUELDO        ID SECTOR        DETALLE ");
 		printf("\n*****************************************************************************\n");

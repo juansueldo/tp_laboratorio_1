@@ -104,7 +104,7 @@ int main(void) {
 				switch(opcion2)
 				{
 				case 1:
-					if(utn_ordenarApellido (empleados, MAX)==0)
+					if(ordenarApellido (empleados, MAX)==0)
 					{
 						mostrarEmpleados (empleados, MAX, sector, CANT);
 					}
