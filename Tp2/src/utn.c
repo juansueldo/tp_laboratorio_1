@@ -62,17 +62,6 @@ int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char ma
 	return ret;
 
 }
-int esSoloLetras(char str[])
-{
-   int i=0;
-   while(str[i] != '\0')
-   {
-       if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
-           return 0;
-       i++;
-   }
-   return 1;
-}
 int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],char min,int intentos)
 {
 	int ret = -1;
@@ -110,7 +99,7 @@ int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],ch
 	}
 	return ret;
 }
-int esNumerica(char* cadena)
+int utn_getIsInt(char* cadena)
 {
 	int i=0;
 	int ret = 1;
@@ -128,7 +117,7 @@ int esNumerica(char* cadena)
 	}
 	return ret;
 }
-int esNumericoFlotante(char str[])
+int utn_getIsFloat(char str[])
 {
    int i=0;
    int cantidadPuntos=0;
@@ -163,13 +152,13 @@ int myGets(char* cadena,int longitud)
 }
 
 
-int getInt(int *pResultado)
+int utn_getEntero(int *pResultado)
 {
 	int ret = -1;
 	char buffer[64];
 	if(pResultado != NULL)
 	{
-		if(myGets(buffer,sizeof(buffer)) == 0 && esNumerica(buffer))
+		if(myGets(buffer,sizeof(buffer)) == 0 && utn_getIsInt(buffer))
 		{
 			*pResultado = atoi(buffer);
 			ret = 0;
@@ -177,13 +166,13 @@ int getInt(int *pResultado)
 	}
 	return ret;
 }
-int getFloat(float *pResultado)
+int utn_getNumFloat(float *pResultado)
 {
 	int ret = -1;
 	char buffer[64];
 	if(pResultado != NULL)
 	{
-		if(myGets(buffer,sizeof(buffer)) == 0 && esNumericoFlotante(buffer))
+		if(myGets(buffer,sizeof(buffer)) == 0 && utn_getIsFloat(buffer))
 		{
 			*pResultado = atof(buffer);
 			ret = 0;
@@ -202,7 +191,7 @@ int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,in
 			reintentos--;
 			printf("\n %s",mensaje);
 			fflush(stdin);
-			if(getInt(&bufferInt) == 0)
+			if(utn_getEntero(&bufferInt) == 0)
 			{
 				if(bufferInt >= minimo && bufferInt <= maximo)
 				{
@@ -230,7 +219,7 @@ int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo
 			reintentos--;
 			printf("\n %s",mensaje);
 			fflush(stdin);
-			if(getFloat(&bufferFloat)==0)
+			if(utn_getNumFloat(&bufferFloat)==0)
 			{
 				if(bufferFloat >= minimo && bufferFloat <= maximo)
 				{
