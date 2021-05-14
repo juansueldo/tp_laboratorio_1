@@ -54,7 +54,7 @@ int buscarLibre(eEmployee arrayEmpleados[],int tamanio);
  * @para id que se ingresa para comprar
  * @return retorna cero en caso de coincidencia
  */
-int buscarId(eEmployee arrayEmpleados[],int tamanio,int id);
+int findEmployeeById(eEmployee arrayEmpleados[],int tamanio,int id);
 /*
  * @brief pide al usuario los datos y los carga en el auxiliar
  * @return auxiliar donde se cargaron los datos ingresados por el usuario
@@ -66,7 +66,7 @@ eEmployee cargarEmpleados (void);
  * @param tamanio cantidad de elementos
  * @return retorna cero en caso de que se cargaran todos los datos
  */
-int altaEmpleados (eEmployee arrayEmpleados[], int tamanio);
+int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado);
 /*
  * @brief pide al usuario los datos y los carga en el auxiliar
  * @return auxiliar donde se cargaron los datos ingresados por el usuario
@@ -113,16 +113,15 @@ int mostrarEmpleados (eEmployee arrayEmpleados[],int tamanio,eSector arraySector
  * @param cant cantidad de elementos
  * @return retorna cero en caso de que haya dado de baja un empleado
  */
-int empleadoBaja(eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant);
+int removeEmployee(eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant);
 /*
- * @brief ordena los empleados ingresados por orden alfabetico de apellido y por sector en caso de coincidencia
+ * @brief de acuerdo al criterio elegido, ordena los empleados ingresados por orden alfabetico de apellido y por sector en caso de coincidencia
  * @param arrayEmpleados estructura que incluye los campos empleados
  * @param tamanio cantidad de elementos
- * @param arraySector estructura que incluye los sectores
- * @param cant cantidad de elementos
+ * @param criterio criterio elegido por el usuario para ordenar
  * @return retorna cero en caso de que el ordenamiento sea exitoso
  */
-int ordenarApellido (eEmployee empleados[], int tamanio);
+int sortEmployees (eEmployee empleados[], int tamanio, int criterio);
 /*
  * @brief obtiene el promedio de los sueldos ingresados por usuario, imprime en pantalla el total de los sueldos y el promedio
  * @param arrayEmpleados estructura que incluye los campos empleados

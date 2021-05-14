@@ -17,8 +17,10 @@
 int main(void) {
 	setbuf(stdout,NULL);
 	int opcion;
+	int contador = 999;
 	int flagAlta = 0;
 	int opcion2;
+	int criterioOrdenamiento;
 
 
 	eEmployee empleados[MAX];
@@ -51,7 +53,7 @@ int main(void) {
 		switch(opcion)
 		{
 		case 1:
-			if(altaEmpleados (empleados, MAX))
+			if(addEmployees (empleados, MAX,&contador))
 			{
 				flagAlta = 1;
 				printf("\nALTA EXITOSA\n");
@@ -83,7 +85,7 @@ int main(void) {
 		case 3:
 			if(flagAlta != 0)
 			{
-				if(empleadoBaja(empleados, MAX, sector, CANT)==0)
+				if(removeEmployee(empleados, MAX, sector, CANT)==0)
 				{
 					printf("\nSE DIO LA BAJA DE UN EMPLEADO\n");
 				}
@@ -108,7 +110,10 @@ int main(void) {
 				switch(opcion2)
 				{
 				case 1:
-					if(ordenarApellido (empleados, MAX)==0)
+					printf("\nIngrese el criterio de ordenamiento [1] Ascendente [2] Descendente: ");
+					fflush(stdin);
+					scanf("%d",&criterioOrdenamiento);
+					if(sortEmployees (empleados, MAX, criterioOrdenamiento )==0)
 					{
 						mostrarEmpleados (empleados, MAX, sector, CANT);
 					}
@@ -132,7 +137,9 @@ int main(void) {
 			break;
 		case 5:
 			printf("\nFin.");
-			system("pause");
+			break;
+		default:
+			("\nERROR. REINGRESE UNA OPCION VALIDA");
 			break;
 		}
 

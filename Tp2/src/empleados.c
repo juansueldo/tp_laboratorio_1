@@ -100,7 +100,7 @@ int buscarLibre (eEmployee arrayEmpleados[],int tamanio)
 	}
 	return ret;
 }
-int buscarId(eEmployee arrayEmpleados[],int tamanio,int id)
+int findEmployeeById(eEmployee arrayEmpleados[],int tamanio,int id)
 {
 	int rtn = -1;
 	int i;
@@ -120,10 +120,6 @@ eEmployee cargarEmpleados (void)
 {
 	eEmployee auxiliar;
 
-		if(utn_getNumero(&auxiliar.id,"\nIngrese el ID del empleado: ","\nError. Ingrese el ID del empleado: ",1,1000,3) != 0)
-		{
-			printf("\n Error al ingresar el ID");
-		}
 		if((utn_getString(auxiliar.name,30,"\nIngrese el nombre del empleado: ","\nError. Ingrese el nombre del empleado: ",3,3)) != 0)
 		{
 			printf("\n Error al ingresar el nombre");
@@ -140,17 +136,17 @@ eEmployee cargarEmpleados (void)
 		{
 			printf("\n Error al ingresar el sector");
 		}
-		auxiliar.id+=1000;
 	return auxiliar;
 }
-int altaEmpleados (eEmployee arrayEmpleados[], int tamanio)
+int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 {
 	int rtn = 0;
 	eEmployee auxiliarEmpleados;
 
 	int index = buscarLibre (arrayEmpleados, tamanio);
 
-	if (index != -1) {
+	if (index != -1)
+	{
 
 		auxiliarEmpleados = cargarEmpleados();
 
@@ -159,6 +155,12 @@ int altaEmpleados (eEmployee arrayEmpleados[], int tamanio)
 		arrayEmpleados[index] = auxiliarEmpleados;
 
 		rtn = 1;
+	}
+	if(rtn == 1)
+	{
+		(*pIdEmpleado)++;
+		auxiliarEmpleados.id = *pIdEmpleado;
+		arrayEmpleados[index] = auxiliarEmpleados;
 	}
 
 	return rtn;
@@ -169,7 +171,7 @@ void mostrarEmpleado (eEmployee arrayEmpleados[],int tamanio,eSector arraySector
 	getNombreSector(arraySector,CANT,arrayEmpleados[tamanio].sector,detalleSector);
 	utn_getMayusMin (arrayEmpleados[tamanio].name, TEXTO);
 	utn_getMayusMin (arrayEmpleados[tamanio].lastName, TEXTO);
-	printf("\n %d     %-5s         %-6s           %-6.2f        %-8d      %s"
+	printf("\n %d     %-5s         %-6s           %-6.2f        %-8d      %s\n"
 			,arrayEmpleados[tamanio].id
 			,arrayEmpleados[tamanio].name
 			,arrayEmpleados[tamanio].lastName
@@ -205,29 +207,29 @@ eEmployee modificarUno(eEmployee arrayEmpleados, int campoModificar)
 			switch (campoModificar)
 			{
 				case 1:
-					if((utn_getString(auxiliar.name,30,"\nIngrese el nombre del empleado: ","\nError. Ingrese el nombre del empleado: ",3,3)) != 0)
+					if((utn_getString(auxiliar.name,30,"\nINGRESE EL NOMBRE DEL EMPLEADO: ","\nERROR. INGRESE EL NOMBRE DEL EMPLEADO:",3,3)) != 0)
 					{
-						printf("\n Error al ingresar el nombre");
+						printf("\nERROR AL INGRESAR EL NOMBRE.");
 					}
 					fflush(stdin);
 					break;
 				case 2:
-					if((utn_getString(auxiliar.lastName,30,"\nIngrese el apellido del empleado: ","\nError. Ingrese el apellido del empleado: ",3,3)) != 0)
+					if((utn_getString(auxiliar.lastName,30,"\nINGRESE EL APELLIDO DEL EMPLEADO: ","\nERROR. INGRESE EL APELLIDO DEL EMPLEADO:  ",3,3)) != 0)
 					{
-						printf("\n Error al ingresar el apellido");
+						printf("\nERROR AL INGRESAR EL APELLIDO");
 					}
 					fflush(stdin);
 					break;
 				case 3:
-					if(utn_getFloat(&auxiliar.salary,"\nIngrese el sueldo del empleado: ","\nError. Ingrese el sueldo del empleado: ",1000,999999,3) != 0)
+					if(utn_getFloat(&auxiliar.salary,"\nINGRESE EL SUELDO DEL EMPLEADO[1000 A 999999.99]: ","\nERROR. INGRESE EL SUELDO DEL EMPLEADO[1000 A 999999.99]: ",1000,999999.99,3) != 0)
 					{
-						printf("\n Error al ingresar el sueldo");
+						printf("\nERROR AL INGRESAR EL SUELDO");
 					}
 					break;
 				case 4:
-					if(utn_getNumero(&auxiliar.sector,"\nIngrese el sector (1. RRHH, 2. Programador, 3. Diseniador, 4. Otros):\n","\nError. Ingrese el sector (1. RRHH, 2. Programador, 3. Diseniador, 4. Otros):\n",1,4,3) != 0)
+					if(utn_getNumero(&auxiliar.sector,"\nINGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR, [3] DISENIADOR [4]. OTROS: ","\nERROR. INGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR, [3] DISENIADOR [4]. OTROS: ",1,4,3) != 0)
 					{
-						printf("\n Error al ingresar el sector");
+						printf("\nERROR AL INGRESAR EL SECTOR");
 					}
 					break;
 					default:
@@ -252,21 +254,21 @@ int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySe
 
 		if (flag) {
 			printf("\n*****************************************************************\n");
-			printf("Ingrese el id del empleado a modificar:");
+			printf("INGRESE EL ID DEL EMPLEADO A MODIFICAR:");
 			scanf("%d",&idGen);
 
-			while (buscarId(arrayEmpleados, tamanio, idGen) == -1)
+			while (findEmployeeById(arrayEmpleados, tamanio, idGen) == -1)
 			{
-				printf("NO EXISTE ID. Reingrese el id a modificar:");
+				printf("NO EXISTE ID. REINGRESE EL ID A MODIFICAR:");
 				scanf("%d",&idGen);
 			}
 
 
-			index = buscarId(arrayEmpleados, tamanio, idGen);
+			index = findEmployeeById(arrayEmpleados, tamanio, idGen);
 			printf("\n*****************************************************************\n");
-			printf("Ingrese el campo a modificar\n1. Nombre \n2. Apellido \n3. Sueldo \n4. Sector");
+			printf("INGRESE EL CAMPO A MODIFICAR\N1. NOMBRE \N2. APELLIDO \N3. SUELDO \N4. SECTOR");
 			printf("\n*****************************************************************\n");
-			printf("Ingrese:");
+			printf("INGRESE:");
 			scanf("%d",&auxMod);
 			if(utn_getRespuesta ("\nDesea modificar el empleado? (SI 's' o NO 'n'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
 			{
@@ -279,7 +281,7 @@ int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySe
 
 		return rtn;
 }
-int empleadoBaja (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant)
+int removeEmployee (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant)
 {
 	int rtn = -1;
 	int idGen;
@@ -296,12 +298,12 @@ int empleadoBaja (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[]
 		printf("\nIngrese el id del empleado a dar de baja:");
 		scanf("%d",&idGen);
 
-		while (buscarId(arrayEmpleados, tamanio, idGen) == -1)
+		while (findEmployeeById(arrayEmpleados, tamanio, idGen) == -1)
 		{
 			printf("NO EXISTE ID. Reingrese el id a dar de baja:");
 			scanf("%d",&idGen);
 		}
-		index = buscarId(arrayEmpleados, tamanio, idGen);
+		index = findEmployeeById(arrayEmpleados, tamanio, idGen);
 		if(utn_getRespuesta ("\nDesea dar la baja el empleado? (si 's' o NO 'no'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
 		{
 			arrayEmpleados[index].isEmpty = 1;
@@ -316,36 +318,67 @@ int empleadoBaja (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[]
 
 	return rtn;
 }
-int ordenarApellido (eEmployee empleados[], int tamanio)
+int sortEmployees (eEmployee empleados[], int tamanio, int criterio)
 {
 	int i;
 	int j;
 	int rtn = -1;
 	eEmployee aux;
+
 	if(empleados != NULL && tamanio > 0)
 	{
-	for(i = 0; i < tamanio -1;i++)
+	switch(criterio)
+	{
+	case 1:
+		for(i = 0; i < tamanio -1;i++)
 		{
 			for(j = i+1; j < tamanio; j++)
 			{
-				if(strcmp(empleados[i].lastName,empleados[j].lastName)>0)
+			if(strcmp(empleados[i].lastName,empleados[j].lastName)>0)
+			{
+				aux = empleados[i];
+				empleados[i] = empleados[j];
+				empleados[j] = aux;
+			}
+			else if(empleados[i].lastName == empleados[j].lastName)
+			{
+				if(empleados[i].sector > empleados[j].sector)
 				{
 					aux = empleados[i];
-					empleados[i] = empleados[j];
+					empleados[i]= empleados[j];
 					empleados[j] = aux;
 				}
-				else if(empleados[i].lastName == empleados[j].lastName)
-				{
-					if(empleados[i].sector > empleados[j].sector)
-					{
-						aux = empleados[i];
-						empleados[i]= empleados[j];
-						empleados[j] = aux;
-					}
-				}
+			}
 			}
 		}
 		rtn = 0;
+		break;
+	case 2:
+		for(i = 0; i < tamanio -1;i++)
+				{
+					for(j = i+1; j < tamanio; j++)
+					{
+					if(strcmp(empleados[i].lastName,empleados[j].lastName)<0)
+					{
+						aux = empleados[i];
+						empleados[i] = empleados[j];
+						empleados[j] = aux;
+					}
+					else if(empleados[i].lastName == empleados[j].lastName)
+					{
+						if(empleados[i].sector < empleados[j].sector)
+						{
+							aux = empleados[i];
+							empleados[i]= empleados[j];
+							empleados[j] = aux;
+						}
+					}
+					}
+				}
+		rtn = 0;
+		break;
+	}
+
 	}
 	return rtn;
 }
