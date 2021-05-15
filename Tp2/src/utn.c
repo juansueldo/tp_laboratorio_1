@@ -71,36 +71,32 @@ int utn_getString(char array[],int max,char mensaje[],char errorMensaje[],char m
 	return rtn;
 }
 
-int utn_getNumero(char num[])
+int myGets ( char * pCadena, int longitud)
 {
-	int i;
-	int rtn = -1;
-    for (i = 0; i < strlen(num); i++)
-    {
-        if(!isdigit(num[i]) )
-        {
-
-            break;
-        }
-        else
-        {
-        	rtn = i;
-        }
-    }
-    return rtn;
+	int rtn=-1;
+	if (pCadena != NULL && longitud >0 && fgets (pCadena,longitud,stdin)==pCadena)
+	{
+		fflush (stdin);
+		if (pCadena[ strlen (pCadena)-1] == '\n' )
+		{
+			pCadena[ strlen (pCadena)-1] = '\0' ;
+		}
+		rtn=0;
+	}
+	return rtn;
 }
 
-int utn_getInt(char* num)
+int esNumerica(char* pNum)
 {
 	int i = 0;
-	int rtn = -1;
-	if(num != NULL && strlen(num) > 0)
+	int rtn = 0;
+	if(pNum != NULL && strlen(pNum) > 0)
 	{
-		while(num[i] != '\0')
+		while(pNum[i] != '\0')
 		{
-			if(num[i] < '0' || num[i] > '9')
+			if(pNum[i] < '0' || pNum[i] > '9')
 			{
-				rtn = 0;
+				rtn = -1;
 				break;
 			}
 			i++;
@@ -109,117 +105,98 @@ int utn_getInt(char* num)
 	return rtn;
 }
 
-int utn_getIsFloat(char str[])
+int getInt ( int * pNum)
+{
+	int rtn=-1;
+	char buffer[64];
+	if (pNum != NULL)
+	{
+		if (myGets(buffer, sizeof (buffer))==0 && esNumerica(buffer)==0)
+		{
+			*pNum = atoi (buffer);
+			 rtn = 0;
+		}
+	}
+	return rtn;
+}
+
+int utn_getNumero(int* pNum,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos)
+{
+	int bufferInt;
+	int rtn = -1;
+	if(pNum != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos > 0)
+	{
+		while(reintentos > 0)
+		{
+			reintentos--;
+			printf("%s",mensaje);
+			fflush(stdin);
+			if(getInt(&bufferInt) == 0)
+			{
+				if(bufferInt >= minimo && bufferInt <= maximo)
+				{
+					*pNum = bufferInt;
+					rtn = 0;
+					break;
+				}
+			}
+			printf("%s",mensajeError);
+		}
+	}
+	return rtn;
+}
+int esFloat (char pNum[])
 {
    int i=0;
+   int rtn = -1;
    int cantidadPuntos=0;
-   while(str[i] != '\0')
+   while(pNum[i] != '\0')
    {
-       if (str[i] == '.' && cantidadPuntos == 0)
+       if (pNum[i] == '.' && cantidadPuntos == 0)
        {
            cantidadPuntos++;
            i++;
            continue;
 
        }
-       if(str[i] < '0' || str[i] > '9')
-           return 0;
+       if(pNum[i] < '0' || pNum[i] > '9')
+    	   rtn = 0;
        i++;
    }
-   return 1;
+   return rtn;
 }
 
-int myGets(char* cadena,int longitud)
+int getNumFloat (float * pFloat)
 {
-	if(cadena != NULL && longitud > 0 && fgets(cadena,longitud,stdin) == cadena)
-	{
-		fflush(stdin);
-		if(cadena[strlen(cadena)-1] == '\n')
-		{
-			cadena[strlen(cadena)-1] = '\0';
-		}
-		return 0;
-	}
-	return -1;
-}
-
-
-int utn_getEntero(int *pResultado)
-{
-	int ret = -1;
+	int rtn = -1;
 	char buffer[64];
-	if(pResultado != NULL)
+	if(pFloat != NULL)
 	{
-		if(myGets(buffer,sizeof(buffer)) == 0 && utn_getIsInt(buffer)!=0)
+		if(myGets(buffer,sizeof(buffer)) == 0 && esFloat(buffer))
 		{
-			*pResultado = atoi(buffer);
-			ret = 0;
+			*pFloat = atof(buffer);
+			rtn = 0;
 		}
 	}
-	return ret;
+	return rtn;
 }
-
-int utn_getNumFloat(float *pResultado)
-{
-	int ret = -1;
-	char buffer[64];
-	if(pResultado != NULL)
-	{
-		if(myGets(buffer,sizeof(buffer)) == 0 && utn_getIsFloat(buffer))
-		{
-			*pResultado = atof(buffer);
-			ret = 0;
-		}
-	}
-	return ret;
-}
-
-int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos)
-{
-	int bufferInt;
-	int ret = -1;
-	if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos > 0)
-	{
-		while(reintentos > 0)
-		{
-			reintentos--;
-			printf("\n %s",mensaje);
-			fflush(stdin);
-			if(utn_getEntero(&bufferInt) == 0)
-			{
-				if(bufferInt >= minimo && bufferInt <= maximo)
-				{
-					*pResultado = bufferInt;
-					ret = 0;
-					break;
-				}
-			}
-			printf("\n %s",mensajeError);
-		}
-	}
-
-
-	return ret;
-
-}
-
-int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos)
+int utn_getFloat(float* pFloat,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos)
 {
 	float bufferFloat;
-	int ret = -1;
-	if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos > 0)
+	int rtn = -1;
+	if(pFloat != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos > 0)
 	{
 		while(reintentos > 0)
 		{
 			reintentos--;
 			printf("\n %s",mensaje);
 			fflush(stdin);
-			if(utn_getNumFloat(&bufferFloat)==0)
+			if(getNumFloat(&bufferFloat)==0)
 			{
 				if(bufferFloat >= minimo && bufferFloat <= maximo)
 				{
-					*pResultado = bufferFloat;
-					ret = 0;
+					*pFloat = bufferFloat;
+					rtn = 0;
 					break;
 				}
 			}
@@ -227,8 +204,7 @@ int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo
 		}
 	}
 
-
-	return ret;
+	return rtn;
 
 }
 int utn_menu(int *pOpcion, char *mensaje, char *mensajeError, int min, int max)
@@ -295,7 +271,6 @@ int utn_getMayusMin (char name[], int tam)
 
    return 0;
 }
-
 
 
 

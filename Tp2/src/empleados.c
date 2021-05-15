@@ -247,6 +247,8 @@ int changeEmployees (eEmployee arrayEmpleados[], int tamanio, eSector arraySecto
 		int auxMod;
 		eEmployee auxiliar;
 
+		if(arrayEmpleados != NULL && arraySector != NULL && tamanio > 0 && cant > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+		{
 		if (printEmployees(arrayEmpleados, tamanio, arraySector, cant) == 0)
 		{
 			flag = 1;
@@ -278,7 +280,11 @@ int changeEmployees (eEmployee arrayEmpleados[], int tamanio, eSector arraySecto
 			}
 
 		}
+		}
+		else
+		{
 
+		}
 		return rtn;
 }
 int removeEmployee (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant)

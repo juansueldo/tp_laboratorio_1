@@ -21,13 +21,61 @@
  * @return retorna cero en caso de que el texto sea valido
  */
 int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],char min,int intentos);
-int utn_getIsInt(char* cadena);
-int myGets(char* cadena,int longitud);
-int utn_getEntero(int *pResultado);
-int utn_getIsFloat(char str[]);
-int utn_getNumFloat(float *pResultado);
-int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos);
-int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos);
+/**
+* @brief Lee de stdin hasta que encuentra un '\n' o hasta que haya copiado en cadena
+* un máximo de ' longitud - 1' caracteres .
+* @param pCadena Puntero al espacio de memoria donde se copiara la cadena obtenida
+* @ param longitud Define el tamaño de cadena
+* @return Retorna cero si se obtiene una cadena y -1 si no
+*
+*/
+int myGets(char* pCadena,int longitud);
+/**
+* @brief Verifica si la cadena ingresada es numerica
+* @param pNum Cadena de caracteres a ser analizada
+* @return Retorna cero si la cadena es numerica y -1  si no lo es
+*/
+int esNumerica(char* pNum);
+/**
+* @brief Verifica si la cadena ingresada es numerica
+* @param pNum Puntero al espacio de memoria donde se dejara el resultado de la funcion
+* @return Retorna cero si se obtiene un numero entero y -1 si no
+*
+*/
+int getInt ( int * pNum);
+/**
+* @brief Verifica si la cadena ingresada es numerica y contiene puntos
+* @param pNum Cadena de caracteres a ser analizada
+* @return Retorna cero si la cadena es numerica y continen puntos y -1  si no lo es
+*/
+int esFloat (char pNum[]);
+/**
+* @brief Verifica si la cadena ingresada es numerica
+* @param pFloat Puntero al espacio de memoria donde se dejara el resultado de la funcion
+* @return Retorna cero si se obtiene un numero flotante y -1 si no
+*
+*/
+int getNumFloat(float * pFloat);
+/**
+* @brief Solicita un numero al usuario , luego de verificarlo devuelve el resultado
+* @param pNum Puntero al espacio de memoria donde se dejara el resultado de la funcion
+* @param mensaje Es el mensaje a ser mostrado
+* @param mensajeError Es el mensaje de Error a ser mostrado
+* @param minimo Es el numero maximo a ser aceptado
+* @param maximo Es el minimo minimo a ser aceptado
+* @return Retorna cero si se obtuvo el numero y -1 si no
+*/
+int utn_getNumero(int* pNum,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos);
+/**
+* @brief Solicita un numero flotante al usuario , luego de verificarlo devuelve el resultado
+* @param pFloat Puntero al espacio de memoria donde se dejara el resultado de la funcion
+* @param mensaje Es el mensaje a ser mostrado
+* @param mensajeError Es el mensaje de Error a ser mostrado
+* @param minimo Es el numero maximo a ser aceptado
+* @param maximo Es el minimo minimo a ser aceptado
+* @return Retorna cero si se obtuvo el numero y -1 si no
+*/
+int utn_getFloat(float* pFloat,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos);
 /*
  * @brief Pide al usuario el ingreso de un numero, y analiza si el numero esta dentro del rango
  * @param pOpcion Numero ingresado por el usuario
@@ -66,12 +114,4 @@ int utn_getMayusMin (char name[], int tam);
  */
 int utn_getLower(char* letra);
 
-/* isdigit
- * utn_getString
- * utn_getFloat
- * utn_getNumero
- * utn_getMayusMin
- * utn_getRespuesta
- *
-*/
 #endif /* UTN_H_ */
