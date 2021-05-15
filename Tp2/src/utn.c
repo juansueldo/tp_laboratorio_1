@@ -11,55 +11,50 @@
  * utn_getRespuesta
  *
 */
-
-/*
- * @brief Comprueba si el dato ingresado y lo valida si es un caracter o espacio
- * @param pDato puntero que toma el dato ingresado
- * @retorno retorna cero en caso de que el dato sea un caracter o espacio
- */
-int utn_getTexto (char *pDato)
+int utn_getTexto (char *pString)
 {
 	int rtn = -1;
 
-		if (strlen(pDato) > 0)
+	if (strlen(pString) > 0)
+	{
+		for (int i = 0; i < strlen(pString); i++)
 		{
-			for (int i = 0; i < strlen(pDato); i++)
+			if (isalpha(pString[i]) == 0)
 			{
-				if (isalpha(pDato[i]) == 0)
+				if (isspace(pString[i]) == 0)
 				{
-					if (isspace(pDato[i]) == 0)
-					{
-						rtn = 0;
-						break;
-					}
+					rtn = 0;
+					break;
 				}
 			}
 		}
+	}
 
 	return rtn;
 }
-int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],char min,int intentos)
+
+int utn_getString(char array[],int max,char mensaje[],char errorMensaje[],char min,int intentos)
 {
-	int ret = -1;
+	int rtn = -1;
 	int aux;
-	char buffer[tamanio];
+	char bufferString[max];
 	int i;
-	if(array != NULL && tamanio > 0 &&  mensaje != NULL && errorMensaje != NULL &&  min <= tamanio && intentos >= 0 )
+	if(array != NULL && max > 0 &&  mensaje != NULL && errorMensaje != NULL &&  min <= max && intentos >= 0 )
 	{
 		printf("\n%s",mensaje);
 		fflush(stdin);
-		scanf("%s",buffer);
+		scanf("%s",bufferString);
 
 		for (i = 0; i < intentos; ++i)
 		{
-			if(utn_getTexto (buffer) != 0)
+			if(utn_getTexto (bufferString) != 0)
 			{
-			aux = strlen(buffer);
+			aux = strlen(bufferString);
 
-			if(aux >= min && aux <= tamanio)
+			if(aux >= min && aux <= max)
 			{
-				strcpy(array,buffer);
-				ret = 0;
+				strcpy(array,bufferString);
+				rtn = 0;
 				break;
 			}
 			}
@@ -67,32 +62,53 @@ int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],ch
 			{
 				printf("\n %s",errorMensaje);
 				fflush(stdin);
-				scanf("%s",buffer);
+				scanf("%s",bufferString);
 
 			}
 
 		}
 	}
-	return ret;
+	return rtn;
 }
-int utn_getIsInt(char* cadena)
+
+int utn_getNumero(char num[])
 {
-	int i=0;
-	int ret = 1;
-	if(cadena != NULL && strlen(cadena) > 0)
+	int i;
+	int rtn = -1;
+    for (i = 0; i < strlen(num); i++)
+    {
+        if(!isdigit(num[i]) )
+        {
+
+            break;
+        }
+        else
+        {
+        	rtn = i;
+        }
+    }
+    return rtn;
+}
+
+int utn_getInt(char* num)
+{
+	int i = 0;
+	int rtn = -1;
+	if(num != NULL && strlen(num) > 0)
 	{
-		while(cadena[i] != '\0')
+		while(num[i] != '\0')
 		{
-			if(cadena[i] < '0' || cadena[i] > '9')
+			if(num[i] < '0' || num[i] > '9')
 			{
-				ret = 0;
+				rtn = 0;
 				break;
 			}
 			i++;
 		}
 	}
-	return ret;
+	return rtn;
 }
+
 int utn_getIsFloat(char str[])
 {
    int i=0;
@@ -134,7 +150,7 @@ int utn_getEntero(int *pResultado)
 	char buffer[64];
 	if(pResultado != NULL)
 	{
-		if(myGets(buffer,sizeof(buffer)) == 0 && utn_getIsInt(buffer))
+		if(myGets(buffer,sizeof(buffer)) == 0 && utn_getIsInt(buffer)!=0)
 		{
 			*pResultado = atoi(buffer);
 			ret = 0;
@@ -142,6 +158,7 @@ int utn_getEntero(int *pResultado)
 	}
 	return ret;
 }
+
 int utn_getNumFloat(float *pResultado)
 {
 	int ret = -1;
@@ -156,6 +173,7 @@ int utn_getNumFloat(float *pResultado)
 	}
 	return ret;
 }
+
 int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos)
 {
 	int bufferInt;
@@ -184,6 +202,7 @@ int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,in
 	return ret;
 
 }
+
 int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos)
 {
 	float bufferFloat;
@@ -212,23 +231,27 @@ int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo
 	return ret;
 
 }
-int utn_menu(int *opcion, char *mensaje, char *mensajeError, int min, int max,int salir)
+int utn_menu(int *pOpcion, char *mensaje, char *mensajeError, int min, int max)
 {
 
-	int retorno = -1;
+	int rtn = -1;
 	int bufferMenu;
-	if (mensaje != NULL && mensajeError != NULL && min <= max && salir != 0) {
+	if (mensaje != NULL && mensajeError != NULL && min <= max)
+	{
 		printf("%s", mensaje);
 		scanf("%d", &bufferMenu);
 
-		if (bufferMenu >= min && bufferMenu <= max) {
-			*opcion = bufferMenu;
-			retorno = 0;
-		} else {
+		if (bufferMenu >= min && bufferMenu <= max)
+		{
+			*pOpcion = bufferMenu;
+			rtn = 0;
+		}
+		else
+		{
 			printf("%s", mensajeError);
 		}
 	}
-	return retorno;
+	return rtn;
 }
 int utn_getLower(char* letra)
 {
@@ -273,80 +296,6 @@ int utn_getMayusMin (char name[], int tam)
    return 0;
 }
 
-//*** VALIDACIONES - INICIO
-int Validate_OnlyNumberInt(char *pDato) {
-	int rtn = 1;
 
-	if (strlen(pDato) > 0) {
-		for (int i = 0; i < strlen(pDato); i++) {
-			if (isdigit(pDato[i]) == 0) {
-				if (i == 0) {
-					if (pDato[0] != '-') {
-						rtn = 0;
-						break;
-					}
-				} else {
-					rtn = 0;
-					break;
-				}
-			}
-		}
-	} else {
-		rtn = 0;
-	}
-
-	return rtn;
-}
-
-int Validate_OnlyNumberFloat(char *pDato) {
-	int countSigno = 0;
-	int rtn = 1;
-
-	if (strlen(pDato) > 0) {
-		for (int i = 0; i < strlen(pDato); i++) {
-
-			if (pDato[i] == '.' || pDato[i] == ',') {
-				countSigno++;
-			} else {
-				if (isdigit(pDato[i]) == 0) {
-					if (i == 0) {
-						if (pDato[0] != '-') {
-							rtn = 0;
-							break;
-						}
-					} else {
-						rtn = 0;
-						break;
-					}
-				}
-			}
-		}
-
-		if (countSigno > 1) {
-			rtn = 0;
-		}
-	} else {
-		rtn = 0;
-	}
-
-	return rtn;
-}
-
-int Validate_OnlyAlphabet(char *pDato) {
-	int rtn = 1;
-
-	if (strlen(pDato) > 0) {
-		for (int i = 0; i < strlen(pDato); i++) {
-			if (isalpha(pDato[i]) == 0) {
-				rtn = 0;
-				break;
-			}
-		}
-	} else {
-		rtn = 0;
-	}
-
-	return rtn;
-}
 
 

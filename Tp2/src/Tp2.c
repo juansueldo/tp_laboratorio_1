@@ -49,7 +49,7 @@ int main(void) {
 	do
 	{
 		printf("\n*****************************************************************\n");
-		utn_menu(&opcion, "1. ALTA \n2. MODIFICAR \n3. BAJA \n4. LISTAR \n5. SALIR \n*****************************************************************\nIngrese:", "\nNO ES VALIDO\n", 1, 5,5);
+		utn_menu(&opcion, "1. ALTA \n2. MODIFICAR \n3. BAJA \n4. LISTAR \n5. SALIR \n*****************************************************************\nIngrese:", "\nNO ES VALIDO\n", 1, 5);
 		switch(opcion)
 		{
 		case 1:
@@ -106,7 +106,7 @@ int main(void) {
 			do
 			{
 				printf("\n*****************************************************************\n");
-				utn_menu(&opcion2, "\n1. LISTAR POR ORDEN ALFABETICO Y SECTOR \n2. Promedio de sueldos y listado de quienes superan el promedio \n3. Volver \n*****************************************************************\n \nIngrese:", "\nNO ES VALIDO\n", 1, 3,3);
+				utn_menu(&opcion2, "\n1. LISTAR POR ORDEN ALFABETICO Y SECTOR \n2. PROMEDIO DE SUELDOS Y LISTADO DE QUIENES SUPERAN EL PROMEDIO \n3. VOLVER \n*****************************************************************\n \nIngrese:", "\nNO ES VALIDO\n", 1, 3);
 				switch(opcion2)
 				{
 				case 1:
@@ -127,7 +127,7 @@ int main(void) {
 					system("pause");
 					break;
 				}
-			}while(opcion2 != 3);
+			} while(opcion2 != 3);
 			}
 			else
 			{
