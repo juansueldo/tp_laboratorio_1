@@ -185,7 +185,7 @@ int printEmployees (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[]
 	int i;
 	int ret;
 	ret = -1;
-	if(arrayEmpleados != NULL && tamanio > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+	if(arrayEmpleados != NULL && tamanio > 0 && arraySector != NULL && cant > 0)
 	{
 		printf("\n*****************************************************************************\n");
 		printf("\n ID    NOMBRE      APELLIDO         SUELDO        ID SECTOR        DETALLE ");
@@ -242,13 +242,13 @@ eEmployee changeEmployee(eEmployee arrayEmpleados, int campoModificar)
 int changeEmployees (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant)
 {
 		int rtn = -1;
-		int idGen;
+		int idEmpleado;
 		int index;
 		int flag = 0;
 		int auxMod;
 		eEmployee auxiliar;
 
-		if(arrayEmpleados != NULL && arraySector != NULL && tamanio > 0 && cant > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+		if(arrayEmpleados != NULL && arraySector != NULL && tamanio > 0 && cant > 0)
 		{
 		if (printEmployees(arrayEmpleados, tamanio, arraySector, cant) == 0)
 		{
@@ -258,16 +258,16 @@ int changeEmployees (eEmployee arrayEmpleados[], int tamanio, eSector arraySecto
 		if (flag) {
 			printf("\n*****************************************************************\n");
 			printf("INGRESE EL ID DEL EMPLEADO A MODIFICAR:");
-			scanf("%d",&idGen);
+			scanf("%d",&idEmpleado);
 
-			while (findEmployeeById(arrayEmpleados, tamanio, idGen) == -1)
+			while (findEmployeeById(arrayEmpleados, tamanio, idEmpleado) == -1)
 			{
 				printf("NO EXISTE ID. REINGRESE EL ID A MODIFICAR:");
-				scanf("%d",&idGen);
+				scanf("%d",&idEmpleado);
 			}
 
 
-			index = findEmployeeById(arrayEmpleados, tamanio, idGen);
+			index = findEmployeeById(arrayEmpleados, tamanio, idEmpleado);
 			printf("\n*****************************************************************\n");
 			printf("INGRESE EL CAMPO A MODIFICAR\n1. NOMBRE \n2. APELLIDO \n3. SUELDO \n4. SECTOR");
 			printf("\n*****************************************************************\n");
@@ -294,7 +294,7 @@ int removeEmployee (eEmployee arrayEmpleados[], int tamanio, eSector arraySector
 	int idGen;
 	int index;
 	int flag = 0;
-	if(arrayEmpleados != NULL && arraySector != NULL && tamanio > 0 && cant > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+	if(arrayEmpleados != NULL && arraySector != NULL && tamanio > 0 && cant > 0)
 	{
 	if (printEmployees(arrayEmpleados, tamanio, arraySector, cant) == 0)
 	{
@@ -337,7 +337,7 @@ int sortEmployees (eEmployee arrayEmpleados[], int tamanio, int criterio)
 	int rtn = -1;
 	eEmployee aux;
 
-	if(arrayEmpleados != NULL && tamanio > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+	if(arrayEmpleados != NULL && tamanio > 0 )
 	{
 	switch(criterio)
 	{
@@ -400,7 +400,7 @@ void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
 	float auxPromedio = 0;
 	float total = 0;
 	int contEmpleados = 0;
-	if(empleados != NULL && tamanio > 0 && promedio != NULL && empleados[tamanio].isEmpty == 0)
+	if(empleados != NULL && tamanio > 0 && promedio != NULL )
 	{
     for (i=0; i<tamanio; i++)
     {
@@ -420,10 +420,10 @@ void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
 int printEmployeesProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
 {
 	int i;
-	int ret = -1;
+	int rtn = -1;
 	float referencia;
 
-	if(arrayEmpleados != NULL && tamanio > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+	if(arrayEmpleados != NULL && tamanio > 0 && arraySector != NULL && cant > 0)
 	{
 		getPromedio (arrayEmpleados, tamanio, &referencia);
 		printf("\n*****************************************************************************\n");
@@ -434,12 +434,12 @@ int printEmployeesProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySect
 			if(arrayEmpleados[i].isEmpty == 0 && arrayEmpleados[i].salary >= referencia)
 			{
 				printEmployee(arrayEmpleados,i,arraySector,cant);
-				ret = 0;
+				rtn = 0;
 			}
 		}
 
 	}
-	return ret;
+	return rtn;
 }
 
 

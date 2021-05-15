@@ -56,11 +56,11 @@ int main(void) {
 			if(addEmployees (empleados, MAX,&contador))
 			{
 				flagAlta = 1;
-				printf("\nALTA EXITOSA\n");
+				printf("\nALTA EXITOSA\n\n");
 			}
 			else
 			{
-				printf("\nNO SE DIO DE ALTA");
+				printf("\nNO SE DIO DE ALTA\n\n");
 			}
 			system("pause");
 			break;
@@ -69,16 +69,16 @@ int main(void) {
 			{
 				if(changeEmployees(empleados, MAX, sector, CANT) ==0)
 				{
-					printf("\nSE MODIFICO UN EMPLEADO\n");
+					printf("\nSE MODIFICO UN EMPLEADO\n\n");
 				}
 				else
 				{
-					printf("\nNO SE REALIZARON CAMBIOS");
+					printf("\nNO SE REALIZARON CAMBIOS\n\n");
 				}
 			}
 			else
 			{
-				printf("\nNO SE DIO NINGUNA ALTA\n");
+				printf("\nNO SE DIO NINGUNA ALTA\n\n");
 			}
 			system("pause");
 			break;
@@ -87,16 +87,16 @@ int main(void) {
 			{
 				if(removeEmployee(empleados, MAX, sector, CANT)==0)
 				{
-					printf("\nSE DIO LA BAJA DE UN EMPLEADO\n");
+					printf("\nSE DIO LA BAJA DE UN EMPLEADO\n\n");
 				}
 				else
 				{
-					printf("\nNO SE DIO DE BAJA\n");
+					printf("\nNO SE DIO DE BAJA\n\n");
 				}
 			}
 			else
 			{
-				printf("\nNO SE DIO NINGUNA ALTA\n");
+				printf("\nNO SE DIO NINGUNA ALTA\n\n");
 			}
 			system("pause");
 			break;
@@ -122,7 +122,7 @@ int main(void) {
 				case 2:
 					if(printEmployeesProm (empleados, MAX, sector, CANT)==0)
 					{
-
+						printf("\n");
 					}
 					system("pause");
 					break;
@@ -131,7 +131,7 @@ int main(void) {
 			}
 			else
 			{
-				printf("\nNO SE DIO NINGUNA ALTA\n");
+				printf("\nNO SE DIO NINGUNA ALTA\n\n");
 			}
 			system("pause");
 			break;

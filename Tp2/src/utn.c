@@ -3,14 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* isdigit
- * utn_getString
- * utn_getFloat
- * utn_getNumero
- * utn_getMayusMin
- * utn_getRespuesta
- *
-*/
+
 int utn_getTexto (char *pString)
 {
 	int rtn = -1;
