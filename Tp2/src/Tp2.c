@@ -49,7 +49,7 @@ int main(void) {
 	do
 	{
 		printf("\n*****************************************************************\n");
-		utn_menu(&opcion, "1. Alta \n2. Modificar \n3. Baja \n4. Listar \n5. Salir \n*****************************************************************\nIngrese:", "\nNO ES VALIDO\n", 1, 5,5);
+		utn_menu(&opcion, "1. ALTA \n2. MODIFICAR \n3. BAJA \n4. LISTAR \n5. SALIR \n*****************************************************************\nIngrese:", "\nNO ES VALIDO\n", 1, 5,5);
 		switch(opcion)
 		{
 		case 1:
@@ -67,7 +67,7 @@ int main(void) {
 		case 2:
 			if(flagAlta != 0)
 			{
-				if(modificarEmpleados(empleados, MAX, sector, CANT) ==0)
+				if(changeEmployees(empleados, MAX, sector, CANT) ==0)
 				{
 					printf("\nSE MODIFICO UN EMPLEADO\n");
 				}
@@ -106,21 +106,21 @@ int main(void) {
 			do
 			{
 				printf("\n*****************************************************************\n");
-				utn_menu(&opcion2, "\n1. Listar por orden alfabetico y sector \n2. Promedio de sueldos y listado de quienes superan el promedio \n3. Volver \n*****************************************************************\n \nIngrese:", "\nNO ES VALIDO\n", 1, 3,3);
+				utn_menu(&opcion2, "\n1. LISTAR POR ORDEN ALFABETICO Y SECTOR \n2. Promedio de sueldos y listado de quienes superan el promedio \n3. Volver \n*****************************************************************\n \nIngrese:", "\nNO ES VALIDO\n", 1, 3,3);
 				switch(opcion2)
 				{
 				case 1:
-					printf("\nIngrese el criterio de ordenamiento [1] Ascendente [2] Descendente: ");
+					printf("\nINGRESE EL CRITERIO DE ORDENAMIENTO [1] ASCENDENTE [2] DESCENDENTE: ");
 					fflush(stdin);
 					scanf("%d",&criterioOrdenamiento);
 					if(sortEmployees (empleados, MAX, criterioOrdenamiento )==0)
 					{
-						mostrarEmpleados (empleados, MAX, sector, CANT);
+						printEmployees (empleados, MAX, sector, CANT);
 					}
 					system("pause");
 					break;
 				case 2:
-					if(mostrarEmpleadosProm (empleados, MAX, sector, CANT)==0)
+					if(printEmployeesProm (empleados, MAX, sector, CANT)==0)
 					{
 
 					}
@@ -139,7 +139,6 @@ int main(void) {
 			printf("\nFin.");
 			break;
 		default:
-			("\nERROR. REINGRESE UNA OPCION VALIDA");
 			break;
 		}
 

@@ -25,4 +25,12 @@ int utn_getMayusMin (char name[], int tam);
 int utn_getTextoEspacios (char *pData);
 int utn_getLower(char* letra);
 
+/* isdigit
+ * utn_getString
+ * utn_getFloat
+ * utn_getNumero
+ * utn_getMayusMin
+ * utn_getRespuesta
+ *
+*/
 #endif /* UTN_H_ */

@@ -40,7 +40,7 @@ int initSector (eSector arraySector[],int tamanio)
 	}
 	return ret;
 }
-int getNombreSector (eSector arraySector[],int cant,int sector,char detalleSector[20])
+int getNameSector (eSector arraySector[],int cant,int sector,char detalleSector[20])
 {
 	int ret;
 	ret = -1;
@@ -59,19 +59,19 @@ int getNombreSector (eSector arraySector[],int cant,int sector,char detalleSecto
 				}
 				if(arraySector[i].sector== 2)
 				{
-					strcpy(detalleSector,"Programador");
+					strcpy(detalleSector,"PROGRAMADOR");
 				ret = 0;
 				break;
 				}
 				if(arraySector[i].sector== 3)
 				{
-				strcpy(detalleSector,"Diseniador");
+				strcpy(detalleSector,"DISENIADOR");
 				ret = 0;
 				break;
 				}
 				if(arraySector[i].sector== 4)
 				{
-					strcpy(detalleSector,"Otros");
+					strcpy(detalleSector,"OTROS");
 				ret = 0;
 				break;
 				}
@@ -82,7 +82,7 @@ int getNombreSector (eSector arraySector[],int cant,int sector,char detalleSecto
 	return ret;
 }
 
-int buscarLibre (eEmployee arrayEmpleados[],int tamanio)
+int findEmpty (eEmployee arrayEmpleados[],int tamanio)
 {
 	int ret;
 	int i;
@@ -116,25 +116,25 @@ int findEmployeeById(eEmployee arrayEmpleados[],int tamanio,int id)
 
 	return rtn;
 }
-eEmployee cargarEmpleados (void)
+eEmployee addEmployee (void)
 {
 	eEmployee auxiliar;
 
-		if((utn_getString(auxiliar.name,30,"\nIngrese el nombre del empleado: ","\nError. Ingrese el nombre del empleado: ",3,3)) != 0)
+		if((utn_getString(auxiliar.name,30,"\nINGRESE EL NOMBRE DEL EMPLEADO: ","\nERROR. INGRESE EL NOMBRE DEL EMPLEADO: ",3,3)) != 0)
 		{
-			printf("\n Error al ingresar el nombre");
+			printf("\nERROR AL INGRESAR EL NOMBRE.");
 		}
-		if((utn_getString(auxiliar.lastName,30,"\nIngrese el apellido del empleado: ","\nError. Ingrese el apellido del empleado: ",3,3)) != 0)
+		if((utn_getString(auxiliar.lastName,30,"\nINGRESE EL APELLIDO DEL EMPLEADO: ","\nERROR. INGRESE EL APELLIDO DEL EMPLEADO:  ",3,3)) != 0)
 		{
-			printf("\n Error al ingresar el apellido");
+			printf("\nERROR AL INGRESAR EL APELLIDO");
 		}
-		if(utn_getFloat(&auxiliar.salary,"\nIngrese el sueldo del empleado: ","\nError. Ingrese el sueldo del empleado: ",1000,999999,3) != 0)
+		if(utn_getFloat(&auxiliar.salary,"\nINGRESE EL SUELDO DEL EMPLEADO[1000 A 999999.99]: ","\nERROR. INGRESE EL SUELDO DEL EMPLEADO[1000 A 999999.99]: ",1000,999999,3) != 0)
 		{
-			printf("\n Error al ingresar el sueldo");
+			printf("\nERROR AL INGRESAR EL SUELDO");
 		}
-		if(utn_getNumero(&auxiliar.sector,"\nIngrese el sector (1. RRHH, 2. Programador, 3. Diseniador, 4. Otros): ","\nError. Ingrese el sector (1. RRHH, 2. Programador, 3. Diseniador, 4. Otros): ",1,4,3) != 0)
+		if(utn_getNumero(&auxiliar.sector,"\nINGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR [3] DISENIADOR [4] OTROS: ","\nERROR. INGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR [3] DISENIADOR [4] OTROS: ",1,4,3) != 0)
 		{
-			printf("\n Error al ingresar el sector");
+			printf("\nERROR AL INGRESAR EL SECTOR");
 		}
 	return auxiliar;
 }
@@ -143,12 +143,12 @@ int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 	int rtn = 0;
 	eEmployee auxiliarEmpleados;
 
-	int index = buscarLibre (arrayEmpleados, tamanio);
+	int index = findEmpty (arrayEmpleados, tamanio);
 
 	if (index != -1)
 	{
 
-		auxiliarEmpleados = cargarEmpleados();
+		auxiliarEmpleados = addEmployee();
 
 		auxiliarEmpleados.isEmpty = 0;
 
@@ -165,10 +165,10 @@ int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 
 	return rtn;
 }
-void mostrarEmpleado (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[],int cant)
+void printEmployee (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[],int cant)
 {
 	char detalleSector[20];
-	getNombreSector(arraySector,CANT,arrayEmpleados[tamanio].sector,detalleSector);
+	getNameSector(arraySector,CANT,arrayEmpleados[tamanio].sector,detalleSector);
 	utn_getMayusMin (arrayEmpleados[tamanio].name, TEXTO);
 	utn_getMayusMin (arrayEmpleados[tamanio].lastName, TEXTO);
 	printf("\n %d     %-5s         %-6s           %-6.2f        %-8d      %s\n"
@@ -179,7 +179,7 @@ void mostrarEmpleado (eEmployee arrayEmpleados[],int tamanio,eSector arraySector
 			,arrayEmpleados[tamanio].sector
 			,detalleSector);
 }
-int mostrarEmpleados (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
+int printEmployees (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
 {
 	int i;
 	int ret;
@@ -194,20 +194,20 @@ int mostrarEmpleados (eEmployee arrayEmpleados[],int tamanio,eSector arraySector
 
 			if(arrayEmpleados[i].isEmpty == 0)
 			{
-				mostrarEmpleado(arrayEmpleados,i,arraySector,cant);
+				printEmployee(arrayEmpleados,i,arraySector,cant);
 			}
 		}
 		ret = 0;
 	}
 	return ret;
 }
-eEmployee modificarUno(eEmployee arrayEmpleados, int campoModificar)
+eEmployee changeEmployee(eEmployee arrayEmpleados, int campoModificar)
 {
 	eEmployee auxiliar = arrayEmpleados;
 			switch (campoModificar)
 			{
 				case 1:
-					if((utn_getString(auxiliar.name,30,"\nINGRESE EL NOMBRE DEL EMPLEADO: ","\nERROR. INGRESE EL NOMBRE DEL EMPLEADO:",3,3)) != 0)
+					if((utn_getString(auxiliar.name,30,"\nINGRESE EL NOMBRE DEL EMPLEADO: ","\nERROR. INGRESE EL NOMBRE DEL EMPLEADO: ",3,3)) != 0)
 					{
 						printf("\nERROR AL INGRESAR EL NOMBRE.");
 					}
@@ -227,7 +227,7 @@ eEmployee modificarUno(eEmployee arrayEmpleados, int campoModificar)
 					}
 					break;
 				case 4:
-					if(utn_getNumero(&auxiliar.sector,"\nINGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR, [3] DISENIADOR [4]. OTROS: ","\nERROR. INGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR, [3] DISENIADOR [4]. OTROS: ",1,4,3) != 0)
+					if(utn_getNumero(&auxiliar.sector,"\nINGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR [3] DISENIADOR [4] OTROS: ","\nERROR. INGRESE EL SECTOR [1] RRHH [2] PROGRAMADOR [3] DISENIADOR [4] OTROS: ",1,4,3) != 0)
 					{
 						printf("\nERROR AL INGRESAR EL SECTOR");
 					}
@@ -238,7 +238,7 @@ eEmployee modificarUno(eEmployee arrayEmpleados, int campoModificar)
 
 	return auxiliar;
 }
-int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant)
+int changeEmployees (eEmployee arrayEmpleados[], int tamanio, eSector arraySector[], int cant)
 {
 		int rtn = -1;
 		int idGen;
@@ -247,7 +247,7 @@ int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySe
 		int auxMod;
 		eEmployee auxiliar;
 
-		if (mostrarEmpleados(arrayEmpleados, tamanio, arraySector, cant) == 0)
+		if (printEmployees(arrayEmpleados, tamanio, arraySector, cant) == 0)
 		{
 			flag = 1;
 		}
@@ -266,13 +266,13 @@ int modificarEmpleados (eEmployee arrayEmpleados[], int tamanio, eSector arraySe
 
 			index = findEmployeeById(arrayEmpleados, tamanio, idGen);
 			printf("\n*****************************************************************\n");
-			printf("INGRESE EL CAMPO A MODIFICAR\N1. NOMBRE \N2. APELLIDO \N3. SUELDO \N4. SECTOR");
+			printf("INGRESE EL CAMPO A MODIFICAR\n1. NOMBRE \n2. APELLIDO \n3. SUELDO \n4. SECTOR");
 			printf("\n*****************************************************************\n");
 			printf("INGRESE:");
 			scanf("%d",&auxMod);
-			if(utn_getRespuesta ("\nDesea modificar el empleado? (SI 's' o NO 'n'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
+			if(utn_getRespuesta ("\nDESEA DAR LA MODICAR EL EMPLEADO? [S] SI [N] NO: ","\nERROR. DESEA DAR LA MODICAR EL EMPLEADO? [S] SI [N] NO:", 3)==0)
 			{
-			auxiliar = modificarUno(arrayEmpleados[index],auxMod);
+			auxiliar = changeEmployee(arrayEmpleados[index],auxMod);
 			arrayEmpleados[index] = auxiliar;
 			rtn = 0;
 			}
@@ -288,23 +288,23 @@ int removeEmployee (eEmployee arrayEmpleados[], int tamanio, eSector arraySector
 	int index;
 	int flag = 0;
 
-	if (mostrarEmpleados(arrayEmpleados, tamanio, arraySector, cant) == 0)
+	if (printEmployees(arrayEmpleados, tamanio, arraySector, cant) == 0)
 	{
 		flag = 1;
 	}
 
 	if (flag) {
 		printf("\n*****************************************************************\n");
-		printf("\nIngrese el id del empleado a dar de baja:");
+		printf("\nINGRESE EL ID A DAR DE BAJA: ");
 		scanf("%d",&idGen);
 
 		while (findEmployeeById(arrayEmpleados, tamanio, idGen) == -1)
 		{
-			printf("NO EXISTE ID. Reingrese el id a dar de baja:");
+			printf("NO EXISTE ID. REINGRESE EL ID A DAR DE BAJA: ");
 			scanf("%d",&idGen);
 		}
 		index = findEmployeeById(arrayEmpleados, tamanio, idGen);
-		if(utn_getRespuesta ("\nDesea dar la baja el empleado? (si 's' o NO 'no'): ","\nError. Ingrese (SI 's' o NO 'n')", 3)==0)
+		if(utn_getRespuesta ("\nDESEA DAR LA BAJA EL EMPLEADO? [S] SI [N] NO: ","\nERROR. DESEA DAR LA BAJA EL EMPLEADO? [S] SI [N] NO: ", 3)==0)
 		{
 			arrayEmpleados[index].isEmpty = 1;
 			rtn = 0;
@@ -334,7 +334,7 @@ int sortEmployees (eEmployee empleados[], int tamanio, int criterio)
 		{
 			for(j = i+1; j < tamanio; j++)
 			{
-			if(strcmp(empleados[i].lastName,empleados[j].lastName)>0)
+			if((strcmp(empleados[i].lastName,empleados[j].lastName))>0)
 			{
 				aux = empleados[i];
 				empleados[i] = empleados[j];
@@ -358,7 +358,7 @@ int sortEmployees (eEmployee empleados[], int tamanio, int criterio)
 				{
 					for(j = i+1; j < tamanio; j++)
 					{
-					if(strcmp(empleados[i].lastName,empleados[j].lastName)<0)
+					if((strcmp(empleados[i].lastName,empleados[j].lastName))<0)
 					{
 						aux = empleados[i];
 						empleados[i] = empleados[j];
@@ -399,11 +399,11 @@ void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
     }
 
     auxPromedio = total/contEmpleados;
-    printf("\nEl total de los sueldos ingresados es: %.2f",total);
-    printf("\nEl promedio de los sueldos ingresados es: %.2f\n",auxPromedio);
+    printf("\nLA SUMA TOTAL DE LOS SUELDOS INGRESADOS ES: %.2f",total);
+    printf("\nEL PROMEDIO DE LOS SUELDOS INGRESADOS ES: %.2f\n",auxPromedio);
     *promedio = auxPromedio;
 }
-int mostrarEmpleadosProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
+int printEmployeesProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
 {
 	int i;
 	int ret = -1;
@@ -419,7 +419,7 @@ int mostrarEmpleadosProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySe
 		{
 			if(arrayEmpleados[i].isEmpty == 0 && arrayEmpleados[i].salary >= referencia)
 			{
-				mostrarEmpleado(arrayEmpleados,i,arraySector,cant);
+				printEmployee(arrayEmpleados,i,arraySector,cant);
 				ret = 0;
 			}
 		}

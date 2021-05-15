@@ -3,62 +3,41 @@
 #include <stdlib.h>
 #include <string.h>
 
-int utn_getTexto (char *pData)
-{
-	int rtn = 1;
+/* isdigit
+ * utn_getString
+ * utn_getFloat
+ * utn_getNumero
+ * utn_getMayusMin
+ * utn_getRespuesta
+ *
+*/
 
-		if (strlen(pData) > 0) {
-			for (int i = 0; i < strlen(pData); i++) {
-				if (isalpha(pData[i]) == 0) {
-					if (isspace(pData[i]) == 0) {
+/*
+ * @brief Comprueba si el dato ingresado y lo valida si es un caracter o espacio
+ * @param pDato puntero que toma el dato ingresado
+ * @retorno retorna cero en caso de que el dato sea un caracter o espacio
+ */
+int utn_getTexto (char *pDato)
+{
+	int rtn = -1;
+
+		if (strlen(pDato) > 0)
+		{
+			for (int i = 0; i < strlen(pDato); i++)
+			{
+				if (isalpha(pDato[i]) == 0)
+				{
+					if (isspace(pDato[i]) == 0)
+					{
 						rtn = 0;
 						break;
 					}
 				}
 			}
-		} else {
-			rtn = 0;
 		}
 
-		return rtn;
-}/*
-int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char max,int intentos)
-{
-	int ret = -1;
-	char aux;
-	char buffer;
-	int i;
-	if(caracter != NULL &&  mensaje != NULL && errorMensaje != NULL &&  min <= max && intentos >= 0 )
-	{
-
-		printf("\n %s",mensaje);
-		fflush(stdin);
-		scanf("%c",&buffer);
-		for (i = 0; i < intentos; ++i)
-		{
-			aux = isdigit(buffer);
-			if(buffer >= min && buffer <= max && aux == 0)
-			{
-
-				*caracter = buffer;
-				ret = 0;
-				break;
-			}
-			else
-			{
-				printf("\n %s",errorMensaje);
-				fflush(stdin);
-				scanf("\n %c",&buffer);
-
-			}
-
-		}
-
-	}
-
-	return ret;
-
-}*/
+	return rtn;
+}
 int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],char min,int intentos)
 {
 	int ret = -1;
@@ -69,7 +48,7 @@ int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],ch
 	{
 		printf("\n%s",mensaje);
 		fflush(stdin);
-		gets(buffer);
+		scanf("%s",buffer);
 
 		for (i = 0; i < intentos; ++i)
 		{
@@ -88,7 +67,7 @@ int utn_getString(char array[],int tamanio,char mensaje[],char errorMensaje[],ch
 			{
 				printf("\n %s",errorMensaje);
 				fflush(stdin);
-				gets(buffer);
+				scanf("%s",buffer);
 
 			}
 
@@ -263,24 +242,24 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 	while(reintentos > 0)
 	{
 		reintentos--;
-	printf("%s",mensaje);
-	fflush(stdin);
-	scanf("%c",&respuesta);
-	utn_getLower (&respuesta);
-	while(respuesta != 's' && respuesta != 'n')
-	{
-		printf("%s",mensajeError);
-	}
-	if(respuesta == 's')
-	{
-		rtn = 0;
-		break;
-	}
-	else if(respuesta == 'n')
-	{
-		rtn = -1;
-		break;
-	}
+		printf("%s",mensaje);
+		fflush(stdin);
+		scanf("%c",&respuesta);
+		utn_getLower (&respuesta);
+		while(respuesta != 's' && respuesta != 'n')
+		{
+			printf("%s",mensajeError);
+		}
+		if(respuesta == 's')
+		{
+			rtn = 0;
+			break;
+		}
+		else if(respuesta == 'n')
+		{
+			rtn = -1;
+			break;
+		}
 	}
 	return rtn;
 }
@@ -295,14 +274,14 @@ int utn_getMayusMin (char name[], int tam)
 }
 
 //*** VALIDACIONES - INICIO
-int Validate_OnlyNumberInt(char *pData) {
+int Validate_OnlyNumberInt(char *pDato) {
 	int rtn = 1;
 
-	if (strlen(pData) > 0) {
-		for (int i = 0; i < strlen(pData); i++) {
-			if (isdigit(pData[i]) == 0) {
+	if (strlen(pDato) > 0) {
+		for (int i = 0; i < strlen(pDato); i++) {
+			if (isdigit(pDato[i]) == 0) {
 				if (i == 0) {
-					if (pData[0] != '-') {
+					if (pDato[0] != '-') {
 						rtn = 0;
 						break;
 					}
@@ -319,19 +298,19 @@ int Validate_OnlyNumberInt(char *pData) {
 	return rtn;
 }
 
-int Validate_OnlyNumberFloat(char *pData) {
+int Validate_OnlyNumberFloat(char *pDato) {
 	int countSigno = 0;
 	int rtn = 1;
 
-	if (strlen(pData) > 0) {
-		for (int i = 0; i < strlen(pData); i++) {
+	if (strlen(pDato) > 0) {
+		for (int i = 0; i < strlen(pDato); i++) {
 
-			if (pData[i] == '.' || pData[i] == ',') {
+			if (pDato[i] == '.' || pDato[i] == ',') {
 				countSigno++;
 			} else {
-				if (isdigit(pData[i]) == 0) {
+				if (isdigit(pDato[i]) == 0) {
 					if (i == 0) {
-						if (pData[0] != '-') {
+						if (pDato[0] != '-') {
 							rtn = 0;
 							break;
 						}
@@ -353,12 +332,12 @@ int Validate_OnlyNumberFloat(char *pData) {
 	return rtn;
 }
 
-int Validate_OnlyAlphabet(char *pData) {
+int Validate_OnlyAlphabet(char *pDato) {
 	int rtn = 1;
 
-	if (strlen(pData) > 0) {
-		for (int i = 0; i < strlen(pData); i++) {
-			if (isalpha(pData[i]) == 0) {
+	if (strlen(pDato) > 0) {
+		for (int i = 0; i < strlen(pDato); i++) {
+			if (isalpha(pDato[i]) == 0) {
 				rtn = 0;
 				break;
 			}
