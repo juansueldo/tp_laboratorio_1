@@ -16,7 +16,7 @@ int initEmployees (eEmployee arrayEmpleados[],int tamanio)
 			strcpy(arrayEmpleados[i].lastName," ");
 			arrayEmpleados[i].salary = 0;
 			arrayEmpleados[i].sector = 0;
-			arrayEmpleados[i].isEmpty=1;
+			arrayEmpleados[i].isEmpty = 1;
 		}
 		ret = 0;
 	}
@@ -142,7 +142,8 @@ int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 {
 	int rtn = 0;
 	eEmployee auxiliarEmpleados;
-
+	if(arrayEmpleados != NULL && tamanio > 0 && pIdEmpleado != NULL)
+	{
 	int index = findEmpty (arrayEmpleados, tamanio);
 
 	if (index != -1)
@@ -162,7 +163,7 @@ int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 		auxiliarEmpleados.id = *pIdEmpleado;
 		arrayEmpleados[index] = auxiliarEmpleados;
 	}
-
+	}
 	return rtn;
 }
 void printEmployee (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[],int cant)
@@ -184,7 +185,7 @@ int printEmployees (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[]
 	int i;
 	int ret;
 	ret = -1;
-	if(arrayEmpleados != NULL && tamanio > 0)
+	if(arrayEmpleados != NULL && tamanio > 0 && arrayEmpleados[tamanio].isEmpty == 0)
 	{
 		printf("\n*****************************************************************************\n");
 		printf("\n ID    NOMBRE      APELLIDO         SUELDO        ID SECTOR        DETALLE ");
@@ -283,7 +284,7 @@ int changeEmployees (eEmployee arrayEmpleados[], int tamanio, eSector arraySecto
 		}
 		else
 		{
-
+			printf("\nPRIMERO SE DEBE DAR DE ALTA");
 		}
 		return rtn;
 }
@@ -293,13 +294,15 @@ int removeEmployee (eEmployee arrayEmpleados[], int tamanio, eSector arraySector
 	int idGen;
 	int index;
 	int flag = 0;
-
+	if(arrayEmpleados != NULL && arraySector != NULL && tamanio > 0 && cant > 0 && arrayEmpleados[tamanio].isEmpty == 0)
+	{
 	if (printEmployees(arrayEmpleados, tamanio, arraySector, cant) == 0)
 	{
 		flag = 1;
 	}
 
-	if (flag) {
+	if (flag)
+	{
 		printf("\n*****************************************************************\n");
 		printf("\nINGRESE EL ID A DAR DE BAJA: ");
 		scanf("%d",&idGen);
@@ -319,19 +322,22 @@ int removeEmployee (eEmployee arrayEmpleados[], int tamanio, eSector arraySector
 		{
 			rtn = -1;
 		}
-
 	}
-
+	}
+	else
+	{
+		printf("\nPRIMERO SE DEBE DAR DE ALTA");
+	}
 	return rtn;
 }
-int sortEmployees (eEmployee empleados[], int tamanio, int criterio)
+int sortEmployees (eEmployee arrayEmpleados[], int tamanio, int criterio)
 {
 	int i;
 	int j;
 	int rtn = -1;
 	eEmployee aux;
 
-	if(empleados != NULL && tamanio > 0)
+	if(arrayEmpleados != NULL && tamanio > 0 && arrayEmpleados[tamanio].isEmpty == 0)
 	{
 	switch(criterio)
 	{
@@ -340,19 +346,19 @@ int sortEmployees (eEmployee empleados[], int tamanio, int criterio)
 		{
 			for(j = i+1; j < tamanio; j++)
 			{
-			if((strcmp(empleados[i].lastName,empleados[j].lastName))>0)
+			if((strcmp(arrayEmpleados[i].lastName,arrayEmpleados[j].lastName))>0)
 			{
-				aux = empleados[i];
-				empleados[i] = empleados[j];
-				empleados[j] = aux;
+				aux = arrayEmpleados[i];
+				arrayEmpleados[i] = arrayEmpleados[j];
+				arrayEmpleados[j] = aux;
 			}
-			else if(empleados[i].lastName == empleados[j].lastName)
+			else if(arrayEmpleados[i].lastName == arrayEmpleados[j].lastName)
 			{
-				if(empleados[i].sector > empleados[j].sector)
+				if(arrayEmpleados[i].sector > arrayEmpleados[j].sector)
 				{
-					aux = empleados[i];
-					empleados[i]= empleados[j];
-					empleados[j] = aux;
+					aux = arrayEmpleados[i];
+					arrayEmpleados[i]= arrayEmpleados[j];
+					arrayEmpleados[j] = aux;
 				}
 			}
 			}
@@ -364,19 +370,19 @@ int sortEmployees (eEmployee empleados[], int tamanio, int criterio)
 				{
 					for(j = i+1; j < tamanio; j++)
 					{
-					if((strcmp(empleados[i].lastName,empleados[j].lastName))<0)
+					if((strcmp(arrayEmpleados[i].lastName,arrayEmpleados[j].lastName))<0)
 					{
-						aux = empleados[i];
-						empleados[i] = empleados[j];
-						empleados[j] = aux;
+						aux = arrayEmpleados[i];
+						arrayEmpleados[i] = arrayEmpleados[j];
+						arrayEmpleados[j] = aux;
 					}
-					else if(empleados[i].lastName == empleados[j].lastName)
+					else if(arrayEmpleados[i].lastName == arrayEmpleados[j].lastName)
 					{
-						if(empleados[i].sector < empleados[j].sector)
+						if(arrayEmpleados[i].sector < arrayEmpleados[j].sector)
 						{
-							aux = empleados[i];
-							empleados[i]= empleados[j];
-							empleados[j] = aux;
+							aux = arrayEmpleados[i];
+							arrayEmpleados[i]= arrayEmpleados[j];
+							arrayEmpleados[j] = aux;
 						}
 					}
 					}
@@ -394,7 +400,8 @@ void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
 	float auxPromedio = 0;
 	float total = 0;
 	int contEmpleados = 0;
-
+	if(empleados != NULL && tamanio > 0 && promedio != NULL && empleados[tamanio].isEmpty == 0)
+	{
     for (i=0; i<tamanio; i++)
     {
         total+= empleados[i].salary;
@@ -408,6 +415,7 @@ void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
     printf("\nLA SUMA TOTAL DE LOS SUELDOS INGRESADOS ES: %.2f",total);
     printf("\nEL PROMEDIO DE LOS SUELDOS INGRESADOS ES: %.2f\n",auxPromedio);
     *promedio = auxPromedio;
+	}
 }
 int printEmployeesProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySector[], int cant)
 {
@@ -415,7 +423,7 @@ int printEmployeesProm (eEmployee arrayEmpleados[],int tamanio,eSector arraySect
 	int ret = -1;
 	float referencia;
 
-	if(arrayEmpleados != NULL && tamanio > 0)
+	if(arrayEmpleados != NULL && tamanio > 0 && arrayEmpleados[tamanio].isEmpty == 0)
 	{
 		getPromedio (arrayEmpleados, tamanio, &referencia);
 		printf("\n*****************************************************************************\n");
