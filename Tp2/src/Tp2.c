@@ -124,6 +124,10 @@ int main(void) {
 					{
 						printf("\n");
 					}
+					else
+					{
+						printf("\nNo sueldos que superen el promedio");
+					}
 					system("pause");
 					break;
 				}

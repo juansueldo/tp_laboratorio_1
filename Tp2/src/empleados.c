@@ -404,9 +404,10 @@ void getPromedio (eEmployee empleados[], int tamanio, float* promedio)
 	{
     for (i=0; i<tamanio; i++)
     {
-        total+= empleados[i].salary;
+
         if(empleados[i].isEmpty == 0)
         {
+        	total+= empleados[i].salary;
         	contEmpleados++;
         }
     }
