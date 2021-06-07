@@ -60,27 +60,5 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-    int retorno = -1;
-    Employee auxStatic;
-    Employee* auxDinamic = NULL;
-
-    if(pFile != NULL && pArrayListEmployee != NULL)
-    {
-        while(!feof(pFile))
-        {
-            if(fread((Employee*)&auxStatic, sizeof(Employee), 1, pFile) == 1)
-            {
-                auxDinamic = employee_newParametrosInt (auxStatic.id, auxStatic.nombre, auxStatic.horasTrabajadas, auxStatic.sueldo);
-
-                if(auxDinamic != NULL
-                   && ll_len(pArrayListEmployee) < 1500
-                   && ll_add(pArrayListEmployee, (Employee*)auxDinamic) == 0)
-                {
-                	retorno = 0;
-                }
-            }
-        }
-    }
-
-    return retorno;
+	return 1;
 }

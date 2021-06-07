@@ -206,65 +206,6 @@ Employee addEmployee (void)
 
 	return auxiliar;
 }
-int employee_print(Employee* this)
-{
-    int retorno = -1;
-    int id;
-    char nombre[30];
-    int horasTrabajadas;
-    int sueldo;
-
-    if(this != NULL
-       && employee_getId(this, &id)
-       && employee_getNombre(this, nombre)
-       && employee_getHorasTrabajadas(this, &horasTrabajadas)
-       && employee_getSueldo(this, &sueldo))
-    {
-    	utn_getLower(nombre);
-        printf("|*******|**********************|*******|============|\n");
-        printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
-        printf("|*******|**********************|*******|============|\n");
-        printf("| %5d | %20s | %5d | %10d |\n",id, nombre, horasTrabajadas, sueldo);
-
-        printf("+-------+----------------------+-------+------------+\n");
-
-        retorno = 0;
-    }
-
-    return retorno;
-}
-Employee employee_change (Employee* this, int opcion)
-{
-	Employee* pAuxEmployee = this;
-
-	switch(opcion)
-	{
-	case 1: /**< Editar el Nombre. >*/
-		if(utn_getString(pAuxEmployee->nombre, 50, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3)
-				&& employee_setNombre(pAuxEmployee, pAuxEmployee->nombre))
-		{
-        //printf("Nombre cambiado, elija la opcion %d para aplicarlo.\n", MENU_EDIT_MAX);
-		}
-    break;
-	case 2: /**< Editar las Horas Trabajadas. >*/
-    if(!utn_getNumero(&pAuxEmployee->horasTrabajadas, "Ingrese las horas trabajadas: ", "\nERROR", 1, 1000,3)
-       && employee_setHorasTrabajadas(pAuxEmployee, pAuxEmployee->horasTrabajadas))
-    {
-        //printf("Horas Trabajadas cambiadas, elija la opcion %d para aplicarlo.\n", MENU_EDIT_MAX);
-    }
-    break;
-	case 3: /**< Editar el Salario. >*/
-    if(!utn_getNumero(&pAuxEmployee->sueldo, "Ingrese el nuevo sueldo: ", "\nERROR", 1, 1000000,3)
-       && employee_setSueldo(pAuxEmployee, pAuxEmployee->sueldo))
-    {
-        //printf("Salario cambiado, elija la opcion %d para aplicarlo.\n", MENU_EDIT_MAX);
-    }
-    break;
-	}
-
-	return *pAuxEmployee;
-
-}
 /*
 int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 {
@@ -290,32 +231,3 @@ int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
 	return rtn;
 }
 */
-int getIndexByEmployeeID(LinkedList* pArrayListEmployee, int id)
-{
-    int returnValue = -1;
-    int arrayLength;
-    int i;
-    Employee* aux;
-
-    if(pArrayListEmployee != NULL)
-    {
-        arrayLength = ll_len(pArrayListEmployee);
-
-        if(arrayLength > 0)
-        {
-            for(i = 0; i < arrayLength; i++)
-            {
-                aux = ll_get(pArrayListEmployee, i);
-
-                if(aux != NULL
-                   && aux->id == id)
-                {
-                    returnValue = i;
-                    break;
-                }
-            }
-        }
-    }
-
-    return returnValue;
-}

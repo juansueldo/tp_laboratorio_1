@@ -31,6 +31,7 @@ int utn_getString(char array[],int max,char mensaje[],char errorMensaje[],char m
 	int rtn = -1;
 	int aux;
 	char bufferString[max];
+	int i;
 	if(array != NULL && max > 0 &&  mensaje != NULL && errorMensaje != NULL &&  min <= max && intentos >= 0 )
 	{
 		while(intentos > 0)

@@ -24,13 +24,15 @@
 int main()
 {
 	system("cls");
-	setbuf(stdout, NULL);
+	setbuf(stdout,NULL);
     int option = 0;
     int len;
+    int lenBin;
     LinkedList* listaEmpleados = ll_newLinkedList();
-    menu_principal (&option);
-    do{
 
+    do{
+    	menu_principal (&option);
+    	fflush(stdin);
         switch(option)
         {
             case 1:
@@ -46,11 +48,24 @@ int main()
                 system("pause");
                 break;
             case 2:
+            	lenBin = controller_loadFromBinary("data.bin",listaEmpleados);
+            	if(lenBin == 0)
+            	{
+            	   printf("\nSE LEYERON LOS DATOS");
+            	}
+            	else
+            	{
+            		printf("\nNO SE LEYERON LOS DATOS");
+            	}
+            	system("pause");
             	break;
             case 3:
             	controller_addEmployee(listaEmpleados);
+            	system("pause");
             	break;
             case 4:
+            	controller_editEmployee(listaEmpleados);
+            	system("pause");
                 break;
             case 5:
                 break;

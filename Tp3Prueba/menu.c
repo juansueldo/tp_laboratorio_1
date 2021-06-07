@@ -19,17 +19,3 @@ void menu_principal (int *opcion)
     printf(" |***********************************************************************************|\n\n");
 	utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 10, 3);
 }
-void menu_editarEmpleado (int *opcion)
-{
-	printf("\n ");
-	printf("\n |***********************************************************************************|\n");
-	printf(" |                                  MENU EDCION                                      |\n");
-	printf(" |***********************************************************************************|\n");
-	printf(" |  [1] Editar nombre.                                                               |\n");
-	printf(" |  [2] Editar horas trabajadas.                                                     |\n");
-	printf(" |  [3] Editar sueldo.                                                               |\n");
-	printf(" |  [4] Volver atras.                                                                |\n");
-	printf(" |***********************************************************************************|\n\n");
-utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 4, 3);
-
-}

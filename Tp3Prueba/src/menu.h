@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 void menu_principal (int *opcion);
-void menu_editarEmpleado (int *opcion);
 
 
 #endif /* MENU_H_ */

@@ -35,7 +35,4 @@ int employee_getSueldo(Employee* this,int* sueldo);
 void mostrarEmpleados(Employee* this, int len);
 int employee_getNextId(LinkedList* pArrayListEmployee);
 Employee addEmployee (void);
-int employee_print(Employee* this);
-int getIndexByEmployeeID(LinkedList* pArrayListEmployee, int id);
-Employee employee_change (Employee* this, int opcion);
 #endif // employee_H_INCLUDED
