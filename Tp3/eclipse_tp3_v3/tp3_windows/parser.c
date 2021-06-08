@@ -69,8 +69,8 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
         {
             if(fread((Employee*)&auxStatic, sizeof(Employee), 1, pFile) == 1)
             {
-                auxDinamic = employee_newParametrosInt (auxStatic.id, auxStatic.nombre, auxStatic.horasTrabajadas, auxStatic.sueldo);
-
+                auxDinamic = employee_newParametrosInt (&auxStatic.id, auxStatic.nombre, &auxStatic.horasTrabajadas, &auxStatic.sueldo);
+                printf(" %5d   %10s   %20d  %8d\n\n", auxStatic.id, auxStatic.nombre, auxStatic.horasTrabajadas, auxStatic.sueldo);
                 if(auxDinamic != NULL
                    && ll_len(pArrayListEmployee) < 1500
                    && ll_add(pArrayListEmployee, (Employee*)auxDinamic) == 0)

@@ -48,7 +48,7 @@ int main()
                 //system("pause");
                 break;
             case 2:
-            	lenBin = controller_loadFromBinary("data.bin",listaEmpleados);
+            	lenBin = controller_loadFromBinary("Prueba.bin",listaEmpleados);
             	if(lenBin == 0)
             	{
             	   printf("\nSE LEYERON LOS DATOS\n");
