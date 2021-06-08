@@ -74,9 +74,10 @@ int main()
             case 7:
                break;
             case 8:
-            	controller_ListEmployee(listaEmpleados);
+            	controller_saveAsText("Prueba.csv",listaEmpleados);
                break;
             case 9:
+            	controller_saveAsBinary("Prueba.bin" , listaEmpleados);
                break;
             case 10:
             	printf("\nFIN");

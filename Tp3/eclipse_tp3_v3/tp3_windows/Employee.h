@@ -7,7 +7,10 @@
 #include "LinkedList.h"
 #include "utn.h"
 
-#define NOMBRE_LEN 30
+#define EMPLOYEE_NOMBRE_MAX 60
+#define EMPLOYEE_HORA_MAX 500
+#define EMPLOYEE_SUELDO_MAX 900000
+#define EMPLOYEE_MAX 2000
 typedef struct
 {
     int id;

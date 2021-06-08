@@ -25,7 +25,11 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
         if(file != NULL)
         {
         	verificar = parser_EmployeeFromText(file, pArrayListEmployee);
-        	retorno = 0;
+        	if(verificar ==0)
+        	{
+        		retorno = 0;
+        	}
+
         }
     }
 
@@ -71,20 +75,23 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
     int id;
-    Employee* pAuxEmployee = NULL;
+    int horasTrabajadas;
+    int sueldo;
+    char nombre[EMPLOYEE_NOMBRE_MAX];
+    Employee* aux = NULL;
 
     if(pArrayListEmployee != NULL)
     {
         id = employee_getNextId(pArrayListEmployee);
-
-        if(id != -1)
+        if(id != -1
+           && !utn_getString(nombre, EMPLOYEE_NOMBRE_MAX,"\nINGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR", 1, 3)
+           && !utn_getNumero(&horasTrabajadas, "\nINGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 0, EMPLOYEE_HORA_MAX, 3)
+           && !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR", 0, EMPLOYEE_SUELDO_MAX, 3))
         {
-        	Employee auxiliar = addEmployee ();
-        	utn_getMayusMin(auxiliar.nombre,50);
+            utn_getLower(nombre);
+        	aux = employee_newParametrosInt(&id, nombre, &horasTrabajadas, &sueldo);
 
-            pAuxEmployee = employee_newParametrosInt(&id, auxiliar.nombre, &auxiliar.horasTrabajadas, &auxiliar.sueldo);
-
-            if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
+            if(aux != NULL && ll_add(pArrayListEmployee, (Employee*)aux) == 0)
             {
                 retorno = 0;
             }
@@ -93,6 +100,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
     return retorno;
 }
+
 
 /** \brief Modificar datos de empleado
  *
@@ -103,7 +111,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
-    int returnValue = 0;
+    int retorno = 0;
     int id;
     int max;
     int index;
@@ -171,7 +179,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
                                   // && inputs_userResponse("Acepta la modificacion? [S] o [N]: ")
                                    && ll_set(pArrayListEmployee, index, (Employee*)pEditEmployee) == 0)
                                 {
-                                    returnValue = 1;
+                                    retorno = 1;
                                 }
                             }
 
@@ -189,7 +197,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
         }
     }
 
-    return returnValue;
+    return retorno;
 }
 
 /** \brief Baja de empleado
@@ -239,7 +247,43 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
-    return 1;
+    FILE* file = NULL;
+    int retorno = -1;
+    int employeeQTY;
+    int i;
+    Employee* aux;
+
+    if(pArrayListEmployee != NULL)
+    {
+        employeeQTY = ll_len(pArrayListEmployee);
+
+        file = fopen(path, "w");
+
+        if(file != NULL
+           && employeeQTY > 0 && employeeQTY <= EMPLOYEE_MAX
+           && fprintf(file, "id,nombre,horasTrabajadas,sueldo\n") != -1)
+        {
+            for(i = 0; i < employeeQTY; i++)
+            {
+                aux = (Employee*)ll_get(pArrayListEmployee, i);
+
+                if(aux == NULL
+                   || fprintf(file, "%d,%s,%d,%d\n", aux->id, aux->nombre, aux->horasTrabajadas, aux->sueldo) == -1)
+                {
+                    break;
+                }
+            }
+        }
+
+        if(i > 0 && i == employeeQTY)
+        {
+        	retorno = 0;
+        }
+    }
+
+    fclose(file);
+
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
@@ -251,6 +295,40 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
-    return 1;
+    FILE* file = NULL;
+    int returnValue = 0;
+    int employeeQTY;
+    int i;
+    Employee* aux;
+
+    if(pArrayListEmployee != NULL)
+    {
+        employeeQTY = ll_len(pArrayListEmployee);
+
+        file = fopen(path, "wb");
+
+        if(file != NULL && employeeQTY > 0 && employeeQTY <= EMPLOYEE_MAX)
+        {
+            for(i = 0; i < employeeQTY; i++)
+            {
+                aux = (Employee*)ll_get(pArrayListEmployee, i);
+
+                if(aux == NULL
+                   || fwrite((Employee*)aux, sizeof(Employee), 1, file) != 1)
+                {
+                    break;
+                }
+            }
+        }
+
+        if(i > 0 && i == employeeQTY)
+        {
+            returnValue = 1;
+        }
+    }
+
+    fclose(file);
+
+    return returnValue;
 }
 
