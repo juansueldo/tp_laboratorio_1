@@ -1,7 +1,8 @@
 #include "menu.h"
 
-void menu_principal (int *opcion)
+int menu_principal (int* opcion)
 {
+	int retorno = -1;
 	printf("\n ");
     printf("\n |***********************************************************************************|\n");
     printf(" |                                  MENU PRINCIPAL                                   |\n");
@@ -17,7 +18,11 @@ void menu_principal (int *opcion)
     printf(" |  [9] Guardar los datos de los Empleados en el archivo data.bin (modo binario).    |\n");
     printf(" | [10] Salir del programa                                                           |\n");
     printf(" |***********************************************************************************|\n\n");
-	utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 10, 3);
+	if(utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 10, 3)==0)
+	{
+		retorno = 0;
+	}
+	return retorno;
 }
 void menu_editarEmpleado (int *opcion)
 {

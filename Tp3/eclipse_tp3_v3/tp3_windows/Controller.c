@@ -14,56 +14,22 @@
  */
 int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 {
-    FILE* file = NULL;
-    int id;
-    int horasTrabajadas;
-    int sueldo;
-    int cantidad;
+    int verificar;
     int retorno = -1;
-    char buffer[4][30];
-    Employee* pAuxEmployee;
-    if(pArrayListEmployee != NULL && path != NULL)
+    FILE* file = NULL;
+
+    if(pArrayListEmployee != NULL)
     {
         file = fopen(path, "r");
 
         if(file != NULL)
         {
-        	    	fscanf(file,"%[^,],%[^,],%[^,],%[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-        	    	printf("%s   %s    %s    %s\n\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-        	        do
-        	        {
-        	        	cantidad = fscanf(file,"%[^,],%[^,],%[^,],%[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-        	        	if(cantidad < 4)
-        	            {
-        	        		printf("\nFIN");//break;
-        	            }
-        	        	else
-        	        	{
-        	            	id = atoi(buffer[0]);
-        	            	horasTrabajadas = atoi(buffer[2]);
-        	            	sueldo = atoi(buffer[3]);
-
-        	            	pAuxEmployee = employee_newParametrosInt(id, buffer[1], horasTrabajadas, sueldo);
-        	            	printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
-
-        	                if(pAuxEmployee != NULL
-        	                   && ll_len(pArrayListEmployee) < 1500
-        	                   && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
-        	                {
-        	                    retorno = 0;
-
-        	                }
-        	            }
-        	        }while(!feof(file));
-
-
+        	verificar = parser_EmployeeFromText(file, pArrayListEmployee);
+        	retorno = 0;
         }
-        else
-        {
-        	printf("\nNO SE PUEDE MOSTRAR");
-        }
-
     }
+
+    fclose(file);
 
     return retorno;
 }
@@ -115,11 +81,10 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
         {
         	Employee auxiliar = addEmployee ();
         	utn_getMayusMin(auxiliar.nombre,50);
-        	addEmployee ();
-            pAuxEmployee = employee_newParametrosInt(id, auxiliar.nombre, auxiliar.horasTrabajadas, auxiliar.sueldo);
 
-            if(pAuxEmployee != NULL
-               && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
+            pAuxEmployee = employee_newParametrosInt(&id, auxiliar.nombre, &auxiliar.horasTrabajadas, &auxiliar.sueldo);
+
+            if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
             {
                 retorno = 0;
             }
@@ -142,44 +107,78 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     int id;
     int max;
     int index;
-    int lifeCycle;
     int editMenu;
     Employee* pAuxEmployee = employee_new();
-    Employee* afterEdit;
+    Employee* pEditEmployee;
 
     if(pArrayListEmployee != NULL && pAuxEmployee != NULL)
     {
         max = employee_getNextId(pArrayListEmployee) - 1;
 
-        if(max > 0 && !utn_getNumero(&id, "Ingrese el ID del Empleado que desea editar: ", "\nERROR", 1, max,3))
+        if(max > 0 && !utn_getNumero(&id, "INGRESE EL ID: ", "\nERROR", 1,2000,3))
         {
             index = getIndexByEmployeeID(pArrayListEmployee, id);
 
             if(index != -1)
             {
-            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
+                pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
 
                 if(pAuxEmployee != NULL)
                 {
-                    afterEdit = employee_newParametrosInt(id, pAuxEmployee->nombre, pAuxEmployee->horasTrabajadas, pAuxEmployee->sueldo);
+                    pEditEmployee = employee_newParametrosInt(&id, pAuxEmployee->nombre, &pAuxEmployee->horasTrabajadas, &pAuxEmployee->sueldo);
 
                     do
                     {
-                        //inputs_clearScreen();
 
-                        if(employee_print(afterEdit) == 0)
+                        if(employee_print(pEditEmployee) == 0)
                         {
                             break;
                         }
 
                         menu_editarEmpleado(&editMenu);
 
-                        employee_change (pAuxEmployee, editMenu);
+                        switch(editMenu)
+                        {
+                        case 1: /**< Editar el Nombre. >*/
+                            if(!utn_getString(pEditEmployee->nombre, 50,"Ingrese nuevo Nombre: ", "\nERROR", 1, 3)
+                               && employee_setNombre(pEditEmployee, pEditEmployee->nombre))
+                            {
+                                printf("Nombre cambiado, elija la opcion %d para aplicarlo.\n", 4);
+                            }
+                            break;
+                        case 2: /**< Editar las Horas Trabajadas. >*/
+                            if(!utn_getNumero(&pEditEmployee->horasTrabajadas, "Ingrese las Horas Trabajadas: ", "\nERROR", 0, 500,3)
+                               && employee_setHorasTrabajadas(pEditEmployee, pEditEmployee->horasTrabajadas))
+                            {
+                                printf("Horas Trabajadas cambiadas, elija la opcion %d para aplicarlo.\n", 4);
+                            }
+                            break;
+                        case 3: /**< Editar el Salario. >*/
+                            if(!utn_getNumero(&pEditEmployee->sueldo, "Ingresa el nuevo Salario: ", "\nERROR", 0, 100000,3)
+                               && employee_setSueldo(pEditEmployee, pEditEmployee->sueldo))
+                            {
+                                printf("Salario cambiado, elija la opcion %d para aplicarlo.\n", 4);
+                            }
+                            break;
+                        case 4: /**< Confirmar cambios y volver al menu principal. >*/
+                           // inputs_clearScreen();
 
-                        //if(editMenu < MENU_EDIT_MAX)
-                        //{
-                         //   inputs_pauseScreen(ENTER_MESSAGE);
-                        //}
+                            printf("El siguiente Empleado:\n");
+                            if(employee_print(pAuxEmployee))
+                            {
+                                printf("Sera modificado de la siguiente forma:\n");
+                                if(employee_print(pEditEmployee)
+                                  // && inputs_userResponse("Acepta la modificacion? [S] o [N]: ")
+                                   && ll_set(pArrayListEmployee, index, (Employee*)pEditEmployee) == 0)
+                                {
+                                    returnValue = 1;
+                                }
+                            }
+
+                            break;
+                        }
+
+
                     }while(editMenu != 4);
                 }
             }
@@ -214,6 +213,8 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
+	Employee* pAuxEmployee;
+	employee_print(pAuxEmployee);
     return 1;
 }
 

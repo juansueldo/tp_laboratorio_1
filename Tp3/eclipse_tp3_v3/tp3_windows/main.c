@@ -25,7 +25,7 @@ int main()
 {
 	system("cls");
 	setbuf(stdout,NULL);
-    int option = 0;
+    int option;
     int len;
     int lenBin;
     LinkedList* listaEmpleados = ll_newLinkedList();
@@ -39,29 +39,29 @@ int main()
             	len = controller_loadFromText("data.csv",listaEmpleados);
                 if(len == 0)
                 {
-                	printf("\nSE LEYERON LOS DATOS");
+                	printf("\nSE LEYERON LOS DATOS\n");
                 }
                 else
                 {
-                	printf("\nNO SE LEYERON LOS DATOS");
+                	printf("\nNO SE LEYERON LOS DATOS\n");
                 }
-                system("pause");
+                //system("pause");
                 break;
             case 2:
             	lenBin = controller_loadFromBinary("data.bin",listaEmpleados);
             	if(lenBin == 0)
             	{
-            	   printf("\nSE LEYERON LOS DATOS");
+            	   printf("\nSE LEYERON LOS DATOS\n");
             	}
             	else
             	{
             		printf("\nNO SE LEYERON LOS DATOS");
             	}
-            	system("pause");
+            	//system("pause");
             	break;
             case 3:
             	controller_addEmployee(listaEmpleados);
-            	system("pause");
+            	//system("pause");
             	break;
             case 4:
             	controller_editEmployee(listaEmpleados);
@@ -74,6 +74,7 @@ int main()
             case 7:
                break;
             case 8:
+            	controller_ListEmployee(listaEmpleados);
                break;
             case 9:
                break;

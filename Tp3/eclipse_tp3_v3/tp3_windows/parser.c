@@ -30,11 +30,10 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
             }
         	else
         	{
+            	pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
             	id = atoi(buffer[0]);
             	horasTrabajadas = atoi(buffer[2]);
             	sueldo = atoi(buffer[3]);
-
-            	pAuxEmployee = employee_newParametrosInt(id, buffer[1], horasTrabajadas, sueldo);
             	printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
 
                 if(pAuxEmployee != NULL

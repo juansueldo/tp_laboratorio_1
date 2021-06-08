@@ -8,10 +8,24 @@ Employee* employee_new()
 
     return pAuxEmployee;
 }
-/*Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldo)
+Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr)
 {
-}*/
-Employee* employee_newParametrosInt(int id,char* nombre,int horasTrabajadas, int sueldo)
+	Employee* this = NULL;
+	this = employee_new();
+	if(this != NULL && idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && sueldoStr != NULL)
+	{
+		if(	employee_setId(this,atoi(idStr) == -1) ||
+			employee_setNombre(this,nombreStr) == -1 ||
+			employee_setHorasTrabajadas(this,atoi(horasTrabajadasStr)) == -1 ||
+			employee_setSueldo(this,atoi(sueldoStr)) == -1)
+		{
+			employee_delete(this);
+			this = NULL;
+		}
+	}
+	return this;
+}
+Employee* employee_newParametrosInt(int* id,char* nombre,int* horasTrabajadas, int* sueldo)
 {
 	Employee* this = NULL;
 	this = employee_new();
@@ -162,14 +176,14 @@ int employee_getNextId(LinkedList* pArrayListEmployee)
                     }
                     else
                     {
-                        if(aux->id > maxValue
-                           && aux->id < 1500)
+                        if(aux->id > maxValue && aux->id < 1500)
                         {
                             maxValue = aux->id;
                         }
                     }
 
                     counter++;
+                    break;
                 }
             }
         }
@@ -221,9 +235,9 @@ int employee_print(Employee* this)
        && employee_getSueldo(this, &sueldo))
     {
     	utn_getLower(nombre);
-        printf("|*******|**********************|*******|============|\n");
+        printf("|*******|**********************|*******|************|\n");
         printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
-        printf("|*******|**********************|*******|============|\n");
+        printf("|*******|**********************|*******|************|\n");
         printf("| %5d | %20s | %5d | %10d |\n",id, nombre, horasTrabajadas, sueldo);
 
         printf("+-------+----------------------+-------+------------+\n");
@@ -239,7 +253,7 @@ Employee employee_change (Employee* this, int opcion)
 
 	switch(opcion)
 	{
-	case 1: /**< Editar el Nombre. >*/
+	case 1:
 		if(utn_getString(pAuxEmployee->nombre, 50, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3)
 				&& employee_setNombre(pAuxEmployee, pAuxEmployee->nombre))
 		{
@@ -265,31 +279,7 @@ Employee employee_change (Employee* this, int opcion)
 	return *pAuxEmployee;
 
 }
-/*
-int addEmployees (eEmployee arrayEmpleados[], int tamanio, int *pIdEmpleado)
-{
-	int rtn = 0;
-	eEmployee auxiliarEmpleados;
-	if(arrayEmpleados != NULL && tamanio > 0 && pIdEmpleado != NULL)
-	{
-	int index = findEmpty (arrayEmpleados, tamanio);
-	if (index != -1)
-	{
-		auxiliarEmpleados = addEmployee();
-		auxiliarEmpleados.isEmpty = 0;
-		arrayEmpleados[index] = auxiliarEmpleados;
-		rtn = 1;
-	}
-	if(rtn == 1)
-	{
-		(*pIdEmpleado)++;
-		auxiliarEmpleados.id = *pIdEmpleado;
-		arrayEmpleados[index] = auxiliarEmpleados;
-	}
-	}
-	return rtn;
-}
-*/
+
 int getIndexByEmployeeID(LinkedList* pArrayListEmployee, int id)
 {
     int returnValue = -1;
@@ -307,8 +297,7 @@ int getIndexByEmployeeID(LinkedList* pArrayListEmployee, int id)
             {
                 aux = ll_get(pArrayListEmployee, i);
 
-                if(aux != NULL
-                   && aux->id == id)
+                if(aux != NULL && aux->id == id)
                 {
                     returnValue = i;
                     break;
