@@ -45,7 +45,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
                 }
             }
         }while(!feof(pFile));
-        free(pAuxEmployee);
+        //free(pAuxEmployee);
     }
     return retorno;
 }

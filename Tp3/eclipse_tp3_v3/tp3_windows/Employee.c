@@ -31,10 +31,10 @@ Employee* employee_newParametrosInt(int* id,char* nombre,int* horasTrabajadas, i
 	this = employee_new();
 	if(this != NULL && nombre != NULL)
 	{
-		if(	employee_setId(this,id == -1) ||
+		if(	employee_setId(this,*id == -1) ||
 			employee_setNombre(this,nombre) == -1 ||
-			employee_setHorasTrabajadas(this,horasTrabajadas) == -1 ||
-			employee_setSueldo(this,sueldo) == -1)
+			employee_setHorasTrabajadas(this,*horasTrabajadas) == -1 ||
+			employee_setSueldo(this,*sueldo) == -1)
 		{
 			employee_delete(this);
 			this = NULL;
@@ -141,7 +141,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
 void mostrarEmpleados(Employee* this, int len)
 {
 
-printf("\n Mostrar empleados \n");
+//printf("\n Mostrar empleados \n");
 
 for(int i=0; i < len; i++)
 {
@@ -152,10 +152,9 @@ printf("\n\n");
 }
 int employee_getNextId(LinkedList* pArrayListEmployee)
 {
-    int maxValue = -1;
+    int idMayor = -1;
     int arrayLength = 0;
     int i;
-    int counter = 0;
     Employee* aux;
 
     if(pArrayListEmployee != NULL)
@@ -170,35 +169,18 @@ int employee_getNextId(LinkedList* pArrayListEmployee)
 
                 if(aux != NULL)
                 {
-                    if(counter == 0)
-                    {
-                        maxValue = aux->id;
-                    }
-                    else
-                    {
-                        if(aux->id > maxValue && aux->id < 1500)
-                        {
-                            maxValue = aux->id;
-                        }
-                    }
+                    idMayor = aux->id;
 
-                    counter++;
-                    break;
+                    if(aux->id > idMayor && aux->id < EMPLOYEE_MAX)
+                    {
+                        idMayor = aux->id;
+                    }
+                 }
                 }
             }
-        }
-
-        if(counter > 0)
-        {
-            maxValue++;
-        }
-        else
-        {
-            maxValue = 1;
-        }
     }
 
-    return maxValue;
+    return idMayor;
 }
 Employee addEmployee (void)
 {

@@ -25,7 +25,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
         if(file != NULL)
         {
         	verificar = parser_EmployeeFromText(file, pArrayListEmployee);
-        	if(verificar ==0)
+        	if(verificar == 0)
         	{
         		retorno = 0;
         	}
@@ -78,7 +78,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
-    int id;
+    int id = 0;
     int horasTrabajadas;
     int sueldo;
     char nombre[EMPLOYEE_NOMBRE_MAX];
@@ -87,14 +87,14 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     if(pArrayListEmployee != NULL)
     {
         id = employee_getNextId(pArrayListEmployee);
+
         if(id != -1
            && !utn_getString(nombre, EMPLOYEE_NOMBRE_MAX,"\nINGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR", 1, 3)
            && !utn_getNumero(&horasTrabajadas, "\nINGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 0, EMPLOYEE_HORA_MAX, 3)
            && !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR", 0, EMPLOYEE_SUELDO_MAX, 3))
         {
-            utn_getLower(nombre);
-        	aux = employee_newParametrosInt(&id, nombre, &horasTrabajadas, &sueldo);
-
+        	utn_getMayusMin(nombre,EMPLOYEE_NOMBRE_MAX);
+        	aux = employee_newParametrosInt(&id+1, nombre, &horasTrabajadas, &sueldo);
             if(aux != NULL && ll_add(pArrayListEmployee, (Employee*)aux) == 0)
             {
                 retorno = 0;
@@ -142,7 +142,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
                     do
                     {
 
-                        if(employee_print(pEditEmployee) == 0)
+                        if(employee_print(pEditEmployee) != 0)
                         {
                             break;
                         }
@@ -225,9 +225,36 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
-	Employee* pAuxEmployee;
-	employee_print(pAuxEmployee);
-    return 1;
+    int retorno = -1;
+    int employeeQty;
+    Employee* aux;
+
+
+    if(pArrayListEmployee != NULL)
+    {
+        employeeQty = ll_len(pArrayListEmployee);
+        void* ll_get(LinkedList* this, int index);
+
+        printf("|*******|**********************|*******|************|\n");
+        printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
+        printf("|*******|**********************|*******|************|\n");
+
+        for(int i = 0 ; i < employeeQty; i++)
+            {
+                aux = (Employee*)ll_get(pArrayListEmployee, i);
+
+                if(aux != NULL)
+                {
+                	utn_getMayusMin(aux->nombre,EMPLOYEE_NOMBRE_MAX);
+                    printf("| %5d | %20s | %5d | %10d |\n",
+                           aux->id, aux->nombre,
+                           aux->horasTrabajadas, aux->sueldo);
+                }
+
+            }
+
+    }
+    return retorno;
 }
 
 /** \brief Ordenar empleados
@@ -289,6 +316,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 
     return retorno;
 }
+
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
  *

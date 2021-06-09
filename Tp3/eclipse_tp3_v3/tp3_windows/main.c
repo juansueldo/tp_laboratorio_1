@@ -65,11 +65,12 @@ int main()
             	break;
             case 4:
             	controller_editEmployee(listaEmpleados);
-            	system("pause");
+            	//system("pause");
                 break;
             case 5:
                 break;
             case 6:
+            	controller_ListEmployee(listaEmpleados);
                break;
             case 7:
                break;
