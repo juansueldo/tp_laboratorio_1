@@ -68,6 +68,7 @@ int main()
             	//system("pause");
                 break;
             case 5:
+            	controller_removeEmployee(listaEmpleados);
                 break;
             case 6:
             	controller_ListEmployee(listaEmpleados);
