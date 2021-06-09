@@ -3,6 +3,8 @@
 #include "LinkedList.h"
 #include "Employee.h"
 #include "parser.h"
+#include "menu.h"
+#include "Controller.h"
 
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
@@ -78,7 +80,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
-    int id = 0;
+    int id;
     int horasTrabajadas;
     int sueldo;
     char nombre[EMPLOYEE_NOMBRE_MAX];
@@ -117,7 +119,6 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = 0;
     int id;
-    int max;
     int index;
     int editMenu;
     Employee* pAuxEmployee = employee_new();
@@ -125,15 +126,16 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 
     if(pArrayListEmployee != NULL && pAuxEmployee != NULL)
     {
-        max = employee_getNextId(pArrayListEmployee) - 1;
-
-        if(max > 0 && !utn_getNumero(&id, "INGRESE EL ID: ", "\nERROR", 1,2000,3))
+        //max = employee_getNextId(pArrayListEmployee) - 1;
+        controller_ListEmployee(pArrayListEmployee);
+        if(utn_getNumero(&id, "INGRESE EL ID: ", "\nERROR", 1,2000,3)==0)
         {
             index = getIndexByEmployeeID(pArrayListEmployee, id);
 
-            if(index != -1)
+            if(index+1 == id)
             {
-                pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
+            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
+                /*pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
 
                 if(pAuxEmployee != NULL)
                 {
@@ -145,15 +147,16 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
                         if(employee_print(pEditEmployee) != 0)
                         {
                             break;
-                        }
+                        }*/
 
                         menu_editarEmpleado(&editMenu);
+
 
                         switch(editMenu)
                         {
                         case 1: /**< Editar el Nombre. >*/
-                            if(!utn_getString(pEditEmployee->nombre, 50,"Ingrese nuevo Nombre: ", "\nERROR", 1, 3)
-                               && employee_setNombre(pEditEmployee, pEditEmployee->nombre))
+                            if(utn_getString(pEditEmployee->nombre, 50,"Ingrese nuevo Nombre: ", "\nERROR", 1, 3)==0)
+                              // && employee_setNombre(pEditEmployee, pEditEmployee->nombre))
                             {
                                 printf("Nombre cambiado, elija la opcion %d para aplicarlo.\n", 4);
                             }
@@ -193,13 +196,14 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 
                     }while(editMenu != 4);
                 }
+
             }
             else
             {
                 printf("No se encontro el Empleado ingresado.\n");
             }
-        }
-    }
+     //   }
+   // }
 
     return retorno;
 }
@@ -242,7 +246,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
         for(int i = 0 ; i < employeeQty; i++)
             {
                 aux = (Employee*)ll_get(pArrayListEmployee, i);
-
+                aux->id = i+1;
                 if(aux != NULL)
                 {
                 	utn_getMayusMin(aux->nombre,EMPLOYEE_NOMBRE_MAX);
