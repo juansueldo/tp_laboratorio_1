@@ -122,68 +122,32 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     int index;
     int editMenu;
     Employee* pAuxEmployee = employee_new();
-    Employee* pEditEmployee;
+    //Employee* pEditEmployee;
 
     if(pArrayListEmployee != NULL && pAuxEmployee != NULL)
     {
-        //max = employee_getNextId(pArrayListEmployee) - 1;
         controller_ListEmployee(pArrayListEmployee);
         if(utn_getNumero(&id, "\nINGRESE EL ID: ", "\nERROR", 1,2000,3)==0)
         {
             index = getIndexByEmployeeID(pArrayListEmployee, id);
-
+            printf("Index %d",index);
+            printf("\nID %d",id);
             if(index+1 == id)
             {
-            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
 
+            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
+            	employee_print(pAuxEmployee);
+
+            	if(utn_getRespuesta ("\nDesea modificar este empleado? [S] o [N]: ","\nERROR", 3) == 0)
+            	{
             	do
             	{
                     menu_editarEmpleado(&editMenu);
-                    switch(editMenu)
-                    {
-                       case 1: /**< Editar el Nombre. >*/
-                            if(utn_getString(pEditEmployee->nombre, 50,"Ingrese nuevo Nombre: ", "\nERROR", 1, 3)==0
-                               && employee_setNombre(pEditEmployee, pEditEmployee->nombre))
-                            {
-                                printf("Nombre cambiado, elija la opcion %d para aplicarlo.\n", 4);
-                            }
-                            break;
-                       case 2: /**< Editar las Horas Trabajadas. >*/
-                            if(!utn_getNumero(&pEditEmployee->horasTrabajadas, "Ingrese las Horas Trabajadas: ", "\nERROR", 0, 500,3)
-                               && employee_setHorasTrabajadas(pEditEmployee, pEditEmployee->horasTrabajadas))
-                            {
-                                printf("Horas Trabajadas cambiadas, elija la opcion %d para aplicarlo.\n", 4);
-                            }
-                            break;
-                       case 3: /**< Editar el Salario. >*/
-                            if(!utn_getNumero(&pEditEmployee->sueldo, "Ingresa el nuevo Salario: ", "\nERROR", 0, 100000,3)
-                               && employee_setSueldo(pEditEmployee, pEditEmployee->sueldo))
-                            {
-                                printf("Salario cambiado, elija la opcion %d para aplicarlo.\n", 4);
-                            }
-                            break;
-                       case 4: /**< Confirmar cambios y volver al menu principal. >*/
-                           // inputs_clearScreen();
+                    employee_change (pAuxEmployee, editMenu);
 
-                            printf("El siguiente Empleado:\n");
-                            if(employee_print(pAuxEmployee))
-                            {
-                                printf("Sera modificado de la siguiente forma:\n");
-                                if(employee_print(pEditEmployee)
-                                  // && inputs_userResponse("Acepta la modificacion? [S] o [N]: ")
-                                   && ll_set(pArrayListEmployee, index, (Employee*)pEditEmployee) == 0)
-                                {
-                                	pAuxEmployee = pEditEmployee;
-                                    retorno = 1;
-                                }
-                            }
-
-                            break;
-                        }
-
-
-                    }while(editMenu != 4);
-                }
+                }while(editMenu != 4);
+            	}
+              }
             else
             {
                 printf("No se encontro el Empleado ingresado.\n");
@@ -203,10 +167,9 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    int returnValue = 0;
+    int retorno = 0;
     int id;
     int index;
-    int max;
     Employee* aux = employee_new();
 
     if(pArrayListEmployee != NULL && aux != NULL)
@@ -215,21 +178,22 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     	if(utn_getNumero(&id, "\nINGRESE EL ID: ", "\nERROR", 1,2000,3)==0)
     	{
     		index = getIndexByEmployeeID(pArrayListEmployee, id);
-
     	     if(index+1 == id)
     	      {
                 aux = (Employee*)ll_get(pArrayListEmployee, index);
 
-                if(aux != NULL
-                   && employee_print(aux)
-                   /*&& inputs_userResponse("Desea dar de baja el Empleado? [S] o [N]: ")*/)
+                if(aux != NULL)
                 {
-                    if(ll_remove(pArrayListEmployee, index) == 0)
-                    {
-                        returnValue = 1;
-                        employee_delete(aux);
-                        aux = NULL;
+                	employee_print(aux);
+                	if(utn_getRespuesta ("\nDesea dar de baja el Empleado? [S] o [N]: ","\nERROR", 3) == 0)
+                	{
+                		if(ll_remove(pArrayListEmployee, index) == 0)
+                		{
+                			retorno = 1;
+                			employee_delete(aux);
+                			aux = NULL;
                     }
+                	}
                 }
             }
             else
@@ -239,7 +203,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
         }
     }
 
-    return returnValue;
+    return retorno;
 }
 
 
@@ -293,7 +257,55 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int retorno = 0;
+    int sortMenu;
+    int sortOption;
+
+    if(pArrayListEmployee != NULL)
+    {
+        if(ll_len(pArrayListEmployee) > 0)
+        {
+            do
+            {
+                menu_sort(&sortMenu);
+                if((sortMenu >= 1 && sortMenu < 5)
+                   && !utn_getNumero(&sortOption, "Ingrese para ordenar: [1] Ascendente - [2] Descendente: ", "\nERROR", 1, 2,3))
+                {
+
+                    switch(sortMenu)
+                    {
+                    case 1:
+                        if(ll_sort(pArrayListEmployee, employee_compareByID, sortOption) == 0)
+                        {
+                            printf("Ordenado por ID finalizado.\n");
+                        }
+                        break;
+                    case 2:
+                        if(ll_sort(pArrayListEmployee, employee_compareBynombre, sortOption) == 0)
+                        {
+                            printf("Ordenado por Nombre finalizado.\n");
+                        }
+                        break;
+                    case 3:
+                        if(ll_sort(pArrayListEmployee, employee_compareByhorasTrabajadas, sortOption) == 0)
+                        {
+                            printf("Ordenado por Horas Trabajadas finalizado.\n");
+                        }
+                        break;
+                    case 4:
+                        if(ll_sort(pArrayListEmployee, employee_compareBysueldo, sortOption) == 0)
+                        {
+                            printf("Ordenado por Salario finalizado.\n");
+                        }
+                        break;
+                    }
+                }
+
+            }while(sortMenu != 5);
+        }
+    }
+
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -355,7 +367,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
     FILE* file = NULL;
-    int returnValue = 0;
+    int retorno = 0;
     int employeeQTY;
     int i;
     Employee* aux;
@@ -382,12 +394,12 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 
         if(i > 0 && i == employeeQTY)
         {
-            returnValue = 1;
+            retorno = 1;
         }
     }
 
     fclose(file);
 
-    return returnValue;
+    return retorno;
 }
 

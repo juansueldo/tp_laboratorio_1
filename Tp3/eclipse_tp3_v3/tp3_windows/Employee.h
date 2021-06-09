@@ -42,4 +42,9 @@ Employee addEmployee (void);
 int employee_print(Employee* this);
 int getIndexByEmployeeID(LinkedList* pArrayListEmployee, int id);
 Employee employee_change (Employee* this, int opcion);
+int employee_compareByID(void* pElement1, void* pElement2);
+int employee_compareBynombre(void* pElement1, void* pElement2);
+int employee_compareByhorasTrabajadas(void* pElement1, void* pElement2);
+int employee_compareBysueldo(void* pElement1, void* pElement2);
+
 #endif // employee_H_INCLUDED

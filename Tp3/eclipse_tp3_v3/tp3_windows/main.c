@@ -60,26 +60,68 @@ int main()
             	//system("pause");
             	break;
             case 3:
-            	controller_addEmployee(listaEmpleados);
+            	if(controller_addEmployee(listaEmpleados)==0)
+            	{
+            		printf("\nSE AGREGO UN EMPLEADO");
+            	}
+            	else
+            	{
+            		printf("\nNO SE AGREGARON EMPLEADOS");
+            	}
             	//system("pause");
             	break;
             case 4:
-            	controller_editEmployee(listaEmpleados);
+            	if(controller_editEmployee(listaEmpleados)==0)
+            	{
+            		printf("\nSE MODIFICO UN EMPLEADO");
+            	}
+            	else
+            	{
+            		printf("\nNO SE MODIFICO EL EMPLEADO");
+            	}
             	//system("pause");
                 break;
             case 5:
-            	controller_removeEmployee(listaEmpleados);
+            	if(controller_removeEmployee(listaEmpleados)==0)
+            	{
+            		printf("\nSE MODIFICO UN EMPLEADO");
+		        }
+		        else
+		        {
+		            printf("\nNO SE MODIFICO EL EMPLEADO");
+		        }
                 break;
             case 6:
-            	controller_ListEmployee(listaEmpleados);
+            	if(controller_ListEmployee(listaEmpleados)!=0)
+            	{
+            		printf("\nNO HAY EMPLEADOS PARA LISTAR");
+            	}
                break;
             case 7:
+            	if(controller_sortEmployee(listaEmpleados)==0)
+            	{
+            		printf("\nSE ORDENARON LOS EMPLEADOS");
+            	}
                break;
             case 8:
-            	controller_saveAsText("Prueba.csv",listaEmpleados);
+            	if(controller_saveAsText("Prueba.csv",listaEmpleados)==0)
+            	{
+            		printf("\nSE GUARDARON LOS DATOS");
+            	}
+            	else
+            	{
+            		printf("\nNO SE GUARDARON LOS DATOS");
+            	}
                break;
             case 9:
-            	controller_saveAsBinary("Prueba.bin" , listaEmpleados);
+            	if(controller_saveAsBinary("Prueba.bin" , listaEmpleados)==0)
+            	{
+            		printf("\nSE GUARDARON LOS DATOS");
+            	}
+            	else
+            	{
+            		printf("\nNO SE GUARDARON LOS DATOS");
+            	}
                break;
             case 10:
             	printf("\nFIN");

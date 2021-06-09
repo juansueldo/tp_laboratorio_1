@@ -38,3 +38,17 @@ void menu_editarEmpleado (int *opcion)
 utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 4, 3);
 
 }
+void menu_sort (int *opcion)
+{
+	printf("\n ");
+	printf("\n |***********************************************************************************|\n");
+	printf(" |                                  ORDENAR                                          |\n");
+	printf(" |***********************************************************************************|\n");
+	printf(" |  [1] Ordenar por ID.                                                              |\n");
+	printf(" |  [2] Ordenar por nombre.                                                          |\n");
+	printf(" |  [3] Ordenar por horas trabajadas.                                                |\n");
+	printf(" |  [4] Ordenar por sueldo.                                                          |\n");
+	printf(" |  [5] Volver atras.                                                                |\n");
+	printf(" |***********************************************************************************|\n\n");
+	utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 5, 3);
+}
