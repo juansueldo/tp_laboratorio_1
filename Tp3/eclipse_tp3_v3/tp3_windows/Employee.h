@@ -36,7 +36,7 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas);
 int employee_setSueldo(Employee* this,int sueldo);
 int employee_getSueldo(Employee* this,int* sueldo);
 
-void mostrarEmpleados(Employee* this, int len);
+
 int employee_getNextId(LinkedList* pArrayListEmployee);
 Employee addEmployee (void);
 int employee_print(Employee* this);

@@ -138,18 +138,6 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	}
 	return retorno;
 }
-void mostrarEmpleados(Employee* this, int len)
-{
-
-//printf("\n Mostrar empleados \n");
-
-for(int i=0; i < len; i++)
-{
-    printf(" %5d   %10s   %20d  %8d\n", (this + i)->id, (this + i)->nombre, (this + i)->horasTrabajadas, (this + i)->sueldo);
-}
-printf("\n\n");
-
-}
 int employee_getNextId(LinkedList* pArrayListEmployee)
 {
     int idMayor = -1;
@@ -176,7 +164,7 @@ int employee_getNextId(LinkedList* pArrayListEmployee)
                         idMayor = pAuxEmployee->id;
                     }
                  }
-                }
+               }
             }
     }
 

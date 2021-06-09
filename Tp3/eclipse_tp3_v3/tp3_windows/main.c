@@ -45,7 +45,6 @@ int main()
                 {
                 	printf("\nNO SE LEYERON LOS DATOS\n");
                 }
-                //system("pause");
                 break;
             case 2:
             	lenBin = controller_loadFromBinary("Prueba.bin",listaEmpleados);
@@ -57,7 +56,6 @@ int main()
             	{
             		printf("\nNO SE LEYERON LOS DATOS");
             	}
-            	//system("pause");
             	break;
             case 3:
             	if(controller_addEmployee(listaEmpleados)==0)
@@ -68,7 +66,6 @@ int main()
             	{
             		printf("\nNO SE AGREGARON EMPLEADOS");
             	}
-            	//system("pause");
             	break;
             case 4:
             	if(controller_editEmployee(listaEmpleados)==0)
@@ -79,7 +76,6 @@ int main()
             	{
             		printf("\nNO SE MODIFICO EL EMPLEADO");
             	}
-            	//system("pause");
                 break;
             case 5:
             	if(controller_removeEmployee(listaEmpleados)==0)

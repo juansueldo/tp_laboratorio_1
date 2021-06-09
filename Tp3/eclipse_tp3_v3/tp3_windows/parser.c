@@ -20,7 +20,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
     if(pFile != NULL && pArrayListEmployee != NULL)
     {
     	fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-    	printf("%s   %s    %s    %s\n\n", buffer[0], buffer[1], buffer[2], buffer[3]);
+    	//printf("%s   %s    %s    %s\n\n", buffer[0], buffer[1], buffer[2], buffer[3]);
         do
         {
         	cantidad = fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
@@ -31,10 +31,10 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
         	else
         	{
             	pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
-            	id = atoi(buffer[0]);
-            	horasTrabajadas = atoi(buffer[2]);
-            	sueldo = atoi(buffer[3]);
-            	printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
+            	//id = atoi(buffer[0]);
+            	//horasTrabajadas = atoi(buffer[2]);
+            	//sueldo = atoi(buffer[3]);
+            	//printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
 
                 if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
