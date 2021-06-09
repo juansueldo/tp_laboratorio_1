@@ -136,35 +136,33 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
             {
             	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
 
-            			do
-            			{
-                        menu_editarEmpleado(&editMenu);
-
-
-                        switch(editMenu)
-                        {
-                        case 1: /**< Editar el Nombre. >*/
+            	do
+            	{
+                    menu_editarEmpleado(&editMenu);
+                    switch(editMenu)
+                    {
+                       case 1: /**< Editar el Nombre. >*/
                             if(utn_getString(pEditEmployee->nombre, 50,"Ingrese nuevo Nombre: ", "\nERROR", 1, 3)==0
                                && employee_setNombre(pEditEmployee, pEditEmployee->nombre))
                             {
                                 printf("Nombre cambiado, elija la opcion %d para aplicarlo.\n", 4);
                             }
                             break;
-                        case 2: /**< Editar las Horas Trabajadas. >*/
+                       case 2: /**< Editar las Horas Trabajadas. >*/
                             if(!utn_getNumero(&pEditEmployee->horasTrabajadas, "Ingrese las Horas Trabajadas: ", "\nERROR", 0, 500,3)
                                && employee_setHorasTrabajadas(pEditEmployee, pEditEmployee->horasTrabajadas))
                             {
                                 printf("Horas Trabajadas cambiadas, elija la opcion %d para aplicarlo.\n", 4);
                             }
                             break;
-                        case 3: /**< Editar el Salario. >*/
+                       case 3: /**< Editar el Salario. >*/
                             if(!utn_getNumero(&pEditEmployee->sueldo, "Ingresa el nuevo Salario: ", "\nERROR", 0, 100000,3)
                                && employee_setSueldo(pEditEmployee, pEditEmployee->sueldo))
                             {
                                 printf("Salario cambiado, elija la opcion %d para aplicarlo.\n", 4);
                             }
                             break;
-                        case 4: /**< Confirmar cambios y volver al menu principal. >*/
+                       case 4: /**< Confirmar cambios y volver al menu principal. >*/
                            // inputs_clearScreen();
 
                             printf("El siguiente Empleado:\n");
