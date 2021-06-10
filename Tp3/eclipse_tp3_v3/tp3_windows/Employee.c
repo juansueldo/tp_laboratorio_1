@@ -193,17 +193,51 @@ Employee addEmployee (void)
 int employee_print(Employee* this)
 {
     int retorno = -1;
+    int id;
+    char nombre[EMPLOYEE_NOMBRE_MAX];
+    int horasTrabajadas;
+    int sueldo;
 
-    if(this != NULL)
+    if(this != NULL && employee_getId(this, &id)==0
+    				&& employee_getNombre(this, nombre)==0
+					&& employee_getHorasTrabajadas(this, &horasTrabajadas)==0
+					&& employee_getSueldo(this, &sueldo)==0)
     {
     	printf("|*******|**********************|*******|************|\n");
     	printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
     	printf("|*******|**********************|*******|************|\n");
     	utn_getMayusMin(this->nombre,EMPLOYEE_NOMBRE_MAX);
     	printf("| %5d | %20s | %5d | %10d |\n",
-    		            	this->id, this->nombre,
-							this->horasTrabajadas, this->sueldo);
+    		            	id, nombre, horasTrabajadas, sueldo);
         printf("|*******|**********************|*******|************|\n");
+
+        retorno = 0;
+    }
+
+    return retorno;
+}
+int employee_printEmployees(Employee* this, int len)
+{
+	int retorno = -1;
+	int id;
+	char nombre[EMPLOYEE_NOMBRE_MAX];
+	int horasTrabajadas;
+	int sueldo;
+    if(this != NULL && len > 0 && employee_getId(this, &id)==0
+						&& employee_getNombre(this, nombre)==0
+						&& employee_getHorasTrabajadas(this, &horasTrabajadas)==0
+						&& employee_getSueldo(this, &sueldo)==0)
+    {
+    	/*printf("|*******|**********************|*******|************|\n");
+    	printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
+    	printf("|*******|**********************|*******|************|\n");*/
+    	for(int i =0; i < len; i++)
+    	{
+    	utn_getMayusMin(this->nombre,EMPLOYEE_NOMBRE_MAX);
+    	printf("| %5d | %20s | %5d | %10d |\n",
+    								id, nombre, horasTrabajadas, sueldo);
+        printf("|*******|**********************|*******|************|\n");
+    	}
 
         retorno = 0;
     }

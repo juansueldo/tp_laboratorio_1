@@ -29,6 +29,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
         	verificar = parser_EmployeeFromText(file, pArrayListEmployee);
         	if(verificar == 0)
         	{
+
         		retorno = 0;
         	}
 
@@ -121,27 +122,26 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     int id;
     int index;
     int editMenu;
-    Employee* ppAuxEmployeeEmployee = employee_new();
-    //Employee* pEditEmployee;
+    Employee* pAuxEmployee = employee_new();
 
-    if(pArrayListEmployee != NULL && ppAuxEmployeeEmployee != NULL)
+    if(pArrayListEmployee != NULL && pAuxEmployee != NULL)
     {
         controller_ListEmployee(pArrayListEmployee);
-        if(utn_getNumero(&id, "\nINGRESE EL ID: ", "\nERROR", 1,2000,3)==0)
+        if(utn_getNumero(&id, "\nINGRESE EL ID: ", "\nERROR", 1,EMPLOYEE_MAX,3)==0)
         {
             index = getIndexByEmployeeID(pArrayListEmployee, id);
             if(index+1 == id)
             {
 
-            	ppAuxEmployeeEmployee = (Employee*)ll_get(pArrayListEmployee, index);
-            	employee_print(ppAuxEmployeeEmployee);
+            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
+            	employee_print(pAuxEmployee);
 
             	if(utn_getRespuesta ("\nDesea modificar este empleado? [S] o [N]: ","\nERROR", 3) == 0)
             	{
             	do
             	{
                     menu_editarEmpleado(&editMenu);
-                    employee_change (ppAuxEmployeeEmployee, editMenu);
+                    employee_change (pAuxEmployee, editMenu);
                     retorno = 0;
                 }while(editMenu != 4);
             	}
@@ -215,32 +215,37 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
+    int i;
     int employeeQty;
-    Employee* pAuxEmployee;
+    int id;
+	char nombre[EMPLOYEE_NOMBRE_MAX];
+	int horasTrabajadas;
+	int sueldo;
+    Employee* pAuxEmployee = NULL;
 
     if(pArrayListEmployee != NULL)
     {
         employeeQty = ll_len(pArrayListEmployee);
-        //void* ll_get(LinkedList* this, int index);
-        pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, employeeQty);
+        printf("\nemployeeQty: %d",employeeQty);
         printf("|*******|**********************|*******|************|\n");
         printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
         printf("|*******|**********************|*******|************|\n");
-
-        for(int i = 0 ; i < employeeQty; i++)
-            {
-                pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, employeeQty);
-                //pAuxEmployee->id = i+1;
-                if(pAuxEmployee != NULL)
-                {
-                	utn_getMayusMin(pAuxEmployee->nombre,EMPLOYEE_NOMBRE_MAX);
+        for(i = 0 ; i < employeeQty; i++)
+         {
+        	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, i);
+        	//employee_print(pAuxEmployee);
+        	if(pAuxEmployee!= NULL && employee_getId(pAuxEmployee, &id)==0
+					&& employee_getNombre(pAuxEmployee, nombre)==0
+					&& employee_getHorasTrabajadas(pAuxEmployee, &horasTrabajadas)==0
+					&& employee_getSueldo(pAuxEmployee, &sueldo)==0)
+        	{
+                	utn_getMayusMin(nombre,EMPLOYEE_NOMBRE_MAX);
                     printf("| %5d | %20s | %5d | %10d |\n",
-                           pAuxEmployee->id, pAuxEmployee->nombre,
-                           pAuxEmployee->horasTrabajadas, pAuxEmployee->sueldo);
-                    	retorno = 0;
-                }
+                    		id,nombre,horasTrabajadas, sueldo);
+        	}
+          }
 
-            }
+        retorno = 0;
 
     }
     return retorno;
@@ -267,7 +272,7 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
             {
                 menu_sort(&opcionMenu);
                 if((opcionMenu >= 1 && opcionMenu < 5)
-                   && !utn_getNumero(&orden, "Ingrese para ordenar: [1] Ascendente - [2] Descendente: ", "\nERROR", 1, 2,3))
+                   && !utn_getNumero(&orden, "Ingrese para ordenar: [1] Ascendente - [0] Descendente: ", "\nERROR", 1, 0,3))
                 {
 
                     switch(opcionMenu)
@@ -350,7 +355,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
     }
 
     fclose(file);
-    free(pAuxEmployee);
+    //free(pAuxEmployee);
     return retorno;
 }
 
@@ -396,7 +401,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     }
 
     fclose(file);
-    free(pAuxEmployee);
+    //free(pAuxEmployee);
     return retorno;
 }
 

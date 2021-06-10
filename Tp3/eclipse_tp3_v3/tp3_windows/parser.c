@@ -20,7 +20,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
     if(pFile != NULL && pArrayListEmployee != NULL)
     {
     	fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
-    	//printf("%s   %s    %s    %s\n\n", buffer[0], buffer[1], buffer[2], buffer[3]);
+
         do
         {
         	cantidad = fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3]);
@@ -31,10 +31,10 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
         	else
         	{
             	pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
-            	//id = atoi(buffer[0]);
-            	//horasTrabajadas = atoi(buffer[2]);
-            	//sueldo = atoi(buffer[3]);
-            	//printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
+            	id = atoi(buffer[0]);
+            	horasTrabajadas = atoi(buffer[2]);
+            	sueldo = atoi(buffer[3]);
+            	printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
 
                 if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
@@ -59,20 +59,20 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
-    Employee auxStatic;
-    Employee* auxDinamic = NULL;
+    Employee auxEmployee;
+    Employee* pAuxEmployee = NULL;
 
     if(pFile != NULL && pArrayListEmployee != NULL)
     {
         while(!feof(pFile))
         {
-            if(fread((Employee*)&auxStatic, sizeof(Employee), 1, pFile) == 1)
+            if(fread((Employee*)&auxEmployee, sizeof(Employee), 1, pFile) == 1)
             {
-                auxDinamic = employee_newParametrosInt (&auxStatic.id, auxStatic.nombre, &auxStatic.horasTrabajadas, &auxStatic.sueldo);
-                printf(" %5d   %10s   %20d  %8d\n\n", auxStatic.id, auxStatic.nombre, auxStatic.horasTrabajadas, auxStatic.sueldo);
-                if(auxDinamic != NULL
+                pAuxEmployee = employee_newParametrosInt (&auxEmployee.id, auxEmployee.nombre, &auxEmployee.horasTrabajadas, &auxEmployee.sueldo);
+                printf(" %5d   %10s   %20d  %8d\n\n", auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
+                if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
-                   && ll_add(pArrayListEmployee, (Employee*)auxDinamic) == 0)
+                   && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
                 {
                 	retorno = 0;
                 }

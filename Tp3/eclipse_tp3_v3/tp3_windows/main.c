@@ -88,10 +88,10 @@ int main()
 		        }
                 break;
             case 6:
-            	if(controller_ListEmployee(listaEmpleados)!=0)
-            	{
-            		printf("\nNO HAY EMPLEADOS PARA LISTAR");
-            	}
+            	controller_ListEmployee(listaEmpleados);//!=0)
+            	//{
+            		//printf("\nNO HAY EMPLEADOS PARA LISTAR");
+            	//}
                break;
             case 7:
             	if(controller_sortEmployee(listaEmpleados)==0)

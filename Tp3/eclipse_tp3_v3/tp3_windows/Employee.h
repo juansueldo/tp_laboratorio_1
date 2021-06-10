@@ -46,5 +46,6 @@ int employee_compareByID(void* pElement1, void* pElement2);
 int employee_compareBynombre(void* pElement1, void* pElement2);
 int employee_compareByhorasTrabajadas(void* pElement1, void* pElement2);
 int employee_compareBysueldo(void* pElement1, void* pElement2);
+int employee_printEmployees(Employee* this, int len);
 
 #endif // employee_H_INCLUDED
