@@ -71,7 +71,10 @@ int employee_getId(Employee* this,int* id)
 	}
 	return retorno;
 }
-
+int employee_getId2(Employee* this)
+{
+    return this->id;
+}
 int employee_setNombre(Employee* this,char* nombre)
 {
     int retorno = -1;
@@ -172,23 +175,23 @@ int employee_getNextId(LinkedList* pArrayListEmployee)
 }
 Employee addEmployee (void)
 {
-	Employee pAuxEmployeeiliar;
+	Employee pAuxEmployee;
 
-	if(utn_getString(pAuxEmployeeiliar.nombre, 50, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3))
+	if(utn_getString(pAuxEmployee.nombre, 50, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3))
 	{
 		printf("\nNO SE INGRESO ES NOMBRE");
 	}
 
-	if(utn_getNumero(&pAuxEmployeeiliar.horasTrabajadas,"\nIngrese las horas trabajadas: ","\nERROR",8,100,3))
+	if(utn_getNumero(&pAuxEmployee.horasTrabajadas,"\nIngrese las horas trabajadas: ","\nERROR",8,100,3))
 	{
 		printf("\nNO SE INGRESARON LAS HORAS TRABAJADAS");
 	}
-	if(utn_getNumero(&pAuxEmployeeiliar.sueldo,"\nIngrese el sueldo: ","\nERROR",1000,100000,3))
+	if(utn_getNumero(&pAuxEmployee.sueldo,"\nIngrese el sueldo: ","\nERROR",1000,100000,3))
 	{
 		printf("\nNO SE INGRESO EL SUELDO");
 	}
 
-	return pAuxEmployeeiliar;
+	return pAuxEmployee;
 }
 int employee_print(Employee* this)
 {
@@ -216,6 +219,31 @@ int employee_print(Employee* this)
 
     return retorno;
 }
+int findEmployeeById(LinkedList* pArrayListEmployee, int id, int *posicionId)
+{
+    int retorno = -1;
+    int i;
+    int idAux;
+    Employee *pEmployee;
+    if(pArrayListEmployee != NULL && id > 0 && posicionId > 0)
+    {
+        for(i = 0; i < ll_len(pArrayListEmployee); i++)
+        {
+            pEmployee = ll_get(pArrayListEmployee, i);
+            if(pEmployee != NULL)
+            {
+                employee_getId(pEmployee, &idAux);
+                if(id == idAux)
+                {
+                    *posicionId = i;
+                    retorno = 0;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
 int employee_printEmployees(Employee* this, int len)
 {
 	int retorno = -1;
@@ -275,35 +303,6 @@ Employee employee_change (Employee* this, int opcion)
 
 	return *ppAuxEmployeeEmployee;
 
-}
-
-int getIndexByEmployeeID(LinkedList* pArrayListEmployee, int id)
-{
-    int retorno;
-    int arrayLength;
-    int i;
-    Employee* pAuxEmployee;
-
-    if(pArrayListEmployee != NULL)
-    {
-        arrayLength = ll_len(pArrayListEmployee);
-
-        if(arrayLength > 0)
-        {
-            for(i = 0; i < arrayLength; i++)
-            {
-                pAuxEmployee = ll_get(pArrayListEmployee, i);
-
-                if(pAuxEmployee != NULL && pAuxEmployee->id == id)
-                {
-                    retorno = i;
-                    break;
-                }
-            }
-        }
-    }
-
-    return retorno;
 }
 int employee_compareByID(void* pElement1, void* pElement2)
 {

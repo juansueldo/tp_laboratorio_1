@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : Tp3Prueba.c
+ Name        : Tp4.c
  Author      : 
  Version     :
  Copyright   : Your copyright notice

@@ -47,5 +47,7 @@ int employee_compareBynombre(void* pElement1, void* pElement2);
 int employee_compareByhorasTrabajadas(void* pElement1, void* pElement2);
 int employee_compareBysueldo(void* pElement1, void* pElement2);
 int employee_printEmployees(Employee* this, int len);
+int employee_getId2(Employee* this);
+int findEmployeeById(LinkedList* pArrayListEmployee, int id, int *posicionId);
 
 #endif // employee_H_INCLUDED
