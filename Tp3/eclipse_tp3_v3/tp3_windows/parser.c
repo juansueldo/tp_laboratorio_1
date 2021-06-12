@@ -9,9 +9,6 @@
  */
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-	int id;
-    int horasTrabajadas;
-    int sueldo;
     int cantidad;
     int retorno = -1;
     char buffer[4][30];
@@ -31,10 +28,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
         	else
         	{
             	pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
-            	id = atoi(buffer[0]);
-            	horasTrabajadas = atoi(buffer[2]);
-            	sueldo = atoi(buffer[3]);
-            	printf(" %5d   %10s   %20d  %8d\n\n", id, buffer[1], horasTrabajadas, sueldo);
 
                 if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
@@ -68,8 +61,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
         {
             if(fread((Employee*)&auxEmployee, sizeof(Employee), 1, pFile) == 1)
             {
-                pAuxEmployee = employee_newParametrosInt (&auxEmployee.id, auxEmployee.nombre, &auxEmployee.horasTrabajadas, &auxEmployee.sueldo);
-                printf(" %5d   %10s   %20d  %8d\n\n", auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
+                pAuxEmployee = employee_newParametrosInt (auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
                 if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
                    && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)

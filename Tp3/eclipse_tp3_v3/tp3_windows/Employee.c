@@ -1,54 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "LinkedList.h"
+#include "utn.h"
 #include "Employee.h"
 
 Employee* employee_new()
 {
-    Employee* ppAuxEmployeeEmployee;
+    Employee* pAuxEmployeeEmploye;
 
-    ppAuxEmployeeEmployee = (Employee*)malloc(sizeof(Employee));
+    pAuxEmployeeEmploye = (Employee*)malloc(sizeof(Employee));
 
-    return ppAuxEmployeeEmployee;
+    return pAuxEmployeeEmploye;
 }
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr)
 {
-	Employee* this = NULL;
-	this = employee_new();
+	Employee* this = employee_new();
+	 void *retorno = NULL;
 	if(this != NULL && idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && sueldoStr != NULL)
 	{
-		if(	employee_setId(this,atoi(idStr) == -1) ||
-			employee_setNombre(this,nombreStr) == -1 ||
+		if(	!employee_setId(this,atoi(idStr)) &&
+			(employee_setNombre(this,nombreStr) == -1 ||
 			employee_setHorasTrabajadas(this,atoi(horasTrabajadasStr)) == -1 ||
-			employee_setSueldo(this,atoi(sueldoStr)) == -1)
+			employee_setSueldo(this,atoi(sueldoStr))== -1))
 		{
 			employee_delete(this);
-			this = NULL;
+			retorno = this;
 		}
-	}
-	return this;
-}
-Employee* employee_newParametrosInt(int* id,char* nombre,int* horasTrabajadas, int* sueldo)
-{
-	Employee* this = NULL;
-	this = employee_new();
-	if(this != NULL && nombre != NULL)
-	{
-		if(	employee_setId(this,*id == -1) ||
-			employee_setNombre(this,nombre) == -1 ||
-			employee_setHorasTrabajadas(this,*horasTrabajadas) == -1 ||
-			employee_setSueldo(this,*sueldo) == -1)
+		else
 		{
-			employee_delete(this);
-			this = NULL;
+			retorno = this;
 		}
 	}
-	return this;
+	return retorno;
 }
-void employee_delete()
+Employee* employee_newParametrosInt(int id, char* nombre,int horasTrabajadas, int sueldo)
 {
-	Employee* this;
-	if(this != NULL)
-	{
-		free(this);
-	}
+    void *retorno = NULL;
+    Employee* this = employee_new();
+    if( this!=NULL && id > 0 && nombre != NULL && horasTrabajadas > 0 && sueldo > 0)
+    {
+        if( !employee_setId(this, id) &&
+            !employee_setNombre(this,nombre) &&
+            !employee_setHorasTrabajadas(this,horasTrabajadas) &&
+            !employee_setSueldo(this,sueldo))
+        {
+            retorno = this;
+        }
+        else
+        {
+            employee_delete(this);
+        }
+    }
+    return retorno;
+}
+void employee_delete(Employee *this)
+{
+
+    if(this != NULL)
+    {
+        free(this);
+    }
 }
 
 int employee_setId(Employee* this,int id)
@@ -66,14 +78,11 @@ int employee_getId(Employee* this,int* id)
 	int retorno = -1;
 	if(this != NULL && id != NULL)
 	{
-		retorno = 0;
 		*id = this->id;
+		retorno = 0;
+
 	}
 	return retorno;
-}
-int employee_getId2(Employee* this)
-{
-    return this->id;
 }
 int employee_setNombre(Employee* this,char* nombre)
 {
@@ -140,38 +149,6 @@ int employee_getSueldo(Employee* this,int* sueldo)
 		*sueldo = this->sueldo;
 	}
 	return retorno;
-}
-int employee_getNextId(LinkedList* pArrayListEmployee)
-{
-    int idMayor = -1;
-    int arrayLength = 0;
-    int i;
-    Employee* pAuxEmployee;
-
-    if(pArrayListEmployee != NULL)
-    {
-        arrayLength = ll_len(pArrayListEmployee);
-
-        if(arrayLength > 0)
-        {
-            for(i = 0; i < arrayLength; i++)
-            {
-                pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, i);
-
-                if(pAuxEmployee != NULL)
-                {
-                    idMayor = pAuxEmployee->id;
-
-                    if(pAuxEmployee->id > idMayor && pAuxEmployee->id < EMPLOYEE_MAX)
-                    {
-                        idMayor = pAuxEmployee->id;
-                    }
-                 }
-               }
-            }
-    }
-
-    return idMayor;
 }
 Employee addEmployee (void)
 {
@@ -256,9 +233,9 @@ int employee_printEmployees(Employee* this, int len)
 						&& employee_getHorasTrabajadas(this, &horasTrabajadas)==0
 						&& employee_getSueldo(this, &sueldo)==0)
     {
-    	/*printf("|*******|**********************|*******|************|\n");
+    	printf("|*******|**********************|*******|************|\n");
     	printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
-    	printf("|*******|**********************|*******|************|\n");*/
+    	printf("|*******|**********************|*******|************|\n");
     	for(int i =0; i < len; i++)
     	{
     	utn_getMayusMin(this->nombre,EMPLOYEE_NOMBRE_MAX);
@@ -274,34 +251,46 @@ int employee_printEmployees(Employee* this, int len)
 }
 Employee employee_change (Employee* this, int opcion)
 {
-	Employee* ppAuxEmployeeEmployee = this;
+	Employee* pAuxEmployee = this;
 
 	switch(opcion)
 	{
 	case 1:
-		if(utn_getString(ppAuxEmployeeEmployee->nombre, 50, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3)
-				&& employee_setNombre(ppAuxEmployeeEmployee, ppAuxEmployeeEmployee->nombre))
+		if(utn_getString(pAuxEmployee->nombre, EMPLOYEE_NOMBRE_MAX, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3)
+				&& employee_setNombre(pAuxEmployee, pAuxEmployee->nombre))
 		{
-        //printf("Nombre cambiado, elija la opcion %d para aplicarlo.\n", MENU_EDIT_MAX);
+			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
+		}
+		else
+		{
+			printf("\nNOMBRE CAMBIADO\n");
 		}
     break;
-	case 2: /**< Editar las Horas Trabajadas. >*/
-    if(!utn_getNumero(&ppAuxEmployeeEmployee->horasTrabajadas, "Ingrese las horas trabajadas: ", "\nERROR", 1, 1000,3)
-       && employee_setHorasTrabajadas(ppAuxEmployeeEmployee, ppAuxEmployeeEmployee->horasTrabajadas))
-    {
-        //printf("Horas Trabajadas cambiadas, elija la opcion %d para aplicarlo.\n", MENU_EDIT_MAX);
-    }
+	case 2:
+		if(!utn_getNumero(&pAuxEmployee->horasTrabajadas, "Ingrese las horas trabajadas: ", "\nERROR", 1, 1000,3)
+				&& employee_setHorasTrabajadas(pAuxEmployee, pAuxEmployee->horasTrabajadas))
+		{
+			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
+		}
+		else
+		{
+			printf("\nHORAS TRABAJADAS CAMBIADAS\n");
+		}
     break;
-	case 3: /**< Editar el Salario. >*/
-    if(!utn_getNumero(&ppAuxEmployeeEmployee->sueldo, "Ingrese el nuevo sueldo: ", "\nERROR", 1, 1000000,3)
-       && employee_setSueldo(ppAuxEmployeeEmployee, ppAuxEmployeeEmployee->sueldo))
-    {
-        //printf("Salario cambiado, elija la opcion %d para aplicarlo.\n", MENU_EDIT_MAX);
-    }
+	case 3:
+		if(!utn_getNumero(&pAuxEmployee->sueldo, "Ingrese el nuevo sueldo: ", "\nERROR", 1, 1000000,3)
+				&& employee_setSueldo(pAuxEmployee, pAuxEmployee->sueldo))
+		{
+			printf("\nEL SUELDO NO FUE CAMBIADO\n");
+		}
+		else
+		{
+			printf("\nSUELDO CAMBIADO\n");
+		}
     break;
 	}
 
-	return *ppAuxEmployeeEmployee;
+	return *pAuxEmployee;
 
 }
 int employee_compareByID(void* pElement1, void* pElement2)

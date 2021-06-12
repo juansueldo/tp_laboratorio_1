@@ -74,24 +74,24 @@ int main()
             	}
             	else
             	{
-            		printf("\nNO SE MODIFICO EL EMPLEADO");
+            		printf("\nNO SE MODIFICO NINGUN EMPLEADO");
             	}
                 break;
             case 5:
             	if(controller_removeEmployee(listaEmpleados)==0)
             	{
-            		printf("\nSE MODIFICO UN EMPLEADO");
+            		printf("\nELIMINO UN EMPLEADO");
 		        }
 		        else
 		        {
-		            printf("\nNO SE MODIFICO EL EMPLEADO");
+		            printf("\nNO SE ELIMINO NINGUN EMPLEADO");
 		        }
                 break;
             case 6:
-            	controller_ListEmployee(listaEmpleados);//!=0)
-            	//{
-            		//printf("\nNO HAY EMPLEADOS PARA LISTAR");
-            	//}
+            	if(controller_ListEmployee(listaEmpleados)!=0)
+            	{
+            		printf("\nNO HAY EMPLEADOS PARA LISTAR");
+            	}
                break;
             case 7:
             	if(controller_sortEmployee(listaEmpleados)==0)
