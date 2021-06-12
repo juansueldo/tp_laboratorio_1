@@ -236,7 +236,7 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 	char respuesta;
 	while(reintentos > 0)
 	{
-		reintentos--;
+		//reintentos--;
 		printf("%s",mensaje);
 		fflush(stdin);
 		scanf("%c",&respuesta);
@@ -244,6 +244,7 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 		while(respuesta != 's' && respuesta != 'n')
 		{
 			printf("%s",mensajeError);
+
 		}
 		if(respuesta == 's')
 		{
@@ -252,7 +253,7 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 		}
 		else if(respuesta == 'n')
 		{
-			rtn = -1;
+			rtn = 1;
 			break;
 		}
 	}

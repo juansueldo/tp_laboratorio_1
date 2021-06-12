@@ -14,12 +14,12 @@ Employee* employee_new()
     return pAuxEmployeeEmploye;
 }
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr)
-{
+/*{
 	Employee* this = employee_new();
 	 void *retorno = NULL;
 	if(this != NULL && idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && sueldoStr != NULL)
 	{
-		if(	!employee_setId(this,atoi(idStr)) &&
+		if(	employee_setId(this,atoi(idStr)) &&
 			(employee_setNombre(this,nombreStr) == -1 ||
 			employee_setHorasTrabajadas(this,atoi(horasTrabajadasStr)) == -1 ||
 			employee_setSueldo(this,atoi(sueldoStr))== -1))
@@ -33,6 +33,33 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 		}
 	}
 	return retorno;
+}*/{
+    int id;
+    int sueldo;
+    int horasTrabajadas;
+    Employee* this = employee_new();
+    void *retorno = NULL;
+    if(this != NULL && idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && sueldoStr != NULL)
+    {
+    	id = atoi(idStr);
+    	horasTrabajadas = atoi(horasTrabajadasStr);
+    	sueldo = atoi(sueldoStr);
+
+    	if(!employee_setId(this, id) &&
+    	!employee_setNombre(this, nombreStr) &&
+    	!employee_setSueldo(this, sueldo) &&
+    	!employee_setHorasTrabajadas(this, horasTrabajadas))
+    	{
+
+    	retorno = this;
+    	}
+    	else
+    	{
+    		employee_delete(this);
+    		retorno = this;
+    	}
+    }
+    return retorno;
 }
 Employee* employee_newParametrosInt(int id, char* nombre,int horasTrabajadas, int sueldo)
 {
@@ -154,16 +181,16 @@ Employee addEmployee (void)
 {
 	Employee pAuxEmployee;
 
-	if(utn_getString(pAuxEmployee.nombre, 50, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3))
+	if(utn_getString(pAuxEmployee.nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR", 1,3))
 	{
 		printf("\nNO SE INGRESO ES NOMBRE");
 	}
 
-	if(utn_getNumero(&pAuxEmployee.horasTrabajadas,"\nIngrese las horas trabajadas: ","\nERROR",8,100,3))
+	if(utn_getNumero(&pAuxEmployee.horasTrabajadas,"\nINGRESE LAS HORAS TRABAJADAS: ","\nERROR",8,EMPLOYEE_HORA_MAX,3))
 	{
 		printf("\nNO SE INGRESARON LAS HORAS TRABAJADAS");
 	}
-	if(utn_getNumero(&pAuxEmployee.sueldo,"\nIngrese el sueldo: ","\nERROR",1000,100000,3))
+	if(utn_getNumero(&pAuxEmployee.sueldo,"\nINGRESE EL SUELDO: ","\nERROR",1000,EMPLOYEE_SUELDO_MAX,3))
 	{
 		printf("\nNO SE INGRESO EL SUELDO");
 	}
@@ -196,67 +223,13 @@ int employee_print(Employee* this)
 
     return retorno;
 }
-int findEmployeeById(LinkedList* pArrayListEmployee, int id, int *posicionId)
-{
-    int retorno = -1;
-    int i;
-    int idAux;
-    Employee *pEmployee;
-    if(pArrayListEmployee != NULL && id > 0 && posicionId > 0)
-    {
-        for(i = 0; i < ll_len(pArrayListEmployee); i++)
-        {
-            pEmployee = ll_get(pArrayListEmployee, i);
-            if(pEmployee != NULL)
-            {
-                employee_getId(pEmployee, &idAux);
-                if(id == idAux)
-                {
-                    *posicionId = i;
-                    retorno = 0;
-                }
-            }
-        }
-    }
-    return retorno;
-}
-
-int employee_printEmployees(Employee* this, int len)
-{
-	int retorno = -1;
-	int id;
-	char nombre[EMPLOYEE_NOMBRE_MAX];
-	int horasTrabajadas;
-	int sueldo;
-    if(this != NULL && len > 0 && employee_getId(this, &id)==0
-						&& employee_getNombre(this, nombre)==0
-						&& employee_getHorasTrabajadas(this, &horasTrabajadas)==0
-						&& employee_getSueldo(this, &sueldo)==0)
-    {
-    	printf("|*******|**********************|*******|************|\n");
-    	printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
-    	printf("|*******|**********************|*******|************|\n");
-    	for(int i =0; i < len; i++)
-    	{
-    	utn_getMayusMin(this->nombre,EMPLOYEE_NOMBRE_MAX);
-    	printf("| %5d | %20s | %5d | %10d |\n",
-    								id, nombre, horasTrabajadas, sueldo);
-        printf("|*******|**********************|*******|************|\n");
-    	}
-
-        retorno = 0;
-    }
-
-    return retorno;
-}
 Employee employee_change (Employee* this, int opcion)
 {
 	Employee* pAuxEmployee = this;
-
 	switch(opcion)
 	{
 	case 1:
-		if(utn_getString(pAuxEmployee->nombre, EMPLOYEE_NOMBRE_MAX, "Ingrese el nombre del Empleado: ", "\nERROR", 1,3)
+		if(utn_getString(pAuxEmployee->nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR", 1,3)
 				&& employee_setNombre(pAuxEmployee, pAuxEmployee->nombre))
 		{
 			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
@@ -267,7 +240,7 @@ Employee employee_change (Employee* this, int opcion)
 		}
     break;
 	case 2:
-		if(!utn_getNumero(&pAuxEmployee->horasTrabajadas, "Ingrese las horas trabajadas: ", "\nERROR", 1, 1000,3)
+		if(!utn_getNumero(&pAuxEmployee->horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 1, EMPLOYEE_HORA_MAX,3)
 				&& employee_setHorasTrabajadas(pAuxEmployee, pAuxEmployee->horasTrabajadas))
 		{
 			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
@@ -278,7 +251,7 @@ Employee employee_change (Employee* this, int opcion)
 		}
     break;
 	case 3:
-		if(!utn_getNumero(&pAuxEmployee->sueldo, "Ingrese el nuevo sueldo: ", "\nERROR", 1, 1000000,3)
+		if(!utn_getNumero(&pAuxEmployee->sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR", 1, EMPLOYEE_SUELDO_MAX,3)
 				&& employee_setSueldo(pAuxEmployee, pAuxEmployee->sueldo))
 		{
 			printf("\nEL SUELDO NO FUE CAMBIADO\n");
@@ -293,111 +266,111 @@ Employee employee_change (Employee* this, int opcion)
 	return *pAuxEmployee;
 
 }
-int employee_compareByID(void* pElement1, void* pElement2)
+int employee_compareByID(void* pThis1, void* pThis2)
 {
-    int compare;
-    int result;
-    Employee* aux1 = (Employee*)pElement1;
-    Employee* aux2 = (Employee*)pElement2;
+    int comparar;
+    int resultado;
+    Employee* pAuxEmployee1 = (Employee*)pThis1;
+    Employee* pAuxEmployee2 = (Employee*)pThis2;
 
-    if(aux1 != NULL && aux2 != NULL)
+    if(pAuxEmployee1 != NULL && pAuxEmployee2 != NULL)
     {
-        result = aux1->id - aux2->id;
+        resultado = pAuxEmployee1->id - pAuxEmployee2->id;
 
-        if(result > 0)
+        if(resultado > 0)
         {
-            compare = 1;
+            comparar = 1;
         }
         else
         {
-            if(result < 0)
+            if(resultado < 0)
             {
-                compare = -1;
+                comparar = -1;
             }
             else
             {
-                compare = 0;
+                comparar = 0;
             }
         }
     }
 
-    return compare;
+    return comparar;
 }
 
-int employee_compareBynombre(void* pElement1, void* pElement2)
+int employee_compareBynombre(void* pThis1, void* pThis2)
 {
-    int compare;
-    Employee* aux1 = (Employee*)pElement1;
-    Employee* aux2 = (Employee*)pElement2;
+    int comparar;
+    Employee* pAuxEmployee1 = (Employee*)pThis1;
+    Employee* pAuxEmployee2 = (Employee*)pThis2;
 
-    if(aux1 != NULL && aux2 != NULL)
+    if(pAuxEmployee1 != NULL && pAuxEmployee2 != NULL)
     {
-    	utn_getMayusMin(aux1->nombre, EMPLOYEE_NOMBRE_MAX);
-    	utn_getMayusMin(aux2->nombre, EMPLOYEE_NOMBRE_MAX);
-        compare = strcmp(aux1->nombre, aux2->nombre);
+    	utn_getMayusMin(pAuxEmployee1->nombre, EMPLOYEE_NOMBRE_MAX);
+    	utn_getMayusMin(pAuxEmployee2->nombre, EMPLOYEE_NOMBRE_MAX);
+        comparar = strcmp(pAuxEmployee1->nombre, pAuxEmployee2->nombre);
     }
 
-    return compare;
+    return comparar;
 }
 
-int employee_compareByhorasTrabajadas(void* pElement1, void* pElement2)
+int employee_compareByhorasTrabajadas(void* pThis1, void* pThis2)
 {
-    int compare;
-    int result;
-    Employee* aux1 = (Employee*)pElement1;
-    Employee* aux2 = (Employee*)pElement2;
+    int comparar;
+    int resultado;
+    Employee* pAuxEmployee1 = (Employee*)pThis1;
+    Employee* pAuxEmployee2 = (Employee*)pThis2;
 
-    if(aux1 != NULL && aux2 != NULL)
+    if(pAuxEmployee1 != NULL && pAuxEmployee2 != NULL)
     {
-        result = aux1->horasTrabajadas - aux2->horasTrabajadas;
+        resultado = pAuxEmployee1->horasTrabajadas - pAuxEmployee2->horasTrabajadas;
 
-        if(result > 0)
+        if(resultado > 0)
         {
-            compare = 1;
+            comparar = 1;
         }
         else
         {
-            if(result < 0)
+            if(resultado < 0)
             {
-                compare = -1;
+                comparar = -1;
             }
             else
             {
-                compare = 0;
+                comparar = 0;
             }
         }
     }
 
-    return compare;
+    return comparar;
 }
 
-int employee_compareBysueldo(void* pElement1, void* pElement2)
+int employee_compareBysueldo(void* pThis1, void* pThis2)
 {
-    int compare;
-    int result;
-    Employee* aux1 = (Employee*)pElement1;
-    Employee* aux2 = (Employee*)pElement2;
+    int comparar;
+    int resultado;
+    Employee* pAuxEmployee1 = (Employee*)pThis1;
+    Employee* pAuxEmployee2 = (Employee*)pThis2;
 
-    if(aux1 != NULL && aux2 != NULL)
+    if(pAuxEmployee1 != NULL && pAuxEmployee2 != NULL)
     {
-        result = aux1->sueldo- aux2->sueldo;
+        resultado = pAuxEmployee1->sueldo- pAuxEmployee2->sueldo;
 
-        if(result > 0)
+        if(resultado > 0)
         {
-            compare = 1;
+            comparar = 1;
         }
         else
         {
-            if(result < 0)
+            if(resultado < 0)
             {
-                compare = -1;
+                comparar = -1;
             }
             else
             {
-                compare = 0;
+                comparar = 0;
             }
         }
     }
 
-    return compare;
+    return comparar;
 }
