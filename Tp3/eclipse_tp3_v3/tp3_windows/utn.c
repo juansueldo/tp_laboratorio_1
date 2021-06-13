@@ -36,13 +36,13 @@ int utn_getString(char array[],int max,char mensaje[],char errorMensaje[],char m
 		while(intentos > 0)
 		{
 			intentos--;
-		printf("\n%s",mensaje);
-		fflush(stdin);
-		scanf("%s",bufferString);
+			printf("\n%s",mensaje);
+			fflush(stdin);
+			scanf("%s",bufferString);
 
 			if(utn_getTexto (bufferString) != 0)
 			{
-			aux = strlen(bufferString);
+				aux = strlen(bufferString);
 
 			if(aux >= min && aux <= max)
 			{
@@ -55,8 +55,8 @@ int utn_getString(char array[],int max,char mensaje[],char errorMensaje[],char m
 			{
 				printf("\n %s",errorMensaje);
 				fflush(stdin);
-				scanf("%s",bufferString);
-
+				//scanf("%s",bufferString);
+				//break;
 			}
 		}
 	}
@@ -236,7 +236,7 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 	char respuesta;
 	while(reintentos > 0)
 	{
-		//reintentos--;
+		reintentos--;
 		printf("%s",mensaje);
 		fflush(stdin);
 		scanf("%c",&respuesta);
@@ -244,6 +244,7 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos)
 		while(respuesta != 's' && respuesta != 'n')
 		{
 			printf("%s",mensajeError);
+			break;
 
 		}
 		if(respuesta == 's')

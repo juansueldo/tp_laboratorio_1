@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "Controller.h"
 
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
  *
@@ -12,6 +13,7 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
     int cantidad;
     int retorno = -1;
     char buffer[4][30];
+    int idAux;
     Employee* pAuxEmployee;
 
     if(pFile != NULL && pArrayListEmployee != NULL)
@@ -27,8 +29,19 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
             }
         	else
         	{
-            	pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
-
+        		int id = atoi(buffer[0]);
+        		int horasTrabajadas = atoi(buffer[2]);
+        		int sueldo = atoi(buffer[3]);
+        		idAux = controller_nextId(pArrayListEmployee);
+        		if(idAux > 0)
+        		{
+        			id = idAux;
+        			pAuxEmployee = employee_newParametrosInt(id, buffer[1], horasTrabajadas, sueldo);
+        		}
+        		else
+        		{
+        			pAuxEmployee = employee_newParametrosInt(id, buffer[1], horasTrabajadas, sueldo);
+        		}
                 if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
                    && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
@@ -54,14 +67,25 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
     int retorno = -1;
     Employee auxEmployee;
     Employee* pAuxEmployee = NULL;
+    int idAux;
 
     if(pFile != NULL && pArrayListEmployee != NULL)
     {
-        while(!feof(pFile))
+        do
         {
             if(fread((Employee*)&auxEmployee, sizeof(Employee), 1, pFile) == 1)
             {
-                pAuxEmployee = employee_newParametrosInt (auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
+            	idAux = controller_nextId(pArrayListEmployee);
+            	if(idAux >= 0)
+            	{
+            		auxEmployee.id = idAux;
+            		pAuxEmployee = employee_newParametrosInt(auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
+            	}
+            	else
+            	{
+            	    pAuxEmployee = employee_newParametrosInt(auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
+            	}
+                //pAuxEmployee = employee_newParametrosInt (auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
                 if(pAuxEmployee != NULL
                    && ll_len(pArrayListEmployee) < EMPLOYEE_MAX
                    && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
@@ -69,7 +93,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
                 	retorno = 0;
                 }
             }
-        }
+        }while(!feof(pFile));
     }
 
     return retorno;

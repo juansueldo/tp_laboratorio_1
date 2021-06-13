@@ -19,6 +19,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 {
     int verificar;
     int retorno = -1;
+    //int idAux;
     FILE* file = NULL;
 
     if(pArrayListEmployee != NULL)
@@ -38,7 +39,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
     }
 
     fclose(file);
-
     return retorno;
 }
 
@@ -86,7 +86,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     int horasTrabajadas;
     int sueldo;
     char nombre[EMPLOYEE_NOMBRE_MAX];
-    Employee* ppAuxEmployeeEmployee = employee_new();
+    Employee* pAuxEmployee = employee_new();
 
     if(pArrayListEmployee != NULL)
     {
@@ -101,8 +101,8 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     		           && !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR", 0, EMPLOYEE_SUELDO_MAX, 3))
     		  {
     		      utn_getMayusMin(nombre,EMPLOYEE_NOMBRE_MAX);
-    		      ppAuxEmployeeEmployee = employee_newParametrosInt(1, nombre, horasTrabajadas, sueldo);
-    		      if(ppAuxEmployeeEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)ppAuxEmployeeEmployee) == 0)
+    		      pAuxEmployee = employee_newParametrosInt(1, nombre, horasTrabajadas, sueldo);
+    		      if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
     		       {
     		                retorno = 0;
     		       }
@@ -119,8 +119,8 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 					&& !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR", 0, EMPLOYEE_SUELDO_MAX, 3))
         {
         	utn_getMayusMin(nombre,EMPLOYEE_NOMBRE_MAX);
-        	ppAuxEmployeeEmployee = employee_newParametrosInt(id, nombre, horasTrabajadas, sueldo);
-            if(ppAuxEmployeeEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)ppAuxEmployeeEmployee) == 0)
+        	pAuxEmployee = employee_newParametrosInt(id, nombre, horasTrabajadas, sueldo);
+            if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
             {
                 retorno = 0;
             }
@@ -150,7 +150,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     if(pArrayListEmployee != NULL && ll_len(pArrayListEmployee)>0)
     {
         controller_ListEmployee(pArrayListEmployee);
-        if(utn_getNumero(&id, "\nINGRESE EL ID: ", "\nERROR", 1,EMPLOYEE_MAX,3)==0)
+        if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A MODIFICAR: ", "\nERROR", 1,EMPLOYEE_MAX,3)==0)
         {
         	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, id-1);
         	if(pAuxEmployee != NULL)
@@ -194,7 +194,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     if(pArrayListEmployee != NULL && ppAuxEmployeeEmployee != NULL)
     {
     	controller_ListEmployee(pArrayListEmployee);
-    	if(utn_getNumero(&id, "\nINGRESE EL ID: ", "\nERROR", 1,2000,3)==0)
+    	if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A ELIMINAR: ", "\nERROR", 1,2000,3)==0)
     	{
              index = controller_getIndexById(pArrayListEmployee, id);
              if(ppAuxEmployeeEmployee != NULL && index+1 == id)
@@ -265,12 +265,12 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
              {
         		do
         		{
-        			respuesta = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR:  ","\nERROR", 3);
+        			respuesta = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR: ","\nERROR", 3);
         			pantalla+=999;
         		}while(respuesta != 0);
               }
         	}
-        	respuesta2 = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR:  ","\nERROR", 3);
+        	respuesta2 = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR: ","\nERROR", 3);
 
         }while(respuesta2 != 0);
         retorno = 0;
@@ -300,8 +300,15 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
                 if(opcionMenu > 0 && opcionMenu < 5)
                 {
                 	orden = utn_getRespuesta ("\nQUIERE ORDENAR DE MANERA ASCENDENTE [S] DESCENDENTE [N]: ","\nERROR", 3);
-
-                	printf("\nPROCESANDO ORDENAMIENTO...\n");
+                	if(orden < 0)
+                	{
+                		printf("\nNO SE REALIZO EL ORDENAMIENTO\n");
+                	}
+                	else
+                	{
+                		printf("\nPROCESANDO ORDENAMIENTO...\n");
+                		printf("ESTO PUEDE TARDAR UNOS MINUTOS...\n");
+                	}
                     switch(opcionMenu)
                     {
                     case 1:
@@ -382,6 +389,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 
     fclose(file);
     free(ppAuxEmployeeEmployee);
+    free(pArrayListEmployee);
     return retorno;
 }
 
@@ -399,7 +407,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     int retorno = -1;
     int employeeQTY;
     int i;
-    Employee* ppAuxEmployeeEmployee;
+    Employee* pAuxEmployee;
 
     if(pArrayListEmployee != NULL)
     {
@@ -411,9 +419,9 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
         {
             for(i = 0; i < employeeQTY; i++)
             {
-                ppAuxEmployeeEmployee = (Employee*)ll_get(pArrayListEmployee, i);
+            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, i);
 
-                if(ppAuxEmployeeEmployee == NULL || fwrite((Employee*)ppAuxEmployeeEmployee, sizeof(Employee), 1, file) != 1)
+                if(pAuxEmployee == NULL || fwrite((Employee*)pAuxEmployee, sizeof(Employee), 1, file) != 1)
                 {
                     break;
                 }
@@ -427,7 +435,8 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     }
 
     fclose(file);
-    free(ppAuxEmployeeEmployee);
+    free(pAuxEmployee);
+    //free(pArrayListEmployee);
     return retorno;
 }
 int controller_nextId(LinkedList* pArrayListEmployee)
@@ -454,8 +463,9 @@ int controller_nextId(LinkedList* pArrayListEmployee)
                     idMax = idpAuxEmployee;
                 }
             }
+            retorno = idMax+1;
         }
-        retorno = idMax+1;
+       // retorno = idMax+1;
     }
     return retorno;
 }

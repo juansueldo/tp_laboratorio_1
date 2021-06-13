@@ -14,26 +14,7 @@ Employee* employee_new()
     return pAuxEmployeeEmploye;
 }
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr)
-/*{
-	Employee* this = employee_new();
-	 void *retorno = NULL;
-	if(this != NULL && idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && sueldoStr != NULL)
-	{
-		if(	employee_setId(this,atoi(idStr)) &&
-			(employee_setNombre(this,nombreStr) == -1 ||
-			employee_setHorasTrabajadas(this,atoi(horasTrabajadasStr)) == -1 ||
-			employee_setSueldo(this,atoi(sueldoStr))== -1))
-		{
-			employee_delete(this);
-			retorno = this;
-		}
-		else
-		{
-			retorno = this;
-		}
-	}
-	return retorno;
-}*/{
+{
     int id;
     int sueldo;
     int horasTrabajadas;
@@ -50,8 +31,7 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
     	!employee_setSueldo(this, sueldo) &&
     	!employee_setHorasTrabajadas(this, horasTrabajadas))
     	{
-
-    	retorno = this;
+    		retorno = this;
     	}
     	else
     	{
