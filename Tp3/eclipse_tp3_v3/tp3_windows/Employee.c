@@ -157,24 +157,43 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	}
 	return retorno;
 }
-Employee addEmployee (void)
+Employee* addEmployee (int* id)
 {
-	Employee pAuxEmployee;
-
-	if(utn_getString(pAuxEmployee.nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR", 1,3))
+	Employee* pAuxEmployee = employee_new();
+	char nombre[EMPLOYEE_NOMBRE_MAX];
+	int horasTrabajadas;
+	int sueldo;
+	employee_getId(pAuxEmployee, id);
+	printf("\nID %d",*id);
+	if(!utn_getString(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR", 1,3)
+			&& employee_setNombre(pAuxEmployee, nombre))
 	{
 		printf("\nNO SE INGRESO ES NOMBRE");
 	}
-
-	if(utn_getNumero(&pAuxEmployee.horasTrabajadas,"\nINGRESE LAS HORAS TRABAJADAS: ","\nERROR",8,EMPLOYEE_HORA_MAX,3))
+	else
+	{
+		employee_getNombre(pAuxEmployee, nombre);
+	}
+	if(utn_getNumero(&horasTrabajadas,"\nINGRESE LAS HORAS TRABAJADAS: ","\nERROR",8,EMPLOYEE_HORA_MAX,3) &&
+			employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
 	{
 		printf("\nNO SE INGRESARON LAS HORAS TRABAJADAS");
 	}
-	if(utn_getNumero(&pAuxEmployee.sueldo,"\nINGRESE EL SUELDO: ","\nERROR",1000,EMPLOYEE_SUELDO_MAX,3))
+	else
+	{
+		employee_getHorasTrabajadas(pAuxEmployee, &horasTrabajadas);
+		printf("\nHORAS %d",horasTrabajadas);
+	}
+	if(!utn_getNumero(&sueldo,"\nINGRESE EL SUELDO: ","\nERROR",1000,EMPLOYEE_SUELDO_MAX,3)
+			&& employee_setSueldo(pAuxEmployee, sueldo))
 	{
 		printf("\nNO SE INGRESO EL SUELDO");
 	}
-
+	else
+	{
+		employee_getSueldo(pAuxEmployee, &sueldo);
+	}
+	pAuxEmployee = employee_newParametrosInt(*id, nombre,horasTrabajadas,sueldo);
 	return pAuxEmployee;
 }
 int employee_print(Employee* this)
@@ -206,38 +225,44 @@ int employee_print(Employee* this)
 Employee employee_change (Employee* this, int opcion)
 {
 	Employee* pAuxEmployee = this;
+	char nombre[EMPLOYEE_NOMBRE_MAX];
+	int horasTrabajadas;
+	int sueldo;
 	switch(opcion)
 	{
 	case 1:
-		if(utn_getString(pAuxEmployee->nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR", 1,3)
-				&& employee_setNombre(pAuxEmployee, pAuxEmployee->nombre))
+		if(!utn_getString(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR", 1,3)
+				&& employee_setNombre(pAuxEmployee,nombre))
 		{
 			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
 		}
 		else
 		{
+			employee_getNombre(pAuxEmployee, nombre);
 			printf("\nNOMBRE CAMBIADO\n");
 		}
     break;
 	case 2:
-		if(!utn_getNumero(&pAuxEmployee->horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 1, EMPLOYEE_HORA_MAX,3)
-				&& employee_setHorasTrabajadas(pAuxEmployee, pAuxEmployee->horasTrabajadas))
+		if(!utn_getNumero(&horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 1, EMPLOYEE_HORA_MAX,3)
+				&& employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
 		{
 			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
 		}
 		else
 		{
+			employee_getHorasTrabajadas(pAuxEmployee, &horasTrabajadas);
 			printf("\nHORAS TRABAJADAS CAMBIADAS\n");
 		}
     break;
 	case 3:
-		if(!utn_getNumero(&pAuxEmployee->sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR", 1, EMPLOYEE_SUELDO_MAX,3)
-				&& employee_setSueldo(pAuxEmployee, pAuxEmployee->sueldo))
+		if(!utn_getNumero(&sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR", 1, EMPLOYEE_SUELDO_MAX,3)
+				&& employee_setSueldo(pAuxEmployee, sueldo))
 		{
 			printf("\nEL SUELDO NO FUE CAMBIADO\n");
 		}
 		else
 		{
+			employee_getSueldo(pAuxEmployee, &sueldo);
 			printf("\nSUELDO CAMBIADO\n");
 		}
     break;

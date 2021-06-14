@@ -109,7 +109,7 @@ int employee_setSueldo(Employee* this,int sueldo);
 int employee_getSueldo(Employee* this,int* sueldo);
 
 
-Employee addEmployee (void);
+Employee* addEmployee (int* id);
 /**brief Muestra en pantalla un empleado
  *	@param this puntero a Empleado.
  *	@return retorna 0 Si se pudo mostrar el empleado y -1 si no se pudo mostrar

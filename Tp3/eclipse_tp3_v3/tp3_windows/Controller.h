@@ -77,5 +77,5 @@ int controller_nextId(LinkedList* pArrayListEmployee);
  * @param id del empleado a buscar
  * @return retorna el indice del id del empleado que se busca, sino existe retorna -1
  */
-int controller_getIndexById (LinkedList* pArrayListEmployee, int id);
+int controller_getIndexById (LinkedList* pArrayListEmployee, int* id);
 

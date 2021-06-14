@@ -26,7 +26,7 @@ int main()
 	system("cls");
 	setbuf(stdout,NULL);
     int option;
-    int flag = 1;
+    //int flag = 1;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{
@@ -34,7 +34,9 @@ int main()
         switch(option)
         {
             case 1:
-                if(flag && controller_loadFromText("data.csv",listaEmpleados) == 0)
+            	printf("CARGANDO DATOS...\n");
+            	printf("ESTO PUEDE DEMORAR UNOS MINUTOS...\n");
+                if(controller_loadFromText("data.csv",listaEmpleados) == 0)
                 {
                 	printf("\nSE LEYERON LOS DATOS\n");
                 }
@@ -44,7 +46,9 @@ int main()
                 }
                 break;
             case 2:
-            	if(flag && controller_loadFromBinary("Prueba.bin",listaEmpleados) == 0)
+            	printf("CARGANDO DATOS...\n");
+            	printf("ESTO PUEDE DEMORAR UNOS MINUTOS...\n");
+            	if(controller_loadFromBinary("Prueba.bin",listaEmpleados) == 0)
             	{
             	   printf("\nSE LEYERON LOS DATOS\n");
             	}
@@ -54,7 +58,7 @@ int main()
             	}
             	break;
             case 3:
-            	if(flag && controller_addEmployee(listaEmpleados)==0)
+            	if(controller_addEmployee(listaEmpleados)==0)
             	{
             		printf("\nSE AGREGO UN EMPLEADO");
             	}
@@ -64,7 +68,8 @@ int main()
             	}
             	break;
             case 4:
-            	if(flag && controller_editEmployee(listaEmpleados)==0)
+            	controller_ListEmployee(listaEmpleados);
+            	if(controller_editEmployee(listaEmpleados)==0)
             	{
             		printf("\nSE MODIFICO UN EMPLEADO");
             	}
@@ -74,7 +79,7 @@ int main()
             	}
                 break;
             case 5:
-            	if(flag && controller_removeEmployee(listaEmpleados)==0)
+            	if(controller_removeEmployee(listaEmpleados)==0)
             	{
             		printf("\nELIMINO UN EMPLEADO");
 		        }
@@ -84,22 +89,21 @@ int main()
 		        }
                 break;
             case 6:
-            	if(flag && controller_ListEmployee(listaEmpleados)!=0)
+            	if(controller_ListEmployee(listaEmpleados)!=0)
             	{
             		printf("\nNO HAY EMPLEADOS PARA LISTAR");
             	}
                break;
             case 7:
-            	if(flag && controller_sortEmployee(listaEmpleados)==0)
+            	if(controller_sortEmployee(listaEmpleados)==0)
             	{
             		printf("\nSE ORDENARON LOS EMPLEADOS");
             	}
                break;
             case 8:
-            	if(flag && controller_saveAsText("Prueba.csv",listaEmpleados)==0)
+            	if(controller_saveAsText("Prueba.csv",listaEmpleados)==0)
             	{
             		printf("\nSE GUARDARON LOS DATOS");
-            		flag = 0;
             	}
             	else
             	{
@@ -110,7 +114,6 @@ int main()
             	if(controller_saveAsBinary("Prueba.bin" , listaEmpleados)==0)
             	{
             		printf("\nSE GUARDARON LOS DATOS");
-            		flag = 0;
             	}
             	else
             	{
