@@ -7,11 +7,11 @@
 
 Employee* employee_new()
 {
-    Employee* pAuxEmployeeEmploye;
+    Employee* pAuxEmployee;
 
-    pAuxEmployeeEmploye = (Employee*)malloc(sizeof(Employee));
+    pAuxEmployee = (Employee*)malloc(sizeof(Employee));
 
-    return pAuxEmployeeEmploye;
+    return pAuxEmployee;
 }
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr)
 {

@@ -38,7 +38,7 @@ void menu_editarEmpleado (int *opcion)
 utn_menu(opcion,"\nINGRESE:", "\nERROR", 1, 4, 3);
 
 }
-void menu_sort (int *opcion)
+void menu_ordenamiento (int *opcion)
 {
 	printf("\n ");
 	printf("\n |***********************************************************************************|\n");

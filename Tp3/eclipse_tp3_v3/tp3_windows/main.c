@@ -26,18 +26,15 @@ int main()
 	system("cls");
 	setbuf(stdout,NULL);
     int option;
-    int len;
-    int lenBin;
+    int flag = 1;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{
     	menu_principal (&option);
-    	fflush(stdin);
         switch(option)
         {
             case 1:
-            	len = controller_loadFromText("data.csv",listaEmpleados);
-                if(len == 0)
+                if(controller_loadFromText("data.csv",listaEmpleados) == 0)
                 {
                 	printf("\nSE LEYERON LOS DATOS\n");
                 }
@@ -47,8 +44,7 @@ int main()
                 }
                 break;
             case 2:
-            	lenBin = controller_loadFromBinary("Prueba.bin",listaEmpleados);
-            	if(lenBin == 0)
+            	if(controller_loadFromBinary("Prueba.bin",listaEmpleados) == 0)
             	{
             	   printf("\nSE LEYERON LOS DATOS\n");
             	}
@@ -121,6 +117,7 @@ int main()
                break;
             case 10:
             	printf("\nFIN");
+            	ll_deleteLinkedList(listaEmpleados);
             	break;
         }
     }while(option != 10);

@@ -19,7 +19,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 {
     int verificar;
     int retorno = -1;
-    //int idAux;
     FILE* file = NULL;
 
     if(pArrayListEmployee != NULL)
@@ -88,6 +87,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     char nombre[EMPLOYEE_NOMBRE_MAX];
     Employee* pAuxEmployee = employee_new();
 
+    //pArrayListEmployee = ll_newLinkedList();
     if(pArrayListEmployee != NULL)
     {
     	if(ll_isEmpty(pArrayListEmployee))
@@ -265,7 +265,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
              {
         		do
         		{
-        			respuesta = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR: ","\nERROR", 3);
+        			respuesta = utn_getRespuesta ("\nPRESIONE [S] PARA MOSTRAR MAS EMPLEADOS: ","\nERROR", 3);
         			pantalla+=999;
         		}while(respuesta != 0);
               }
@@ -296,10 +296,10 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
     {
             do
             {
-                menu_sort(&opcionMenu);
+            	menu_ordenamiento(&opcionMenu);
                 if(opcionMenu > 0 && opcionMenu < 5)
                 {
-                	orden = utn_getRespuesta ("\nQUIERE ORDENAR DE MANERA ASCENDENTE [S] DESCENDENTE [N]: ","\nERROR", 3);
+                	orden = utn_getRespuesta ("\nQUIERE ORDENAR DE MANERA DESCENDENTE [S] ASCENDENTE [N]: ","\nERROR", 3);
                 	if(orden < 0)
                 	{
                 		printf("\nNO SE REALIZO EL ORDENAMIENTO\n");
@@ -358,7 +358,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
     int retorno = -1;
     int employeeQTY;
     int i;
-    Employee* ppAuxEmployeeEmployee;
+    Employee* pAuxEmployee;
 
     if(pArrayListEmployee != NULL)
     {
@@ -372,9 +372,9 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
         {
             for(i = 0; i < employeeQTY; i++)
             {
-                ppAuxEmployeeEmployee = (Employee*)ll_get(pArrayListEmployee, i);
+            	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, i);
 
-                if(ppAuxEmployeeEmployee == NULL || fprintf(file, "%d,%s,%d,%d\n", ppAuxEmployeeEmployee->id, ppAuxEmployeeEmployee->nombre, ppAuxEmployeeEmployee->horasTrabajadas, ppAuxEmployeeEmployee->sueldo) == -1)
+                if(pAuxEmployee == NULL || fprintf(file, "%d,%s,%d,%d\n", pAuxEmployee->id, pAuxEmployee->nombre, pAuxEmployee->horasTrabajadas, pAuxEmployee->sueldo) == -1)
                 {
                     break;
                 }
@@ -383,13 +383,14 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 
         if(i > 0 && i == employeeQTY)
         {
+        	ll_deleteLinkedList(pArrayListEmployee);
         	retorno = 0;
         }
     }
 
     fclose(file);
-    free(ppAuxEmployeeEmployee);
-    free(pArrayListEmployee);
+    free(pAuxEmployee);
+   // free(pArrayListEmployee);
     return retorno;
 }
 
@@ -430,6 +431,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 
         if(i > 0 && i == employeeQTY)
         {
+        	//ll_deleteLinkedList(pArrayListEmployee);
             retorno = 0;
         }
     }

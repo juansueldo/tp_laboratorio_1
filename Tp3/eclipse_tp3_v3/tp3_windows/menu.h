@@ -5,7 +5,7 @@
 
 int menu_principal (int* opcion);
 void menu_editarEmpleado (int *opcion);
-void menu_sort (int *opcion);
+void menu_ordenamiento (int *opcion);
 
 
 #endif /* MENU_H_ */
