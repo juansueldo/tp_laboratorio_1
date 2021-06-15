@@ -68,7 +68,6 @@ int main()
             	}
             	break;
             case 4:
-            	controller_ListEmployee(listaEmpleados);
             	if(controller_editEmployee(listaEmpleados)==0)
             	{
             		printf("\nSE MODIFICO UN EMPLEADO");
