@@ -157,45 +157,6 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	}
 	return retorno;
 }
-Employee* addEmployee (int* id)
-{
-	Employee* pAuxEmployee = employee_new();
-	char nombre[EMPLOYEE_NOMBRE_MAX];
-	int horasTrabajadas;
-	int sueldo;
-	employee_getId(pAuxEmployee, id);
-	printf("\nID %d",*id);
-	if(!utn_getString(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR", 1,3)
-			&& employee_setNombre(pAuxEmployee, nombre))
-	{
-		printf("\nNO SE INGRESO ES NOMBRE");
-	}
-	else
-	{
-		employee_getNombre(pAuxEmployee, nombre);
-	}
-	if(utn_getNumero(&horasTrabajadas,"\nINGRESE LAS HORAS TRABAJADAS: ","\nERROR",8,EMPLOYEE_HORA_MAX,3) &&
-			employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
-	{
-		printf("\nNO SE INGRESARON LAS HORAS TRABAJADAS");
-	}
-	else
-	{
-		employee_getHorasTrabajadas(pAuxEmployee, &horasTrabajadas);
-		printf("\nHORAS %d",horasTrabajadas);
-	}
-	if(!utn_getNumero(&sueldo,"\nINGRESE EL SUELDO: ","\nERROR",1000,EMPLOYEE_SUELDO_MAX,3)
-			&& employee_setSueldo(pAuxEmployee, sueldo))
-	{
-		printf("\nNO SE INGRESO EL SUELDO");
-	}
-	else
-	{
-		employee_getSueldo(pAuxEmployee, &sueldo);
-	}
-	pAuxEmployee = employee_newParametrosInt(*id, nombre,horasTrabajadas,sueldo);
-	return pAuxEmployee;
-}
 int employee_print(Employee* this)
 {
     int retorno = -1;
@@ -358,7 +319,7 @@ int employee_compareBysueldo(void* pThis1, void* pThis2)
 
     if(pAuxEmployee1 != NULL && pAuxEmployee2 != NULL)
     {
-        resultado = pAuxEmployee1->sueldo- pAuxEmployee2->sueldo;
+        resultado = pAuxEmployee1->sueldo - pAuxEmployee2->sueldo;
 
         if(resultado > 0)
         {

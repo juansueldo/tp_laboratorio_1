@@ -65,10 +65,6 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
     int retorno = -1;
     Employee auxEmployee;
     Employee* pAuxEmployee = NULL;
-    //int id;
-    //char nombre[EMPLOYEE_NOMBRE_MAX];
-    //int horasTrabajadas;
-    //int sueldo;
     int idAux = 0;
 
     if(pFile != NULL && pArrayListEmployee != NULL)

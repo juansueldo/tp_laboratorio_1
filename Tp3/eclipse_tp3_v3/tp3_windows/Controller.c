@@ -200,19 +200,20 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     	if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A ELIMINAR: ", "\nERROR", 1,2000,3)==0)
     	{
              index = controller_getIndexById(pArrayListEmployee, &id);
-             printf("\nINDEX %d\n",index);
-             printf("\nID %d\n",id);
              if(pAuxEmployee != NULL && index+1 == id)
                 {
             	 	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
-                	employee_print(pAuxEmployee);
-                	if(utn_getRespuesta ("\nQUIERE DAR DE BAJA ESTE EMPLEADO? [S] o [N]: ","\nERROR", 3) == 0)
-                	{
+            	 	if(pAuxEmployee != NULL)
+            	 	{
+            	 		employee_print(pAuxEmployee);
+            	 		if(utn_getRespuesta ("\nQUIERE DAR DE BAJA ESTE EMPLEADO? [S] o [N]: ","\nERROR", 3) == 0)
+            	 		{
                 		ll_remove(pArrayListEmployee, index);
                 		employee_delete(pAuxEmployee);
                 		//pAuxEmployee = NULL;
                 		retorno = 0;
                 	}
+            	 	}
                 }
                 else
                 {

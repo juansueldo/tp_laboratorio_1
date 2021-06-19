@@ -48,7 +48,7 @@ int main()
             case 2:
             	printf("CARGANDO DATOS...\n");
             	printf("ESTO PUEDE DEMORAR UNOS MINUTOS...\n");
-            	if(controller_loadFromBinary("Prueba.bin",listaEmpleados) == 0)
+            	if(controller_loadFromBinary("data.bin",listaEmpleados) == 0)
             	{
             	   printf("\nSE LEYERON LOS DATOS\n");
             	}
@@ -100,7 +100,7 @@ int main()
             	}
                break;
             case 8:
-            	if(controller_saveAsText("Prueba.csv",listaEmpleados)==0)
+            	if(controller_saveAsText("data.csv",listaEmpleados)==0)
             	{
             		printf("\nSE GUARDARON LOS DATOS");
             	}
@@ -110,7 +110,7 @@ int main()
             	}
                break;
             case 9:
-            	if(controller_saveAsBinary("Prueba.bin" , listaEmpleados)==0)
+            	if(controller_saveAsBinary("data.bin" , listaEmpleados)==0)
             	{
             		printf("\nSE GUARDARON LOS DATOS");
             	}

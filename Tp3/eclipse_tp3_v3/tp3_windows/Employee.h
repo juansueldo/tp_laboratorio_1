@@ -121,13 +121,25 @@ int employee_print(Employee* this);
  *@return retorna el empleado con los campos modificados
  */
 Employee employee_change (Employee* this, int opcion);
-
+/**brief Compara dos elementos por el ID
+ *@param pThis1 puntero a void
+ *@param pThis2 puntero a void
+ *@return retorna cero si los ID son iguales, -1 si el primero es mayor al segundo y 1 si el segundo es mayor al primero
+ */
 int employee_compareByID(void* pThis1, void* pThis2);
 
 int employee_compareBynombre(void* pThis1, void* pThis2);
-
+/**brief Compara dos elementos por las horas trabajadas
+ *@param pThis1 puntero a void
+ *@param pThis2 puntero a void
+ *@return retorna cero si las horas trabajadas son iguales, -1 si el primero es mayor al segundo y 1 si el segundo es mayor al primero
+ */
 int employee_compareByhorasTrabajadas(void* pThis1, void* pThis2);
-
+/**brief Compara dos elementos por el Sueldo
+ *@param pThis1 puntero a void
+ *@param pThis2 puntero a void
+ *@return retorna cero si los sueldos son iguales, -1 si el primero es mayor al segundo y 1 si el segundo es mayor al primero
+ */
 int employee_compareBysueldo(void* pThis1, void* pThis2);
 
 
