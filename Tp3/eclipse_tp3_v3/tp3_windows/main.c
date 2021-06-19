@@ -26,7 +26,7 @@ int main()
 	system("cls");
 	setbuf(stdout,NULL);
     int option;
-    //int flag = 1;
+
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{
