@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "../inc/LinkedList.h"
+#include "Employee.h"
+#include "parser.h"
+#include "menu.h"
+#include "utn.h"
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * @param path char* recibe el archivo de texto a leer
