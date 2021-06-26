@@ -133,7 +133,13 @@ Employee employee_change (Employee* this, int opcion);
  *@return retorna cero si los ID son iguales, -1 si el primero es mayor al segundo y 1 si el segundo es mayor al primero
  */
 int employee_compareByID(void* pThis1, void* pThis2);
-
+/** \brief Compara elementos por el nombre
+ *
+ *@param pThis1 puntero a void
+ *@param pThis2 puntero a void
+ *@return retorna 0 si tienen el mismo nombre, -1 si el primer nombre esta primero, 1 si el segundo nombre esta primero.
+ *
+ */
 int employee_compareBynombre(void* pThis1, void* pThis2);
 /**brief Compara dos elementos por las horas trabajadas
  *@param pThis1 puntero a void
