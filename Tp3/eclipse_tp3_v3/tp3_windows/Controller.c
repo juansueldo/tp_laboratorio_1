@@ -59,7 +59,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 
         if(file != NULL)
         {
-        	verificar = parser_EmployeeFromBinary(file, pArrayListEmployee);
+        	//verificar = parser_EmployeeFromBinary(file, pArrayListEmployee);
 
         	if(verificar == 0)
         	{
@@ -101,7 +101,10 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     		         && !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR", 0, EMPLOYEE_SUELDO_MAX, 3))
     		  {
     		     utn_getMayusMin(nombre,EMPLOYEE_NOMBRE_MAX);
-    		      pAuxEmployee = employee_newParametrosInt(1, nombre, horasTrabajadas, sueldo);
+    		      employee_setId(pAuxEmployee, id);
+    		      employee_setNombre(pAuxEmployee, nombre);
+    		      employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas);
+    		      employee_setSueldo(pAuxEmployee, sueldo);
     		      if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
     		       {
     		            retorno = 0;
@@ -119,7 +122,10 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 					&& !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR", 0, EMPLOYEE_SUELDO_MAX, 3))
         {
         	utn_getMayusMin(nombre,EMPLOYEE_NOMBRE_MAX);
-        	pAuxEmployee = employee_newParametrosInt(id, nombre, horasTrabajadas, sueldo);
+        	employee_setId(pAuxEmployee, id);
+        	employee_setNombre(pAuxEmployee, nombre);
+        	employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas);
+        	employee_setSueldo(pAuxEmployee, sueldo);
             if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
             {
                 retorno = 0;
@@ -144,8 +150,9 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
     int id;
-    int index;
+    int auxId;
     int editMenu;
+    int i;
     Employee* pAuxEmployee = employee_new();
 
     if(pArrayListEmployee != NULL && ll_len(pArrayListEmployee)>0)
@@ -153,30 +160,35 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     	controller_ListEmployee(pArrayListEmployee);
         if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A MODIFICAR: ", "\nERROR", 1,EMPLOYEE_MAX,3)==0)
         {
-        	index = controller_getIndexById(pArrayListEmployee, &id);
-
-        	if(pAuxEmployee != NULL && index+1 ==  id)
+        	for(i = 0 ; i < ll_len(pArrayListEmployee); i++)
         	{
-        		pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
+        		pAuxEmployee = (Employee*)ll_get(pArrayListEmployee,i);
+        		employee_getId(pAuxEmployee, &auxId);
+        	if(pAuxEmployee != NULL && auxId ==  id)
+        	{
             	employee_print(pAuxEmployee);
 
             	if(utn_getRespuesta ("\nQUIERE MODIFICAR ESTE EMPLEADO? [S] o [N]: ","\nERROR", 3) == 0)
             	{
-            	do
-            	{
-                    menu_editarEmpleado(&editMenu);
-                    employee_change (pAuxEmployee, editMenu);
-                    retorno = 0;
-                }while(editMenu != 4);
+            		do
+            		{
+            			menu_editarEmpleado(&editMenu);
+                    	employee_change (pAuxEmployee, editMenu);
+                    	retorno = 0;
+
+            		}while(editMenu != 4);
             	}
-             }
+            	break;
+
+        	}
+        	}
+        	}
             else
             {
                 printf("NO EXISTE EL EMPLEADO INGRESADO.\n");
             }
-        }
-    }
 
+    }
     return retorno;
 }
 
@@ -191,7 +203,8 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
     int id;
-    int index;
+    int auxId;
+    int i;
     Employee* pAuxEmployee = employee_new();
 
     if(pArrayListEmployee != NULL && pAuxEmployee != NULL)
@@ -199,29 +212,29 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     	controller_ListEmployee(pArrayListEmployee);
     	if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A ELIMINAR: ", "\nERROR", 1,2000,3)==0)
     	{
-             index = controller_getIndexById(pArrayListEmployee, &id);
-             if(pAuxEmployee != NULL && index+1 == id)
-                {
-            	 	pAuxEmployee = (Employee*)ll_get(pArrayListEmployee, index);
-            	 	if(pAuxEmployee != NULL)
-            	 	{
-            	 		employee_print(pAuxEmployee);
-            	 		if(utn_getRespuesta ("\nQUIERE DAR DE BAJA ESTE EMPLEADO? [S] o [N]: ","\nERROR", 3) == 0)
-            	 		{
-                		ll_remove(pArrayListEmployee, index);
-                		employee_delete(pAuxEmployee);
-                		//pAuxEmployee = NULL;
-                		retorno = 0;
-                	}
-            	 	}
+    		for(i = 0 ; i < ll_len(pArrayListEmployee); i++)
+    		  {
+    		       pAuxEmployee = (Employee*)ll_get(pArrayListEmployee,i);
+    		        employee_getId(pAuxEmployee, &auxId);
+    		       if(pAuxEmployee != NULL && auxId ==  id)
+    		        {
+    		            	employee_print(pAuxEmployee);
+
+            	if(utn_getRespuesta ("\nQUIERE DAR DE BAJA ESTE EMPLEADO? [S] o [N]: ","\nERROR", 3) == 0)
+            	{
+                	ll_remove(pArrayListEmployee, i);
+                	//employee_delete(pAuxEmployee);
+                	retorno = 0;
+            	}
+            		break;
+            	}
                 }
+    	}
                 else
                 {
                      printf("NO EXISTE EL EMPLEADO INGRESADO.\n");
                 }
           }
-
-        }
 
     return retorno;
 }

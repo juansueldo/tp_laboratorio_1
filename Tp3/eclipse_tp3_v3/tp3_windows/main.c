@@ -109,7 +109,7 @@ int main()
             		printf("\nNO SE GUARDARON LOS DATOS");
             	}
                break;
-            case 9:
+          /*  case 9:
             	if(controller_saveAsBinary("data.bin" , listaEmpleados)==0)
             	{
             		printf("\nSE GUARDARON LOS DATOS");
@@ -118,7 +118,7 @@ int main()
             	{
             		printf("\nNO SE GUARDARON LOS DATOS");
             	}
-               break;
+               break;*/
             case 10:
             	printf("\nFIN");
             	ll_deleteLinkedList(listaEmpleados);
