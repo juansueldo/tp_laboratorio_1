@@ -166,6 +166,8 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
         				{
         					menu_editarEmpleado(&editMenu);
         					employee_change (pAuxEmployee, editMenu);
+        					printf("\nDATOS ACTUALIZADOS\n");
+        					employee_print(pAuxEmployee);
         					retorno = 0;
         				}while(editMenu != 4);
         			}
