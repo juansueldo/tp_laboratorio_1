@@ -1,5 +1,9 @@
 #ifndef UTN_H_
 #define UTN_H_
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * @brief Verifica si el entero ingresado es un numero valido

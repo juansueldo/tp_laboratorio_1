@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "LinkedList.h"
-#include "utn.h"
 #include "Employee.h"
 
 Employee* employee_new()

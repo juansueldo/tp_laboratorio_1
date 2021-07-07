@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "LinkedList.h"
+
+#include "Controller.h"
 #include "Employee.h"
+
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * @param path char* archivo que contiene los datos a parsear

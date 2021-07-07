@@ -1,6 +1,9 @@
 #ifndef employee_H_INCLUDED
 #define employee_H_INCLUDED
 
+#include "utn.h"
+#include "LinkedList.h"
+
 #define EMPLOYEE_NOMBRE_MAX 60
 #define EMPLOYEE_HORA_MAX 500
 #define EMPLOYEE_SUELDO_MAX 900000
