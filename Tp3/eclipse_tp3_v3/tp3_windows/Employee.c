@@ -162,7 +162,7 @@ Employee employee_change (Employee* this, int opcion)
 	switch(opcion)
 	{
 	case 1:
-		if(!utn_getStringWithSpaces(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR", 1,3)
+		if(!utn_getStringWithSpaces(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR. REINGRESE EL NOMBRE: ", 1,3)
 				&& employee_setNombre(pAuxEmployee,nombre))
 		{
 			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
@@ -174,7 +174,7 @@ Employee employee_change (Employee* this, int opcion)
 		}
     break;
 	case 2:
-		if(!utn_getNumero(&horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 1, EMPLOYEE_HORA_MAX,3)
+		if(!utn_getNumero(&horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR. REINGRESE LAS HORAS TRABAJADAS: ", 1, EMPLOYEE_HORA_MAX,3)
 				&& employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
 		{
 			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
@@ -186,7 +186,7 @@ Employee employee_change (Employee* this, int opcion)
 		}
     break;
 	case 3:
-		if(!utn_getNumero(&sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR", 1, EMPLOYEE_SUELDO_MAX,3)
+		if(!utn_getNumero(&sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR. REINGRESE EL SUELDO: ", 1, EMPLOYEE_SUELDO_MAX,3)
 				&& employee_setSueldo(pAuxEmployee, sueldo))
 		{
 			printf("\nEL SUELDO NO FUE CAMBIADO\n");
