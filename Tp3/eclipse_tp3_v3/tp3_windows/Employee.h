@@ -27,16 +27,6 @@ Employee* employee_new();
  *
  */
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr);
-/** \brief Nueva estructura de Empleado ingresando los valores por parametros.
- *
- * @param id recibe el ID a cargar.
- * @param nombreStr puntero que recibe el nombre a cargar.
- * @param horasTrabajadas  recibe las horas trabjadas a cargar.
- * @param sueldo  recibe el sueldo a cargar.
- * @return retora el Empleado con los datos que se recibieron , en caso contrario retorna NULL.
- *
- */
-Employee* employee_newParametrosInt(int id, char* nombre,int horasTrabajadas, int sueldo);
 /** \brief Libera la memoria que se asingno a un empleado
  *
  * @param this direccion de memoria de un Empleado.

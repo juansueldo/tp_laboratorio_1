@@ -84,6 +84,7 @@ int employee_getNombre(Employee* this,char* nombre)
     if(this != NULL && nombre !=NULL)
     {
         strcpy(nombre, this->nombre);
+        utn_getMayusMin(nombre);
         retorno = 0;
     }
 
@@ -147,7 +148,7 @@ int employee_print(Employee* this)
     	printf("|*******|**********************|*******|************|\n");
     	printf("|   ID  |        NOMBRE        | HORAS |   SUELDO   |\n");
     	printf("|*******|**********************|*******|************|\n");
-    	utn_getMayusMin(this->nombre,EMPLOYEE_NOMBRE_MAX);
+    	utn_getMayusMin(this->nombre);
     	printf("| %5d | %20s | %5d | %10d |\n",
     		            	id, nombre, horasTrabajadas, sueldo);
         printf("|*******|**********************|*******|************|\n");
@@ -166,39 +167,39 @@ Employee employee_change (Employee* this, int opcion)
 	switch(opcion)
 	{
 	case 1:
-		if(!utn_getString(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR", 1,3)
-				&& !employee_setNombre(pAuxEmployee,nombre))
+		if(!utn_getStringWithSpaces(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR", 1,3)
+				&& employee_setNombre(pAuxEmployee,nombre))
+		{
+			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
+		}
+		else
 		{
 			employee_getNombre(pAuxEmployee, nombre);
 			printf("\nNOMBRE CAMBIADO\n");
 		}
-		else
-		{
-			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
-		}
     break;
 	case 2:
 		if(!utn_getNumero(&horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR", 1, EMPLOYEE_HORA_MAX,3)
-				&& !employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
+				&& employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
+		{
+			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
+		}
+		else
 		{
 			employee_getHorasTrabajadas(pAuxEmployee, &horasTrabajadas);
 			printf("\nHORAS TRABAJADAS CAMBIADAS\n");
 		}
-		else
-		{
-			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
-		}
     break;
 	case 3:
 		if(!utn_getNumero(&sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR", 1, EMPLOYEE_SUELDO_MAX,3)
-				&& !employee_setSueldo(pAuxEmployee, sueldo))
+				&& employee_setSueldo(pAuxEmployee, sueldo))
 		{
-			employee_getSueldo(pAuxEmployee, &sueldo);
-			printf("\nSUELDO CAMBIADO\n");
+			printf("\nEL SUELDO NO FUE CAMBIADO\n");
 		}
 		else
 		{
-			printf("\nEL SUELDO NO FUE CAMBIADO\n");
+			employee_getSueldo(pAuxEmployee, &sueldo);
+			printf("\nSUELDO CAMBIADO\n");
 		}
     break;
 	}
@@ -245,8 +246,8 @@ int employee_compareByID(void* pThis1, void* pThis2)
 int employee_compareBynombre(void* pThis1, void* pThis2)
 {
     int comparar;
-    char* nombre1;
-    char* nombre2;
+    char nombre1[EMPLOYEE_NOMBRE_MAX];
+    char nombre2[EMPLOYEE_NOMBRE_MAX];
     Employee* pAuxEmployee1 = (Employee*)pThis1;
     Employee* pAuxEmployee2 = (Employee*)pThis2;
 

@@ -71,11 +71,4 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
  * @return retorna el siguiente id al utlimo ingresado
  */
 int controller_nextId(LinkedList* pArrayListEmployee);
-/** \brief Compara si el id ingresado coincide con los existentes
- *
- * @param pArrayListEmployee LinkedList* Arreglo de tipo LinkedList.
- * @param id del empleado a buscar
- * @return retorna el indice del id del empleado que se busca, sino existe retorna -1
- */
-int controller_getIndexById (LinkedList* pArrayListEmployee, int* id);
 

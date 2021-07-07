@@ -12,7 +12,8 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
     int cantidad;
     int retorno = -1;
-    char buffer[4][30];
+    char buffer[4][EMPLOYEE_NOMBRE_MAX];
+    int idAux;
     Employee* pAuxEmployee;
 
     if(pFile != NULL && pArrayListEmployee != NULL)
@@ -28,11 +29,21 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
             }
         	else
         	{
-        		pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
-        	}
-            if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
-            {
-            	retorno = 0;
+        		idAux = controller_nextId(pArrayListEmployee);
+        		if(idAux > 0)
+        		{
+        			itoa(idAux,buffer[0],10);
+        			pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
+        		}
+        		else
+        		{
+        			pAuxEmployee = employee_newParametros(buffer[0], buffer[1], buffer[2], buffer[3]);
+        		}
+                if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
+                {
+                    retorno = 0;
+
+                }
             }
         }while(!feof(pFile));
     }
@@ -46,28 +57,23 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  * \return int
  *
  */
-/*int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
+int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
     int retorno = -1;
-    Employee auxEmployee;
     Employee* pAuxEmployee = NULL;
-    int idAux = 0;
+    int id;
 
     if(pFile != NULL && pArrayListEmployee != NULL)
     {
+    	id = controller_nextId(pArrayListEmployee);
         do
         {
-            if(fread((Employee*)&auxEmployee, sizeof(Employee), 1, pFile) == 1)
+        	pAuxEmployee = employee_new();
+            if(fread((Employee*)pAuxEmployee, sizeof(Employee), 1, pFile) == 1)
             {
-            	idAux = controller_nextId(pArrayListEmployee);
-            	if(idAux > 0)
+            	if(id > 0)
             	{
-            		auxEmployee.id = idAux;
-            		pAuxEmployee = employee_newParametrosInt(auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
-            	}
-            	else
-            	{
-            	    pAuxEmployee = employee_newParametrosInt(auxEmployee.id, auxEmployee.nombre, auxEmployee.horasTrabajadas, auxEmployee.sueldo);
+            		employee_setId(pAuxEmployee, id++);
             	}
 
                 if(pAuxEmployee != NULL && ll_add(pArrayListEmployee, (Employee*)pAuxEmployee) == 0)
@@ -79,4 +85,4 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
     }
 
     return retorno;
-}*/
+}

@@ -1,6 +1,28 @@
 #ifndef UTN_H_
 #define UTN_H_
 
+/**
+ * @brief Verifica si el entero ingresado es un numero valido
+ * @param num entero a ser analizado
+ * @return Retorna cero si el entero es valido y -1 si no lo es
+ *
+ */
+int validarEntero(int num);
+/**
+ * @brief Verifica si el flotante ingresado es un numero valido
+ * @param num flotante a ser analizado
+ * @return Retorna cero si el numero flotante es valido y -1 si no lo es
+ *
+ */
+int validarFlotante(float num);
+/**
+ * @brief Verifica si la cadena ingresada es un nombre valido
+ * @param cadena Cadena de caracteres a ser analizada
+ * @return Retorna cero si la cadena es valida y -1 si no lo es
+ *
+ */
+int validarNombre(char* cadena,int longitud);
+int utn_getTexto (char *pString);
 /* @brief Pide el numero al caracter y valida que este
  * @param auxiliarNum toma el dato ingresado por el usuario
  * @param i la cantidad de elementos que caben en auxiliarNum
@@ -9,7 +31,7 @@
  * @param mensajeError en caso de reintento vuelve a pedir el dao
  * @return retorna el valor del operador entero
  */
-//int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char max,int intentos);
+int utn_getChar(char* caracter,char* mensaje,char* errorMensaje,char min,char max,int intentos);
 /*
  * @brief solicita un texto al usuario, en caso de error otorga reintentos
  * @param array Array donde se cargara el texto ingresado
@@ -48,7 +70,7 @@ int getInt ( int * pNum);
 * @param pNum Cadena de caracteres a ser analizada
 * @return Retorna cero si la cadena es numerica y continen puntos y -1  si no lo es
 */
-int esFloat (char pNum[]);
+int esFloat (char* pNum);
 /**
 * @brief Verifica si la cadena ingresada es numerica
 * @param pFloat Puntero al espacio de memoria donde se dejara el resultado de la funcion
@@ -101,17 +123,32 @@ int utn_getRespuesta (char* mensaje,char*mensajeError, int reintentos);
  */
 int utn_getTexto (char *pString);
 /*
- * @brief recibe una cadena y convierte todos sus carateres en minuscular y el primer caracter en mayuscula
+ * @brief recibe una cadena y convierte todos sus carateres en minusculas y el primer caracter en mayuscula
  * @param name recibe la cadena
- * @param tam cantidad de caracteres de la cadena
  * @return retorna cero
  */
-int utn_getMayusMin (char name[], int tam);
+int utn_getMayusMin (char* name);
 /*
  * @brief Recibe un caracter y lo convierte en minuscula
  * @param letra Caracter que se convertira en minuscula
  * @return Retorna cero cuando se convierte el caracter
  */
 int utn_getLower(char* letra);
-
+/*
+ * @brief solicita un texto con espacios al usuario, en caso de error otorga reintentos
+ * @param array Array donde se cargara el texto ingresado
+ * @param max cantidad maxima de caracteres que puede tener la cadena
+ * @param mensaje Es el mesaje a ser mostrado
+ * @param mensaje Es el mesaje a ser mostrado en caso de error
+ * @param min cantidad minima de caracteres que puede tener la cadena
+ * @para intentos cantidad de reintentos en caso de error
+ * @return retorna cero en caso de que el texto sea valido
+ */
+int utn_getStringWithSpaces(char array[],int tamanio,char mensaje[],char errorMensaje[],char min,int intentos);
+/*
+ *@brief Recibe una cadena y la valida incluidos los espacios
+ *@param cadena puntero que recibe la cadena
+ *@return retorna cero si se obtuvo la cadena
+ */
+int validarTexto(char *cadena);
 #endif /* UTN_H_ */
