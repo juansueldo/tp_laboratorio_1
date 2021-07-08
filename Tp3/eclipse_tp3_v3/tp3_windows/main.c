@@ -100,9 +100,16 @@ int main()
             	}
                break;
             case 8:
-            	if(controller_saveAsText("data.csv",listaEmpleados)==0)
+            	if(utn_getRespuesta("\nESTA POR GUARDAR. LOS DATOS SERAN SOBREESCRITOS DESEA CONTINUAR [S] o [N]: ","ERROR. " , 3)==0)
             	{
-            		printf("\nSE GUARDARON LOS DATOS");
+            		if(controller_saveAsText("data.csv",listaEmpleados)==0)
+            		{
+            			printf("\nSE GUARDARON LOS DATOS");
+            		}
+            		else
+            		{
+            			printf("\nNO SE GUARDARON LOS DATOS");
+            		}
             	}
             	else
             	{
@@ -110,9 +117,16 @@ int main()
             	}
                break;
             case 9:
+            	if(utn_getRespuesta("\nESTA POR GUARDAR. LOS DATOS SERAN SOBREESCRITOS DESEA CONTINUAR [S] o [N]: ","ERROR. " , 3)==0)
+            	{
             	if(controller_saveAsBinary("data.bin" , listaEmpleados)==0)
             	{
             		printf("\nSE GUARDARON LOS DATOS");
+            	}
+            	else
+            	{
+            		printf("\nNO SE GUARDARON LOS DATOS");
+            	}
             	}
             	else
             	{

@@ -7,7 +7,6 @@
 #define EMPLOYEE_NOMBRE_MAX 60
 #define EMPLOYEE_HORA_MAX 500
 #define EMPLOYEE_SUELDO_MAX 900000
-#define EMPLOYEE_MAX 70000
 
 typedef struct
 {
@@ -27,37 +26,28 @@ Employee* employee_new();
  * @param horasTrabajadasStr  puntero que recibe las horas trabjadas a cargar.
  * @param sueldoStr  puntero que recibe el sueldo a cargar.
  * @return retora el Empleado con los datos que se recibieron por puntero, en caso contrario retorna NULL.
- *
  */
 Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr, char* sueldoStr);
 /** \brief Libera la memoria que se asingno a un empleado
- *
  * @param this direccion de memoria de un Empleado.
- *
  */
 void employee_delete(Employee *this);
 /** \brief Coloca el ID a una estructura Empleado.
- *
  * @param this puntero a Empleado.
  * @param id valor que se colocara en el ID del empleado
  * @return retorna 0 si se pudo colocar el ID, y -1 si no se coloco
- *
  */
 int employee_setId(Employee* this,int id);
 /** \brief Obtiene el ID de una estructura Empleado.
- *
  * @param this puntero a Empleado.
  * @param ID puntero al ID del empleado
  * @return retorna 0 Si pudo obtener el ID y -1 si no pudo obtener el ID
- *
  */
 int employee_getId(Employee* this,int* id);
 /** \brief Coloca el NOMBRE del empleado en una estructura Empleado.
- *
  * @param this puntero a Empleado.
  * @param nombre cadena que se colocara el NOMBRE del empleado
  * @return retorna 0 si se pudo colocar el NOMBRE, y -1 si no se coloco
- *
  */
 int employee_setNombre(Employee* this,char* nombre);
 /** \brief Obtiene el NOMBRE del empleado de la estructura Empleado.
@@ -85,24 +75,17 @@ int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas);
  */
 int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas);
 /** \brief Coloca el SUELDO del empleado en una estructura Empleado.
- *
  * @param this puntero a Empleado.
  * @param sueldo valor que se colocara en el SUELDO del empleado
  * @return retorna 0 si se pudo colocar el SUELDO, y -1 si no se coloco
- *
  */
 int employee_setSueldo(Employee* this,int sueldo);
 /** \brief Obtiene el SUELDO del empleado de la estructura Empleado.
- *
  * @param this puntero a Empleado.
  * @param sueldo puntero al SUELDO del empleado
  * @return retorna 0 Si pudo obtener el SUELDO y -1 si no pudo obtener el SUELDO
- *
  */
 int employee_getSueldo(Employee* this,int* sueldo);
-
-
-Employee* addEmployee (int* id);
 /**brief Muestra en pantalla un empleado
  *	@param this puntero a Empleado.
  *	@return retorna 0 Si se pudo mostrar el empleado y -1 si no se pudo mostrar
@@ -111,16 +94,20 @@ int employee_print(Employee* this);
 /**brief Modifica los datos que se tienen de un empleado
  *@param this puntero a Empleado.
  *@param opcion valor que determina que campo se va a modificar
- *@return retorna el empleado con los campos modificados
+ *@return retorna 0 si se modifico y -1 sino
  */
-Employee employee_change (Employee* this, int opcion);
+int employee_change (Employee* this, int opcion);
 /**brief Compara dos elementos por el ID
  *@param pThis1 puntero a void
  *@param pThis2 puntero a void
  *@return retorna cero si los ID son iguales, -1 si el primero es mayor al segundo y 1 si el segundo es mayor al primero
  */
 int employee_compareByID(void* pThis1, void* pThis2);
-
+/**brief Compara dos elemetos por el nombre
+ *@param pThis1 puntero a void
+ *@param pThis2 puntero a void
+ *@return retorna cero si los ID son iguales, -1 si el primero es mayor al segundo y 1 si el segundo es mayor al primero
+ */
 int employee_compareBynombre(void* pThis1, void* pThis2);
 /**brief Compara dos elementos por las horas trabajadas
  *@param pThis1 puntero a void

@@ -89,9 +89,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     	}
     	if(ll_isEmpty(pArrayListEmployee) == 1)
     	{
-    		if(!utn_getStringWithSpaces(nombre, EMPLOYEE_NOMBRE_MAX,"\nINGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR.REINGRESE EL NOMBRE: ", 1, 3)
-    		         && !utn_getNumero(&horasTrabajadas, "\nINGRESE LAS HORAS TRABAJADAS: ", "\nERROR. REINGRESE LAS HORAS TRABAJADAS: ", 0, EMPLOYEE_HORA_MAX, 3)
-    		         && !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO: ", "\nERROR. REINGRESE EL SUELDO: ", 0, EMPLOYEE_SUELDO_MAX, 3))
+    		if(!utn_getStringWithSpaces(nombre, EMPLOYEE_NOMBRE_MAX,"\nINGRESE EL NOMBRE DEL EMPLEADO: ", "\nERROR. REINGRESE EL NOMBRE: ", 1, 3)
+    		         && !utn_getNumero(&horasTrabajadas, "\nINGRESE LAS HORAS TRABAJADAS[ENTRE 1 - 500]: ", "\nERROR. ", 0, EMPLOYEE_HORA_MAX, 3)
+    		         && !utn_getNumero(&sueldo, "\nINGRESE EL SUELDO[ENTRE 100 - 900000]: ", "\nERROR. ", 100, EMPLOYEE_SUELDO_MAX, 3))
     		  {
     			employee_setId(pAuxEmployee, id);
     			employee_setNombre(pAuxEmployee, nombre);
@@ -151,7 +151,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     if(pArrayListEmployee != NULL && employeeQTY > 0)
     {
     	controller_ListEmployee(pArrayListEmployee);
-        if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A MODIFICAR: ", "\nERROR", 1,EMPLOYEE_MAX,3)==0)
+        if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A MODIFICAR: ", "\nERROR", 1,employeeQTY,3)==0)
         {
         	for(i = 0 ; i < employeeQTY; i++)
         	{
@@ -165,10 +165,17 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
         				do
         				{
         					menu_editarEmpleado(&editMenu);
-        					employee_change (pAuxEmployee, editMenu);
-        					printf("\nDATOS ACTUALIZADOS\n");
-        					employee_print(pAuxEmployee);
-        					retorno = 0;
+        					if(employee_change (pAuxEmployee, editMenu)==0)
+        					{
+        						printf("\nDATOS ACTUALIZADOS\n");
+        						employee_print(pAuxEmployee);
+        						retorno = 0;
+        					}
+        					else
+        					{
+        						printf("\nNO SE MODIFICO EL EMPLEADO\n");
+        						employee_print(pAuxEmployee);
+        					}
         				}while(editMenu != 4);
         			}
         			break;
@@ -178,7 +185,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
         }
         else
         {
-        	printf("NO EXISTE EL EMPLEADO INGRESADO.\n");
+        	printf("\nNO EXISTE EL EMPLEADO INGRESADO.\n");
         }
 
     }
@@ -204,7 +211,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     {
     	controller_ListEmployee(pArrayListEmployee);
     	int employeeQTY = ll_len(pArrayListEmployee);
-    	if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A ELIMINAR: ", "\nERROR", 1,2000,3)==0)
+    	if(utn_getNumero(&id, "\nINGRESE EL ID DEL EMPLEADO A ELIMINAR: ", "\nERROR. REINGRESE EL ID: ", 1,employeeQTY,3)==0)
     	{
     		for(i = 0 ; i < employeeQTY; i++)
     		  {
@@ -245,17 +252,18 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
     int retorno = -1;
     int i;
     int id;
-    int pantalla = 999;
+    int pantalla = 1000;
     int respuesta;
     int respuesta2;
 	char nombre[EMPLOYEE_NOMBRE_MAX];
 	int horasTrabajadas;
 	int sueldo;
+	int employeeQTY;
     Employee* pAuxEmployee = NULL;
 
     if(pArrayListEmployee != NULL)
     {
-    	int employeeQTY = ll_len(pArrayListEmployee);
+    	employeeQTY = ll_len(pArrayListEmployee);
     	if(employeeQTY > 0)
     	{
         printf("|*******|**********************|*******|************|\n");
@@ -276,12 +284,12 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
              {
         		do
         		{
-        			respuesta = utn_getRespuesta ("\nPRESIONE [S] PARA MOSTRAR MAS EMPLEADOS: ","\nERROR", 3);
-        			pantalla+=999;
+        			respuesta = utn_getRespuesta ("\nPRESIONE [S] PARA MOSTRAR MAS EMPLEADOS: ","\nERROR. ", 3);
+        			pantalla+=1000;
         		}while(respuesta != 0);
               }
         	}
-        	respuesta2 = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR: ","\nERROR", 3);
+        	respuesta2 = utn_getRespuesta ("\nPRESIONE [S] PARA CONTINUAR: ","\nERROR. ", 3);
 
         }while(respuesta2 != 0);
         retorno = 0;
@@ -406,7 +414,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 
     fclose(file);
     free(pAuxEmployee);
-   // free(pArrayListEmployee);
+    //free(pArrayListEmployee);
     return retorno;
 }
 

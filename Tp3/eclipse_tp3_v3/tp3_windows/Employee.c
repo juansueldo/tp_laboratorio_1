@@ -153,53 +153,58 @@ int employee_print(Employee* this)
 
     return retorno;
 }
-Employee employee_change (Employee* this, int opcion)
+int employee_change (Employee* this, int opcion)
 {
 	Employee* pAuxEmployee = this;
 	char nombre[EMPLOYEE_NOMBRE_MAX];
 	int horasTrabajadas;
 	int sueldo;
+	int retorno = -1;
 	switch(opcion)
 	{
 	case 1:
 		if(!utn_getStringWithSpaces(nombre, EMPLOYEE_NOMBRE_MAX, "INGRESE EL NUEVO NOMBRE: ", "\nERROR. REINGRESE EL NOMBRE: ", 1,3)
-				&& employee_setNombre(pAuxEmployee,nombre))
-		{
-			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
-		}
-		else
+				&& employee_setNombre(pAuxEmployee,nombre)==0)
 		{
 			employee_getNombre(pAuxEmployee, nombre);
 			printf("\nNOMBRE CAMBIADO\n");
+			retorno = 0;
+		}
+		else
+		{
+			printf("\nEL NOMBRE NO FUE CAMBIADO\n");
 		}
     break;
 	case 2:
-		if(!utn_getNumero(&horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS: ", "\nERROR. REINGRESE LAS HORAS TRABAJADAS: ", 1, EMPLOYEE_HORA_MAX,3)
-				&& employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas))
-		{
-			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
-		}
-		else
+		if(!utn_getNumero(&horasTrabajadas, "INGRESE LAS HORAS TRABAJADAS[ENTRE 1 - 500]: ", "\nERROR. ", 1, EMPLOYEE_HORA_MAX,3)
+				&& employee_setHorasTrabajadas(pAuxEmployee, horasTrabajadas)==0)
 		{
 			employee_getHorasTrabajadas(pAuxEmployee, &horasTrabajadas);
 			printf("\nHORAS TRABAJADAS CAMBIADAS\n");
-		}
-    break;
-	case 3:
-		if(!utn_getNumero(&sueldo, "INGRESE EL NUEVO SUELDO: ", "\nERROR. REINGRESE EL SUELDO: ", 1, EMPLOYEE_SUELDO_MAX,3)
-				&& employee_setSueldo(pAuxEmployee, sueldo))
-		{
-			printf("\nEL SUELDO NO FUE CAMBIADO\n");
+			retorno = 0;
 		}
 		else
 		{
+
+			printf("\nLAS HORAS TRABAJADAS NO FUERON CAMBIADAS\n");
+		}
+    break;
+	case 3:
+		if(!utn_getNumero(&sueldo, "INGRESE EL NUEVO SUELDO[ENTRE 100 - 900000]: ", "\nERROR. ", 100, EMPLOYEE_SUELDO_MAX,3)
+				&& employee_setSueldo(pAuxEmployee, sueldo)==0)
+		{
 			employee_getSueldo(pAuxEmployee, &sueldo);
 			printf("\nSUELDO CAMBIADO\n");
+			retorno = 0;
+		}
+		else
+		{
+			printf("\nEL SUELDO NO FUE CAMBIADO\n");
 		}
     break;
 	}
 
-	return *pAuxEmployee;
+	return retorno;
 
 }
 int employee_compareByID(void* pThis1, void* pThis2)
